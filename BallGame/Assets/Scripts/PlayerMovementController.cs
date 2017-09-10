@@ -6,7 +6,7 @@ using System;
 public class PlayerMovementController : MonoBehaviour {
 
     public float baseMovementSpeed = 3;
-	public float movementSpeed = 600;
+	public float rotationalSpeed = 600;
 	private float jumpHeight = 8;
 
 	public TouchControlMovement touchControls;
@@ -91,23 +91,23 @@ public class PlayerMovementController : MonoBehaviour {
 		{
 			if (grounded == true)
 			{
-				if (rigi.angularVelocity < 0)
-				{
-					rigi.angularVelocity = 0;
+				//if (rigi.angularVelocity < 0)
+				//{
+					//rigi.angularVelocity = 0;
 					rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
-				}
+				//}
 
-				else
-				{
-					rigi.angularVelocity = -movementSpeed;
-				}
+				//else
+				//{
+					rigi.angularVelocity = -rotationalSpeed;
+				//}
 			}
 
 			else if ((rigi.velocity.y > 0 || rigi.velocity.y < 0) && grounded == false)
 			{
 				rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
 
-				rigi.angularVelocity = -movementSpeed;
+				rigi.angularVelocity = -rotationalSpeed;
 				/*if (Math.Round (groundCheckLocation.x) == Math.Round (rigi.transform.position.x))
 						rigi.angularVelocity = -movementSpeedTest;*/
 			}
@@ -121,16 +121,16 @@ public class PlayerMovementController : MonoBehaviour {
 
 			if (grounded == true)
 			{
-				if (rigi.angularVelocity > 0)
-				{
-				//	rigi.angularVelocity = 0;
-					//rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
-				}
+				//if (rigi.angularVelocity > 0)
+				//{
+					//rigi.angularVelocity = 0;
+					rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
+				//}
 
-				else
-				{
-					rigi.angularVelocity = movementSpeed;
-				}
+				//else
+				//{
+				rigi.angularVelocity = rotationalSpeed;
+				//}
 					
 			}
 
@@ -138,7 +138,7 @@ public class PlayerMovementController : MonoBehaviour {
 			{
 				rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
 
-				rigi.angularVelocity = movementSpeed;
+				rigi.angularVelocity = rotationalSpeed;
 			}
 		}
 	}

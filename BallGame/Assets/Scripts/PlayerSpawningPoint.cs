@@ -55,6 +55,7 @@ public class PlayerSpawningPoint : MonoBehaviour
 
 	void Update ()
 	{
+		//Searches for Player -object and if one does not exist, sets player existance false.
 		playerObject = GameObject.FindGameObjectWithTag("Player");
 
 		if (playerObject == null) {
@@ -63,6 +64,9 @@ public class PlayerSpawningPoint : MonoBehaviour
 
 		if (doesPlayerExist == false)
 		{
+			/*
+			 *After respawn time has passed, spawn player at the latest unlocked checkpoint. 
+			*/
 			try
 			{
 				if (Time.time >= playerDeathTime)
