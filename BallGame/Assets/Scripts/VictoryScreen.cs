@@ -10,6 +10,7 @@ public class VictoryScreen : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+
 		Debug.Log ("Disabled");
 		img.enabled = false;
 	}

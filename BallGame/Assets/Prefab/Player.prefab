@@ -119,8 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de0a92d4824c574187248ce5184a567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMovementSpeed: 3
-  movementSpeed: 800
+  baseMovementSpeed: 4
+  rotationalSpeed: 600
   touchControls: {fileID: 0}
   rigi: {fileID: 0}
   collider: {fileID: 0}
