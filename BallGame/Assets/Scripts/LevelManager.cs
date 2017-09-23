@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
+    //public GameObject menu;
+
 	// Use this for initialization
 	void Start () {
 		

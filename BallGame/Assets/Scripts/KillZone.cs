@@ -28,7 +28,7 @@ public class KillZone : MonoBehaviour {
 
 			PlayerSpawningPoint.doesPlayerExist = false;
 
-			PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
+            PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
 		}
 	}
 }

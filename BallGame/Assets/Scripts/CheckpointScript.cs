@@ -6,7 +6,7 @@ using System;
 public class CheckpointScript : MonoBehaviour
 {	
 	private Transform location;
-	private string name;
+	//private string name;
 
 	private GameObject spawningGameObject;
 	private PlayerSpawningPoint spawningPoints;

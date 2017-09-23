@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "task-LevelManager",
+      "appliesTo": "BallGame/Assets/Scripts/LevelManager.cs",
+      "type": "launch"
+    }
+  ]
+}
