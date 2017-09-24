@@ -4,8 +4,9 @@ using UnityEngine;
 using System;
 
 public class PlayerAbilities : MonoBehaviour {
-	
-	private PlayerMovementController player;
+
+    //private GameObject playerObject;
+	//private PlayerMovementController playerMovementScript;
 
 	private bool isAbilityActive;
 
@@ -15,22 +16,20 @@ public class PlayerAbilities : MonoBehaviour {
 
 	public Vector2 playerBaseSize;
 
-	public float enlargeAbilitySize = 10;
+	public float enlargeAbilitySize = 2;
 	public float shrinkAbilitySize = 2;
-
-	private bool test;
 
 	private float time;
 	private float abilityCooldown = 5;
 
+    private Rigidbody2D rigi; 
+
 
 	void Start ()
 	{
-		GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-		player = playerObject.GetComponent<PlayerMovementController>();
-
-		playerBaseSize = player.transform.localScale;
-	}
+        rigi = GetComponent<Rigidbody2D>();
+        playerBaseSize = rigi.transform.localScale;
+    }
 		
 	void Update ()
 	{
@@ -72,23 +71,22 @@ public class PlayerAbilities : MonoBehaviour {
 
 	private void ResetPlayer()
 	{
-		player.transform.localScale = playerBaseSize;
-	}
+        rigi.transform.localScale = playerBaseSize;
+    }
 
 	private void EnlargeAbility()
 	{
 		ActivateAbilityTimer();
 
 		Debug.Log ("Enlarge ability. Enlarging player.");
-		player.transform.localScale = new Vector2(enlargeAbilitySize, enlargeAbilitySize);
-	}
+        rigi.transform.localScale = new Vector2(enlargeAbilitySize, enlargeAbilitySize);
+    }
 
 	private void SizeReductionAbility()
 	{
 		ActivateAbilityTimer();
-
-		player.transform.localScale = new Vector2(shrinkAbilitySize, shrinkAbilitySize);
-	}
+        rigi.transform.localScale = new Vector2(enlargeAbilitySize, enlargeAbilitySize);
+    }
 
 	public void climbAblity()
 	{

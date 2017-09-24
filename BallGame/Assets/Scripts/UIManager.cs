@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour {
     {
 	}*/
 
-    void ActivateMenu()
+    public void ActivateMenu()
     {
         menuScreen.SetActive(true);
     }

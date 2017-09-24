@@ -14,10 +14,10 @@ public class PlayerMovementController : MonoBehaviour {
 	public Rigidbody2D rigi;
 	public CircleCollider2D collider;
 
-	bool grounded = false;
-	bool rightWalled = false;
-	bool leftWalled = false;
-	float groundRadius = 0.05f;
+	private bool grounded = false;
+	private bool rightWalled = false;
+	private bool leftWalled = false;
+	private float groundRadius = 0.05f;
 	public LayerMask whatIsGround;
 
 	private Vector2 groundCheckLocation;
@@ -28,7 +28,9 @@ public class PlayerMovementController : MonoBehaviour {
 	public bool isRightButtonActive;
 	public bool isJumpButtonActive;
 
-	void Start ()
+    public bool canPlayerMove = true;
+
+    void Start ()
     {
 		GameObject touchObject = GameObject.FindGameObjectWithTag ("TouchController");
 		touchControls = touchObject.GetComponent<TouchControlMovement>();
@@ -38,47 +40,50 @@ public class PlayerMovementController : MonoBehaviour {
 	}
 
 
-	void Update ()
+    void Update()
     {
-		if (Input.GetKey(KeyCode.E))
-		{
-			Debug.Log (collider.bounds.size);
-			Debug.Log (collider.transform.position);
-		}
-			
-		createGroundChecks();
+        if (Input.GetKey(KeyCode.E))
+        {
+            Debug.Log(collider.bounds.size);
+            Debug.Log(collider.transform.position);
+        }
 
-		if (rightWalled == false)
-		{
-			moveRight();
-		}
+        createGroundChecks();
 
-		if (leftWalled == false)
-		{
-			moveLeft ();
-		}
+        if (canPlayerMove == true)
+        { 
+            if (rightWalled == false)
+            {
+                moveRight();
+            }
 
-		if (Input.GetKey(KeyCode.DownArrow))
-		{
-			rigi.velocity = new Vector2 (0, rigi.velocity.y);
-		}
+            if (leftWalled == false)
+            {
+                moveLeft();
+            }
 
-		if (Input.GetKeyDown(KeyCode.UpArrow) || isJumpButtonActive)
-		{
-			try
-			{
-				//if (grounded || (leftWalled || rightWalled))
-				if (grounded)
-				{				
-					rigi.velocity = new Vector2 (rigi.velocity.x, jumpHeight);
-				}
-			}
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                rigi.velocity = new Vector2(0, rigi.velocity.y);
+            }
 
-			catch (Exception e)
-			{
-				Debug.Log ("Error jumping: " + e);
-			}
-		}
+            if (Input.GetKeyDown(KeyCode.UpArrow) || isJumpButtonActive)
+            {
+                try
+                {
+                    //if (grounded || (leftWalled || rightWalled))
+                    if (grounded)
+                    {
+                        rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    Debug.Log("Error jumping: " + e);
+                }
+            }
+        }
 	}
 
 	/*
