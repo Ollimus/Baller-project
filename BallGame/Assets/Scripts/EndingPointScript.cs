@@ -8,6 +8,7 @@ public class EndingPointScript : MonoBehaviour
 	private GameObject timeObject;
     private UIManager menu;
 	public GameTimer timer;
+    private string completionTime;
 
 	void Start()
 	{
@@ -19,7 +20,8 @@ public class EndingPointScript : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		timer.stopTimer();
-        menu.ActivateMenu();
+        timer.StopTimer();
+		completionTime = timer.EndingTime();
+        menu.ActivateMenu(completionTime);
 	}
 }

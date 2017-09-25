@@ -24,10 +24,10 @@ public class GameTimer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		updateTimer ();
+		UpdateTimer ();
 	}
 
-	private void updateTimer()
+	private void UpdateTimer()
 	{
 		if (isTimerRunning)
 		{
@@ -43,8 +43,14 @@ public class GameTimer : MonoBehaviour
 		}
 	}
 
-	public void stopTimer()
+	public void StopTimer()
 	{
 		isTimerRunning = false;
 	}
+
+    public string EndingTime()
+    {
+        var gameTime = timeMinutes + " minutes " + (int)timeSeconds + " seconds.";
+        return gameTime;
+    }
 }
