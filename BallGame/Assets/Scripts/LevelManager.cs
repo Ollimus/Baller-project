@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
-    //public GameObject menu;
+    //SceneManager scene;
+
+    //public string levelName;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
@@ -15,4 +19,9 @@ public class LevelManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void ChangeScene(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
 }

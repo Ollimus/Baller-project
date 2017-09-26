@@ -13,7 +13,7 @@ public class GameTimer : MonoBehaviour
 
 	private bool isTimerRunning;
 
-	void Start ()
+    void Start ()
 	{
 		isTimerRunning = true;
 		
@@ -31,7 +31,7 @@ public class GameTimer : MonoBehaviour
 	{
 		if (isTimerRunning)
 		{
-			timeSeconds += Time.deltaTime;
+            timeSeconds += Time.deltaTime;
 
 			if (timeSeconds >= 60)
 			{
