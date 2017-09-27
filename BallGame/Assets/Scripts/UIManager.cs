@@ -7,18 +7,15 @@ using System;
 public class UIManager : MonoBehaviour {
 
     public GameObject menuScreen;
+    public Text completionText;
     private Text completionTimeText;
     private bool isActivated = false;
 
-    /*// Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frames
-	void Update ()
+    // Use this for initialization
+    void Start ()
     {
-	}*/
+        completionText.text = "You are victorious! You completed the level with ";
+    }
 
     public void ActivateMenu(string completionTime)
     {
@@ -30,7 +27,7 @@ public class UIManager : MonoBehaviour {
                 //menuScreen.transform.position = new Vector3(0,0,1);
                 menuScreen.transform.SetSiblingIndex(-1);
                 completionTimeText = menuScreen.transform.FindChild("txtCompletionTime").GetComponentInChildren<Text>();
-                completionTimeText.text = "You are victorious! You completed the level with " + completionTime;
+                completionTimeText.text = completionTime;
                 Debug.Log(completionTimeText.text);
                 menuScreen.SetActive(true);
             }
