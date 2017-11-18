@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour {
                 isActivated = true;
                 //menuScreen.transform.position = new Vector3(0,0,1);
                 menuScreen.transform.SetSiblingIndex(-1);
-                completionTimeText = menuScreen.transform.FindChild("txtCompletionTime").GetComponentInChildren<Text>();
+                completionTimeText = menuScreen.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
                 completionTimeText.text = completionTime;
                 Debug.Log(completionTimeText.text);
                 menuScreen.SetActive(true);
