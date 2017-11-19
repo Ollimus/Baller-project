@@ -48,18 +48,18 @@ public class PlayerMovementController : MonoBehaviour {
             Debug.Log(collider.transform.position);
         }
 
-        createGroundChecks();
+        CreateGroundChecks();
 
-        if (canPlayerMove == true)
+        if (canPlayerMove)
         { 
             if (rightWalled == false)
             {
-                moveRight();
+                MoveRight();
             }
 
             if (leftWalled == false)
             {
-                moveLeft();
+                MoveLeft();
             }
 
             if (Input.GetKey(KeyCode.DownArrow))
@@ -71,7 +71,6 @@ public class PlayerMovementController : MonoBehaviour {
             {
                 try
                 {
-                    //if (grounded || (leftWalled || rightWalled))
                     if (grounded)
                     {
                         rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
@@ -90,61 +89,23 @@ public class PlayerMovementController : MonoBehaviour {
 	 *Player turns and moves to right.
 	*/
 
-	private void moveRight()
+	private void MoveRight()
 	{
 		if (Input.GetKey (KeyCode.RightArrow) || isRightButtonActive)
 		{
-			if (grounded == true)
-			{
-				//if (rigi.angularVelocity < 0)
-				//{
-					//rigi.angularVelocity = 0;
-					rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
-				//}
+			rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
 
-				//else
-				//{
-					rigi.angularVelocity = -rotationalSpeed;
-				//}
-			}
-
-			else if ((rigi.velocity.y > 0 || rigi.velocity.y < 0) && grounded == false)
-			{
-				rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
-
-				rigi.angularVelocity = -rotationalSpeed;
-				/*if (Math.Round (groundCheckLocation.x) == Math.Round (rigi.transform.position.x))
-						rigi.angularVelocity = -movementSpeedTest;*/
-			}
+			rigi.angularVelocity = -rotationalSpeed;
 		}
 	}
 
-	private void moveLeft()
+	private void MoveLeft()
 	{
 		if (Input.GetKey (KeyCode.LeftArrow) || isLeftButtonActive)
 		{
+			rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
 
-			if (grounded == true)
-			{
-				//if (rigi.angularVelocity > 0)
-				//{
-					//rigi.angularVelocity = 0;
-					rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
-				//}
-
-				//else
-				//{
-				rigi.angularVelocity = rotationalSpeed;
-				//}
-					
-			}
-
-			else if ((rigi.velocity.y > 0 || rigi.velocity.y < 0) && grounded == false)
-			{
-				rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
-
-				rigi.angularVelocity = rotationalSpeed;
-			}
+			rigi.angularVelocity = rotationalSpeed;
 		}
 	}
 
@@ -152,7 +113,7 @@ public class PlayerMovementController : MonoBehaviour {
 	 * Creates OverLap circles on bottom of the ball and on both sides of it. Checks whether the sides/bottom is touching objects.
 	 *
 	*/
-	void createGroundChecks()
+	void CreateGroundChecks()
 	{
 		try
 		{

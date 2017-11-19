@@ -58,8 +58,6 @@ public class PlayerSpawningPoint : MonoBehaviour
 	void Update ()
 	{
 
-        Debug.Log(lastAddedObject);
-
 		//Searches for Player -object and if one does not exist, sets player existance false.
 		playerObject = GameObject.FindGameObjectWithTag("Player");
 

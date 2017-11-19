@@ -7,15 +7,8 @@ using System;
 public class UIManager : MonoBehaviour {
 
     public GameObject menuScreen;
-    public Text completionText;
     private Text completionTimeText;
     private bool isActivated = false;
-
-    // Use this for initialization
-    void Start ()
-    {
-        completionText.text = "You are victorious! You completed the level with ";
-    }
 
     public void ActivateMenu(string completionTime)
     {
@@ -24,7 +17,6 @@ public class UIManager : MonoBehaviour {
             try
             {
                 isActivated = true;
-                //menuScreen.transform.position = new Vector3(0,0,1);
                 menuScreen.transform.SetSiblingIndex(-1);
                 completionTimeText = menuScreen.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
                 completionTimeText.text = completionTime;
