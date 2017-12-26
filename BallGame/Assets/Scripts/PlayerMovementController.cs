@@ -12,7 +12,7 @@ public class PlayerMovementController : MonoBehaviour {
 	public TouchControlMovement touchControls;
 
 	public Rigidbody2D rigi;
-	public CircleCollider2D collider;
+	//public CircleCollider2D collider;
 
 	private bool grounded = false;
 	private bool rightWalled = false;
@@ -36,7 +36,7 @@ public class PlayerMovementController : MonoBehaviour {
 		touchControls = touchObject.GetComponent<TouchControlMovement>();
  
         rigi = GetComponent<Rigidbody2D>();
-		collider = GetComponent<CircleCollider2D>();
+		//collider = GetComponent<CircleCollider2D>();
 	}
 
 
@@ -44,8 +44,8 @@ public class PlayerMovementController : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.Log(collider.bounds.size);
-            Debug.Log(collider.transform.position);
+            Debug.Log(GetComponent<Collider>().bounds.size);
+            Debug.Log(GetComponent<Collider>().transform.position);
         }
 
         CreateGroundChecks();
@@ -118,15 +118,15 @@ public class PlayerMovementController : MonoBehaviour {
 		try
 		{
 			groundCheckLocation = rigi.transform.position;
-			groundCheckLocation.y -= (collider.bounds.size.y) / 2;
+			groundCheckLocation.y -= (GetComponent<Collider2D>().bounds.size.y) / 2;
 			grounded = Physics2D.OverlapCircle (groundCheckLocation, groundRadius, whatIsGround);
 
 			rightWallCheckLocation = rigi.transform.position;
-			rightWallCheckLocation.x += (collider.bounds.size.x)/2;
+			rightWallCheckLocation.x += (GetComponent<Collider2D>().bounds.size.x)/2;
 			rightWalled = Physics2D.OverlapCircle(rightWallCheckLocation, groundRadius, whatIsGround);
 
 			leftWallCheckLocation = rigi.transform.position;
-			leftWallCheckLocation.x -= (collider.bounds.size.x)/2;
+			leftWallCheckLocation.x -= (GetComponent<Collider2D>().bounds.size.x)/2;
 			leftWalled = Physics2D.OverlapCircle(leftWallCheckLocation, groundRadius, whatIsGround);
 		}
 

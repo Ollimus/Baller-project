@@ -6,6 +6,11 @@ using System;
 
 public class LevelManager : MonoBehaviour
 {
+
+    Scene scene;
+    int sceneNumber;
+
+    //Change to specific scene
     public void ChangeScene(string levelName)
     {
         try
@@ -17,6 +22,21 @@ public class LevelManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log("Error changing level: " + e);
+        }
+    }
+
+    //Automatically go to the next scene
+    public void NextLevel()
+    {
+        try
+        {
+            scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex + 1);
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error changing to the next level. Error: " + e);
         }
     }
 }

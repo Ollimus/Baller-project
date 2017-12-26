@@ -1269,7 +1269,7 @@ Prefab:
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
@@ -1284,7 +1284,7 @@ Prefab:
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeScene
+      value: NextLevel
       objectReference: {fileID: 0}
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
@@ -1294,7 +1294,7 @@ Prefab:
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: nextLevel
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
@@ -1606,7 +1606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1280003497
 RectTransform:
   m_ObjectHideFlags: 0
