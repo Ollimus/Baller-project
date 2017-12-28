@@ -72,4 +72,9 @@ public class UIManager : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         Debug.Log("?");
     }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }
