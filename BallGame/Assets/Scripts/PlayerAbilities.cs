@@ -6,7 +6,9 @@ using System;
 public class PlayerAbilities : MonoBehaviour {
 
     //private GameObject playerObject;
-	//private PlayerMovementController playerMovementScript;
+    //private PlayerMovementController playerMovementScript;
+
+    private PlayerMovementController playerMovement;
 
 	private bool isAbilityActive;
 
@@ -29,10 +31,15 @@ public class PlayerAbilities : MonoBehaviour {
 	{
         rigi = GetComponent<Rigidbody2D>();
         playerBaseSize = rigi.transform.localScale;
+
+        playerMovement = GetComponent<PlayerMovementController>();
     }
 		
 	void Update ()
 	{
+
+       // playerMovement.Test();
+
 		if (isAbilityActive == false)
 		{	
 			try

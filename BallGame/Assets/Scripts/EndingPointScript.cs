@@ -10,6 +10,7 @@ public class EndingPointScript : MonoBehaviour
 	public GameTimer timer;
     private string completionTime;
 
+    //Set time and menu objects
 	void Start()
 	{
 		timeObject = GameObject.Find ("GameTime");
@@ -18,6 +19,7 @@ public class EndingPointScript : MonoBehaviour
         menu = GameObject.Find("UIManager").GetComponent<UIManager>();
 	}
 
+    //When player touches endpoint flag, stop the timer, get the endtime and activate the menu with completion time
 	void OnTriggerEnter2D(Collider2D other)
 	{
         timer.StopTimer();

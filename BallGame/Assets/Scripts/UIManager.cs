@@ -7,18 +7,26 @@ using System;
 public class UIManager : MonoBehaviour {
 
     public GameObject menuScreen;
+    public GameObject informationObject;
+    private Text informationText;
     private Text completionTimeText;
     private bool isActivated = false;
+    private IEnumerator coroutine;
 
-    /*// Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frames
-	void Update ()
+    /*private void Update()
     {
-	}*/
+        string test = "Teksti toimii";
+
+        InformationTextUI(test);
+    }*/
+
+    private void Start()
+    {
+
+        coroutine = BlinkingText(1.0f);
+
+        StartCoroutine(coroutine);
+    }
 
     public void ActivateMenu(string completionTime)
     {
@@ -27,10 +35,9 @@ public class UIManager : MonoBehaviour {
             try
             {
                 isActivated = true;
-                //menuScreen.transform.position = new Vector3(0,0,1);
                 menuScreen.transform.SetSiblingIndex(-1);
-                completionTimeText = menuScreen.transform.FindChild("txtCompletionTime").GetComponentInChildren<Text>();
-                completionTimeText.text = "You are victorious! You completed the level with " + completionTime;
+                completionTimeText = menuScreen.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
+                completionTimeText.text = completionTime;
                 Debug.Log(completionTimeText.text);
                 menuScreen.SetActive(true);
             }
@@ -40,5 +47,34 @@ public class UIManager : MonoBehaviour {
                 Debug.Log("Error creating victory menu for player. Error: " + e);
             }
         }
+    }
+
+    public void ShowInformationText(string inputText)
+    {
+        if (!informationObject.activeInHierarchy)
+        {
+            try
+            {
+                informationObject.SetActive(true);
+                informationText = informationObject.GetComponent<Text>();
+                informationText.text = inputText;
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error with inputting text to player. Error: " + e);
+            }
+        }
+    }
+
+    private IEnumerator BlinkingText(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Debug.Log("?");
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 }

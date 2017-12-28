@@ -12,7 +12,7 @@ public class PlayerMovementController : MonoBehaviour {
 	public TouchControlMovement touchControls;
 
 	public Rigidbody2D rigi;
-	public CircleCollider2D collider;
+	//public CircleCollider2D collider;
 
 	private bool grounded = false;
 	private bool rightWalled = false;
@@ -36,7 +36,7 @@ public class PlayerMovementController : MonoBehaviour {
 		touchControls = touchObject.GetComponent<TouchControlMovement>();
  
         rigi = GetComponent<Rigidbody2D>();
-		collider = GetComponent<CircleCollider2D>();
+		//collider = GetComponent<CircleCollider2D>();
 	}
 
 
@@ -44,22 +44,22 @@ public class PlayerMovementController : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.Log(collider.bounds.size);
-            Debug.Log(collider.transform.position);
+            Debug.Log(GetComponent<Collider>().bounds.size);
+            Debug.Log(GetComponent<Collider>().transform.position);
         }
 
-        createGroundChecks();
+        CreateGroundChecks();
 
-        if (canPlayerMove == true)
+        if (canPlayerMove)
         { 
             if (rightWalled == false)
             {
-                moveRight();
+                MoveRight();
             }
 
             if (leftWalled == false)
             {
-                moveLeft();
+                MoveLeft();
             }
 
             if (Input.GetKey(KeyCode.DownArrow))
@@ -71,7 +71,6 @@ public class PlayerMovementController : MonoBehaviour {
             {
                 try
                 {
-                    //if (grounded || (leftWalled || rightWalled))
                     if (grounded)
                     {
                         rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
@@ -90,61 +89,23 @@ public class PlayerMovementController : MonoBehaviour {
 	 *Player turns and moves to right.
 	*/
 
-	private void moveRight()
+	private void MoveRight()
 	{
 		if (Input.GetKey (KeyCode.RightArrow) || isRightButtonActive)
 		{
-			if (grounded == true)
-			{
-				//if (rigi.angularVelocity < 0)
-				//{
-					//rigi.angularVelocity = 0;
-					rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
-				//}
+			rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
 
-				//else
-				//{
-					rigi.angularVelocity = -rotationalSpeed;
-				//}
-			}
-
-			else if ((rigi.velocity.y > 0 || rigi.velocity.y < 0) && grounded == false)
-			{
-				rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
-
-				rigi.angularVelocity = -rotationalSpeed;
-				/*if (Math.Round (groundCheckLocation.x) == Math.Round (rigi.transform.position.x))
-						rigi.angularVelocity = -movementSpeedTest;*/
-			}
+			rigi.angularVelocity = -rotationalSpeed;
 		}
 	}
 
-	private void moveLeft()
+	private void MoveLeft()
 	{
 		if (Input.GetKey (KeyCode.LeftArrow) || isLeftButtonActive)
 		{
+			rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
 
-			if (grounded == true)
-			{
-				//if (rigi.angularVelocity > 0)
-				//{
-					//rigi.angularVelocity = 0;
-					rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
-				//}
-
-				//else
-				//{
-				rigi.angularVelocity = rotationalSpeed;
-				//}
-					
-			}
-
-			else if ((rigi.velocity.y > 0 || rigi.velocity.y < 0) && grounded == false)
-			{
-				rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
-
-				rigi.angularVelocity = rotationalSpeed;
-			}
+			rigi.angularVelocity = rotationalSpeed;
 		}
 	}
 
@@ -152,20 +113,20 @@ public class PlayerMovementController : MonoBehaviour {
 	 * Creates OverLap circles on bottom of the ball and on both sides of it. Checks whether the sides/bottom is touching objects.
 	 *
 	*/
-	void createGroundChecks()
+	void CreateGroundChecks()
 	{
 		try
 		{
 			groundCheckLocation = rigi.transform.position;
-			groundCheckLocation.y -= (collider.bounds.size.y) / 2;
+			groundCheckLocation.y -= (GetComponent<Collider2D>().bounds.size.y) / 2;
 			grounded = Physics2D.OverlapCircle (groundCheckLocation, groundRadius, whatIsGround);
 
 			rightWallCheckLocation = rigi.transform.position;
-			rightWallCheckLocation.x += (collider.bounds.size.x)/2;
+			rightWallCheckLocation.x += (GetComponent<Collider2D>().bounds.size.x)/2;
 			rightWalled = Physics2D.OverlapCircle(rightWallCheckLocation, groundRadius, whatIsGround);
 
 			leftWallCheckLocation = rigi.transform.position;
-			leftWallCheckLocation.x -= (collider.bounds.size.x)/2;
+			leftWallCheckLocation.x -= (GetComponent<Collider2D>().bounds.size.x)/2;
 			leftWalled = Physics2D.OverlapCircle(leftWallCheckLocation, groundRadius, whatIsGround);
 		}
 

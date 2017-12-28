@@ -8,7 +8,9 @@ public class PlayerSpawningPoint : MonoBehaviour
 	public Transform player;
 	public Transform checkpointLocation;
 
-	private GameObject startingPoint;
+    int lastAddedObject;
+
+    private GameObject startingPoint;
 	private GameObject playerObject;
 	public List<Transform> checkpointLocations = new List<Transform>();
 
@@ -23,24 +25,28 @@ public class PlayerSpawningPoint : MonoBehaviour
 			playerObject = GameObject.FindGameObjectWithTag("Player");
 			startingPoint = GameObject.FindGameObjectWithTag("StartingPoint");
 
+            //If starting location does not exist, spawn at the first placed checkpoint location.
 			if (startingPoint != null)
 			{
 				checkpointLocation = startingPoint.transform;
 				checkpointLocations.Add(checkpointLocation); 
 			}
 
+            //If player and starting point do not exist, create player at latest checkpoint location
 			if (playerObject == null && startingPoint != null)
 			{
 				doesPlayerExist = true;
 				Instantiate (player, checkpointLocation.position, checkpointLocation.rotation);
 			}
 
+            //If player object does not exist, but starting point does, spawn player at the spawning point location.
 			else if (playerObject == null)
 			{
 				doesPlayerExist = true;
 				Instantiate (player, transform.position, transform.rotation);
 			}
 
+            //Otherwise player has been created with the level.
 			else
 			{
 				doesPlayerExist = true;
@@ -55,6 +61,7 @@ public class PlayerSpawningPoint : MonoBehaviour
 
 	void Update ()
 	{
+
 		//Searches for Player -object and if one does not exist, sets player existance false.
 		playerObject = GameObject.FindGameObjectWithTag("Player");
 
@@ -76,7 +83,7 @@ public class PlayerSpawningPoint : MonoBehaviour
 
 					doesPlayerExist = true;
 
-					var lastAddedObject = checkpointLocations.Count;
+					lastAddedObject = checkpointLocations.Count;
 					lastAddedObject -= 1;
 
 					checkpointLocation = checkpointLocations[lastAddedObject];
@@ -91,7 +98,8 @@ public class PlayerSpawningPoint : MonoBehaviour
 		}
 	}
 
-	public void addCheckpoint(Transform location)
+    //Receives transform location from CheckPoint script and adds it into the list of checkpoints.
+	public void AddCheckpoint(Transform location)
 	{
 		Debug.Log ("Adding a new checkpoint location");
 
