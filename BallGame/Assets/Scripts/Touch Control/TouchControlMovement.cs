@@ -6,7 +6,7 @@ public class TouchControlMovement : MonoBehaviour {
 	
 	PlayerMovementController player;
 
-	public bool jumpCheck;
+	//public bool jumpCheck;
 
 	void Start()
 	{
@@ -46,14 +46,14 @@ public class TouchControlMovement : MonoBehaviour {
 
 	public void touchControlJump()
 	{
-		jumpCheck = true;
+		//jumpCheck = true;
 
 		player.isJumpButtonActive = true;
 	}
 
 	public void releaseJump()
 	{
-		jumpCheck = true;
+		//jumpCheck = true;
 		player.isJumpButtonActive = false;
 	}
 }

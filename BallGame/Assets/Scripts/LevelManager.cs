@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     Scene scene;
     int sceneNumber;
 
-    //Change to specific scene
+    //Change to specific scene using level name as variable
     public void ChangeScene(string levelName)
     {
         try

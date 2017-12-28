@@ -4,10 +4,12 @@ using UnityEngine;
 using System;
 
 public class CheckpointScript : MonoBehaviour
-{	
-	private Transform location;
-	//private string name;
+{
+    public string checkpointText = "Checkpoint unlocked!";
+   // private int 
 
+    private UIManager manager;
+	private Transform location;
 	private GameObject spawningGameObject;
 	private PlayerSpawningPoint spawningPoints;
 
@@ -17,6 +19,8 @@ public class CheckpointScript : MonoBehaviour
 	{
 		try
 		{
+            manager = GameObject.Find("UIManager").GetComponent<UIManager>();
+
 			spawningGameObject = GameObject.FindGameObjectWithTag("SpawningCheckpoints");
 
 			if (spawningGameObject != null)
@@ -38,8 +42,18 @@ public class CheckpointScript : MonoBehaviour
 			if (!isCheckpointActivated && other.CompareTag("Player"))
 			{
 				location = this.transform;
-				spawningPoints.addCheckpoint (location);
+				spawningPoints.AddCheckpoint (location);
 				isCheckpointActivated = true;
+
+                try
+                {
+                    manager.ShowInformationText(checkpointText);
+                }
+
+                catch (Exception e)
+                {
+                    Debug.Log("Error with displaying information. Error: " + e);
+                }
 			}
 		}
 
@@ -47,6 +61,5 @@ public class CheckpointScript : MonoBehaviour
 		{
 			Debug.Log ("Checkpoint activation failed. Error: " + e);
 		}
-
 	}
 }
