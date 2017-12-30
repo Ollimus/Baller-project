@@ -8,24 +8,29 @@ public class UIManager : MonoBehaviour {
 
     public GameObject menuScreen;
     public GameObject informationObject;
+    public GameObject touchControls;
     private Text informationText;
     private Text completionTimeText;
     private bool isActivated = false;
     private IEnumerator coroutine;
 
-    /*private void Update()
+    void Start()
     {
-        string test = "Teksti toimii";
+        if (touchControls != null)
+        {
+            string operatingSystemCheck;
+            operatingSystemCheck = SystemInfo.operatingSystem;
 
-        InformationTextUI(test);
-    }*/
+            if (operatingSystemCheck.StartsWith("Windows") || !operatingSystemCheck.StartsWith("Mac"))
+            {
+                touchControls.SetActive(false);
+            }
 
-    private void Start()
-    {
-
-        coroutine = BlinkingText(1.0f);
-
-        StartCoroutine(coroutine);
+            else
+            {
+                touchControls.SetActive(true);
+            }
+        }
     }
 
     public void ActivateMenu(string completionTime)
@@ -38,7 +43,6 @@ public class UIManager : MonoBehaviour {
                 menuScreen.transform.SetSiblingIndex(-1);
                 completionTimeText = menuScreen.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
                 completionTimeText.text = completionTime;
-                Debug.Log(completionTimeText.text);
                 menuScreen.SetActive(true);
             }
 
@@ -55,9 +59,13 @@ public class UIManager : MonoBehaviour {
         {
             try
             {
-                informationObject.SetActive(true);
                 informationText = informationObject.GetComponent<Text>();
                 informationText.text = inputText;
+                informationObject.SetActive(true);
+                coroutine = FlashUIText(2.0f);
+                StartCoroutine(coroutine);
+
+
             }
 
             catch (Exception e)
@@ -67,14 +75,27 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    private IEnumerator BlinkingText(float waitTime)
+    private IEnumerator FlashUIText(float waitTime)
     {
+
         yield return new WaitForSeconds(waitTime);
-        Debug.Log("?");
+        informationObject.SetActive(false);
     }
 
     public void QuitApplication()
     {
         Application.Quit();
+    }
+
+    public void DisableTouchControl()
+    {
+        touchControls.SetActive(false);
+    }
+
+    public void PlaceHolderText()
+    {
+        String placeholderText = "Functionality under construction!";
+
+        ShowInformationText(placeholderText);
     }
 }

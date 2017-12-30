@@ -10,6 +10,17 @@ public class LevelManager : MonoBehaviour
     Scene scene;
     int sceneNumber;
 
+    private void Start()
+    {
+        UnPauseGame();
+    }
+
+    private void UnPauseGame()
+    {
+        Time.timeScale = 1f;
+    }
+
+
     //Change to specific scene using level name as variable
     public void ChangeScene(string levelName)
     {
@@ -23,6 +34,8 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("Error changing level: " + e);
         }
+
+
     }
 
     //Automatically go to the next scene

@@ -22,8 +22,16 @@ public class EndingPointScript : MonoBehaviour
     //When player touches endpoint flag, stop the timer, get the endtime and activate the menu with completion time
 	void OnTriggerEnter2D(Collider2D other)
 	{
+        //Stops timer and takes time
         timer.StopTimer();
 		completionTime = timer.EndingTime();
+
+        //Activates the menu and sends it the time
         menu.ActivateMenu(completionTime);
+
+        //disables touch control settings.
+        menu.DisableTouchControl();
+
+        Time.timeScale = 0f;
 	}
 }
