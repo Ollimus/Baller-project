@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    //Automatically go to the next scene
+    //Automatically go to the next scene when "Next level" -button is pressed.
     public void NextLevel()
     {
         try

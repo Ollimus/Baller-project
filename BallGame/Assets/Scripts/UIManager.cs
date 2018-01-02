@@ -6,33 +6,42 @@ using System;
 
 public class UIManager : MonoBehaviour {
 
+    //Gameobjects to affected by UIManager
     public GameObject menuScreen;
     public GameObject informationObject;
     public GameObject touchControls;
+    public GameObject exitMenuButton;
+
     private Text informationText;
     private Text completionTimeText;
     private bool isActivated = false;
     private IEnumerator coroutine;
+    private string operatingSystemCheck;
 
     void Start()
     {
+        //Receives and sets up information about user's operating system.
+        operatingSystemCheck = SystemInfo.operatingSystem;
+
+        //Checks whether scene has touchcontrols set up.
         if (touchControls != null)
         {
-            string operatingSystemCheck;
-            operatingSystemCheck = SystemInfo.operatingSystem;
-
-            if (operatingSystemCheck.StartsWith("Windows") || !operatingSystemCheck.StartsWith("Mac"))
+            //If user runs the game on windows/mac, disables touch controls. Otherwise activates them (for Android/IOS).
+            if (operatingSystemCheck.StartsWith("Windows") || operatingSystemCheck.StartsWith("Mac"))
             {
                 touchControls.SetActive(false);
+                exitMenuButton.SetActive(false);
             }
 
             else
             {
                 touchControls.SetActive(true);
+                exitMenuButton.SetActive(true);
             }
         }
     }
 
+    //Handles activation of End Menu
     public void ActivateMenu(string completionTime)
     {
         if (!isActivated)
@@ -53,6 +62,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    //Handles sending information for player in UI.
     public void ShowInformationText(string inputText)
     {
         if (!informationObject.activeInHierarchy)
@@ -82,20 +92,28 @@ public class UIManager : MonoBehaviour {
         informationObject.SetActive(false);
     }
 
+    //Quits from application.
     public void QuitApplication()
     {
         Application.Quit();
     }
 
+    //Disables touch controls, mainly used to be called when game is used on android/ios when the game ends and activates end-game screen or player opens menu.
     public void DisableTouchControl()
     {
         touchControls.SetActive(false);
     }
 
+    //PlaceHolderText for unfinished functions.
     public void PlaceHolderText()
     {
         String placeholderText = "Functionality under construction!";
 
         ShowInformationText(placeholderText);
+    }
+
+    public void ShowPauseMenu()
+    {
+        
     }
 }
