@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour {
     //Gameobjects to affected by UIManager
     public GameObject menuScreen;
     public GameObject informationObject;
+    public GameObject EndLevelMenu;
+
     public GameObject touchControls;
     public GameObject exitMenuButton;
 
@@ -41,6 +43,14 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ActivatePauseMenu();
+        }
+    }
+
     //Handles activation of End Menu
     public void ActivateMenu(string completionTime)
     {
@@ -50,9 +60,11 @@ public class UIManager : MonoBehaviour {
             {
                 isActivated = true;
                 menuScreen.transform.SetSiblingIndex(-1);
-                completionTimeText = menuScreen.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
+                completionTimeText = EndLevelMenu.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
                 completionTimeText.text = completionTime;
+
                 menuScreen.SetActive(true);
+                EndLevelMenu.SetActive(true);
             }
 
             catch (Exception e)
@@ -112,8 +124,24 @@ public class UIManager : MonoBehaviour {
         ShowInformationText(placeholderText);
     }
 
-    public void ShowPauseMenu()
+    public void ActivatePauseMenu()
     {
         
+    }
+
+    public void HidePauseMenu()
+    {
+
+    }
+
+    //Make for clarity sake. Pauses and unpauses game time.
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void UnPauseGame()
+    {
+        Time.timeScale = 1f;
     }
 }
