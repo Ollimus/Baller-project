@@ -27,7 +27,7 @@ public class EndingPointScript : MonoBehaviour
 		completionTime = timer.EndingTime();
 
         //Activates the menu and sends it the time
-        menu.ActivateMenu(completionTime);
+        menu.ActivateEndMenu(completionTime);
 
         //disables touch control settings.
         menu.DisableTouchControl();

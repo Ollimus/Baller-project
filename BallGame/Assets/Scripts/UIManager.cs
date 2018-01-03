@@ -10,9 +10,10 @@ public class UIManager : MonoBehaviour {
     public GameObject menuScreen;
     public GameObject informationObject;
     public GameObject EndLevelMenu;
+    public GameObject PauseMenu;
 
     public GameObject touchControls;
-    public GameObject exitMenuButton;
+   // public GameObject exitMenuButton;
 
     private Text informationText;
     private Text completionTimeText;
@@ -32,27 +33,32 @@ public class UIManager : MonoBehaviour {
             if (operatingSystemCheck.StartsWith("Windows") || operatingSystemCheck.StartsWith("Mac"))
             {
                 touchControls.SetActive(false);
-                exitMenuButton.SetActive(false);
+                //exitMenuButton.SetActive(false);
             }
 
             else
             {
                 touchControls.SetActive(true);
-                exitMenuButton.SetActive(true);
+                //exitMenuButton.SetActive(true);
             }
         }
     }
 
     private void Update()
     {
+        //If player uses Escape, check whether pausemenu is actives. If not active, create menu and pause. If active, resume game.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ActivatePauseMenu();
+            if (!PauseMenu.activeInHierarchy)
+                ActivatePauseMenu();
+
+            else
+                ResumeGame();
         }
     }
 
     //Handles activation of End Menu
-    public void ActivateMenu(string completionTime)
+    public void ActivateEndMenu(string completionTime)
     {
         if (!isActivated)
         {
@@ -72,6 +78,41 @@ public class UIManager : MonoBehaviour {
                 Debug.Log("Error creating victory menu for player. Error: " + e);
             }
         }
+    }
+
+    //Activates pause menu and pauses the game
+    public void ActivatePauseMenu()
+    {
+        try
+        {
+            menuScreen.SetActive(true);
+            PauseMenu.SetActive(true);
+
+            PauseGame();
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error pausing game. Error: " + e);
+        }
+    }
+
+    //Resumes the game by removing menus and unpausing the game
+    public void ResumeGame()
+    {
+        try
+        {
+            menuScreen.SetActive(false);
+            PauseMenu.SetActive(false);
+
+            UnPauseGame();
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error Resuming Game. Error: " + e);
+        }
+
     }
 
     //Handles sending information for player in UI.
@@ -95,6 +136,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    //Makes the text disappear after a while
     private IEnumerator FlashUIText(float waitTime)
     {
 
@@ -120,16 +162,6 @@ public class UIManager : MonoBehaviour {
         String placeholderText = "Functionality under construction!";
 
         ShowInformationText(placeholderText);
-    }
-
-    public void ActivatePauseMenu()
-    {
-        
-    }
-
-    public void HidePauseMenu()
-    {
-
     }
 
     //Make for clarity sake. Pauses and unpauses game time.
