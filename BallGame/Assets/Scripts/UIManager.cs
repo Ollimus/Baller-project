@@ -86,8 +86,6 @@ public class UIManager : MonoBehaviour {
                 informationObject.SetActive(true);
                 coroutine = FlashUIText(2.0f);
                 StartCoroutine(coroutine);
-
-
             }
 
             catch (Exception e)
@@ -104,16 +102,16 @@ public class UIManager : MonoBehaviour {
         informationObject.SetActive(false);
     }
 
-    //Quits from application.
-    public void QuitApplication()
-    {
-        Application.Quit();
-    }
-
     //Disables touch controls, mainly used to be called when game is used on android/ios when the game ends and activates end-game screen or player opens menu.
     public void DisableTouchControl()
     {
         touchControls.SetActive(false);
+    }
+
+    //Quits from application.
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 
     //PlaceHolderText for unfinished functions.
