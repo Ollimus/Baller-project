@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour {
     public GameObject PauseMenu;
 
     public GameObject touchControls;
-   // public GameObject exitMenuButton;
 
     private Text informationText;
     private Text completionTimeText;

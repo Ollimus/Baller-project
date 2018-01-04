@@ -52,3 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuScreen: {fileID: 0}
+  informationObject: {fileID: 0}
+  EndLevelMenu: {fileID: 0}
+  PauseMenu: {fileID: 0}
+  touchControls: {fileID: 0}
