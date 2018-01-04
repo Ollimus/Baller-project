@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour
 
         catch (Exception e)
         {
-            Debug.Log("Error changing to the next level. Error: " + e);
+            Debug.Log("Error changing to the next level. Returning to Main Menu. Error: " + e);
         }
     }
 }
