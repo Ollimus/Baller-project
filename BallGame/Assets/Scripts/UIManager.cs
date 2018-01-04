@@ -6,14 +6,14 @@ using System;
 
 public class UIManager : MonoBehaviour {
 
-    //Shared UI gameobjects
+    //Gameobjects to affected by UIManager
     public GameObject menuScreen;
     public GameObject informationObject;
     public GameObject EndLevelMenu;
     public GameObject PauseMenu;
 
-    //Phone-only gameobjects
     public GameObject touchControls;
+   // public GameObject exitMenuButton;
 
     private Text informationText;
     private Text completionTimeText;
@@ -33,18 +33,20 @@ public class UIManager : MonoBehaviour {
             if (operatingSystemCheck.StartsWith("Windows") || operatingSystemCheck.StartsWith("Mac"))
             {
                 touchControls.SetActive(false);
+                //exitMenuButton.SetActive(false);
             }
 
             else
             {
                 touchControls.SetActive(true);
+                //exitMenuButton.SetActive(true);
             }
         }
     }
 
     private void Update()
     {
-        //If player uses Escape, check whether pausemenu is actives. If not active, create menu and pause. If active, resume game by removing menus and unpausing game.
+        //If player uses Escape, check whether pausemenu is actives. If not active, create menu and pause. If active, resume game.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!PauseMenu.activeInHierarchy)
@@ -56,7 +58,7 @@ public class UIManager : MonoBehaviour {
     }
 
     //Handles activation of End Menu
-    public void ActiveVictoryMenu(string completionTime)
+    public void ActivateEndMenu(string completionTime)
     {
         if (!isActivated)
         {
