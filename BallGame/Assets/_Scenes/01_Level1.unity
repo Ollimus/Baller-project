@@ -1167,12 +1167,12 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
+    - target: {fileID: 114447730375126094, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 295613724}
-    - target: {fileID: 114004168855899348, guid: 1d94372f263a12047a725915350f3dfa,
+      objectReference: {fileID: 818892576}
+    - target: {fileID: 114136425480784990, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1182,16 +1182,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 818892576}
-    - target: {fileID: 114447730375126094, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 818892576}
     - target: {fileID: 114879106108879552, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 818892576}
+    - target: {fileID: 114004168855899348, guid: 1d94372f263a12047a725915350f3dfa,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 818892576}
+    - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 295613724}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d94372f263a12047a725915350f3dfa, type: 2}
   m_IsPrefabParent: 0
@@ -1482,7 +1487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1280003497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2130,7 +2135,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.8897059, g: 0.5691501, b: 0.5691501, a: 0}
+  m_BackGroundColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

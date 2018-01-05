@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour {
     }
 
     //Handles activation of End Menu
-    public void ActivateEndMenu(string completionTime)
+    public void ActivateVictoryScreen(string completionTime)
     {
         if (!isActivated)
         {
@@ -77,6 +77,16 @@ public class UIManager : MonoBehaviour {
                 Debug.Log("Error creating victory menu for player. Error: " + e);
             }
         }
+    }
+
+    public void ActivateDefeatScreen()
+    {
+        /*
+         *Uncomment when menu has been created 
+         * 
+         * menuScreen.SetActive(true);
+         * 
+        */
     }
 
     //Activates pause menu and pauses the game

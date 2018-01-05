@@ -2565,46 +2565,26 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114855075041921842, guid: 1d94372f263a12047a725915350f3dfa,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1336801861}
+    - target: {fileID: 114879106108879552, guid: 1d94372f263a12047a725915350f3dfa,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1336801861}
+    - target: {fileID: 114004168855899348, guid: 1d94372f263a12047a725915350f3dfa,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1336801861}
     - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1059157866}
-    - target: {fileID: 114562796302849672, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 114004168855899348, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1336801861}
-    - target: {fileID: 114004168855899348, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 114879106108879552, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1336801861}
-    - target: {fileID: 114879106108879552, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NextLevel
-      objectReference: {fileID: 0}
-    - target: {fileID: 114855075041921842, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1336801861}
-    - target: {fileID: 114855075041921842, guid: 1d94372f263a12047a725915350f3dfa,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeScene
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d94372f263a12047a725915350f3dfa, type: 2}
   m_IsPrefabParent: 0
