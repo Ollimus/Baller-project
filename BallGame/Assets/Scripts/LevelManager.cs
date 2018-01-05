@@ -44,7 +44,12 @@ public class LevelManager : MonoBehaviour
         try
         {
             scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.buildIndex + 1);
+
+           // if (SceneManager.GetSceneByBuildIndex(scene.buildIndex + 1) != null)
+                SceneManager.LoadScene(scene.buildIndex + 1);
+
+            //else
+             //   Debug.Log("Error loading into next level. Does not exist in build.");
         }
 
         catch (Exception e)
