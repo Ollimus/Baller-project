@@ -70,4 +70,9 @@ public class LevelManager : MonoBehaviour
             ChangeScene("00_MainMenu");
         }
     }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }

@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 	//Set player lives to 5 at start of every screen.
 	void Start ()
     {
-        playerLives = 5;
+        playerLives = 3;
 
         UImanager = GameObject.Find("UIManager").GetComponent<UIManager>();
 	}
@@ -28,6 +28,10 @@ public class PlayerManager : MonoBehaviour
         try
         {
             playerLives -= 1;
+
+            Debug.Log(playerLives);
+
+            UImanager.RemovePlayerLifeSprite();
 
             if (playerLives == 0)
                 UImanager.ActivateDefeatScreen();

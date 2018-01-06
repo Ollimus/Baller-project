@@ -10,10 +10,13 @@ public class UIManager : MonoBehaviour {
     public GameObject menuScreen;
     public GameObject informationObject;
     public GameObject EndLevelMenu;
-    public GameObject PauseMenu;
+    public GameObject pauseMenu;
+    public GameObject playerLives;
+    public GameObject defeatScreen;
 
     public GameObject touchControls;
 
+    private GameObject playerLifeSprite;
     private Text informationText;
     private Text completionTimeText;
     private bool isActivated = false;
@@ -48,7 +51,7 @@ public class UIManager : MonoBehaviour {
         //If player uses Escape, check whether pausemenu is actives. If not active, create menu and pause. If active, resume game.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!PauseMenu.activeInHierarchy)
+            if (!pauseMenu.activeInHierarchy)
                 ActivatePauseMenu();
 
             else
@@ -81,12 +84,18 @@ public class UIManager : MonoBehaviour {
 
     public void ActivateDefeatScreen()
     {
-        /*
-         *Uncomment when menu has been created 
-         * 
-         * menuScreen.SetActive(true);
-         * 
-        */
+        try
+        {
+            menuScreen.SetActive(true);
+            defeatScreen.SetActive(true);
+
+            PauseGame();
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error starting defeat menu. Error: " + e);
+        }
     }
 
     //Activates pause menu and pauses the game
@@ -95,7 +104,7 @@ public class UIManager : MonoBehaviour {
         try
         {
             menuScreen.SetActive(true);
-            PauseMenu.SetActive(true);
+            pauseMenu.SetActive(true);
 
             PauseGame();
         }
@@ -112,7 +121,7 @@ public class UIManager : MonoBehaviour {
         try
         {
             menuScreen.SetActive(false);
-            PauseMenu.SetActive(false);
+            pauseMenu.SetActive(false);
 
             UnPauseGame();
         }
@@ -148,7 +157,6 @@ public class UIManager : MonoBehaviour {
     //Makes the text disappear after a while
     private IEnumerator FlashUIText(float waitTime)
     {
-
         yield return new WaitForSeconds(waitTime);
         informationObject.SetActive(false);
     }
@@ -159,10 +167,20 @@ public class UIManager : MonoBehaviour {
         touchControls.SetActive(false);
     }
 
-    //Quits from application.
-    public void QuitApplication()
+    //Finds a sprite tagged PlayerLives and deletes it.
+    public void RemovePlayerLifeSprite()
     {
-        Application.Quit();
+       try
+        {
+            playerLifeSprite = GameObject.FindGameObjectWithTag("PlayerLives");
+
+            GameObject.Destroy(playerLifeSprite);
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error removing a player life from UI. Error: " + e);
+        }
     }
 
     //PlaceHolderText for unfinished functions.

@@ -1,34 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 public class KillZone : MonoBehaviour {
 
 	private GameObject player;
 	private PlayerSpawningPoint PlayerSpawningPoint;
+    private PlayerManager playerManager;
 
 	private float gameTime;
 
-	void start()
+	void Start()
 	{
-
-	}
+        PlayerSpawningPoint = GameObject.FindGameObjectWithTag("CheckPoints").GetComponentInParent<PlayerSpawningPoint>();
+        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+    }
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.CompareTag ("Player"))
 		{
-			GameObject findCheckPoints = GameObject.FindGameObjectWithTag ("CheckPoints");
-			PlayerSpawningPoint = findCheckPoints.GetComponentInParent<PlayerSpawningPoint> ();
+            try
+            {
+                KillPlayer();
+                
+                PlayerSpawningPoint.doesPlayerExist = false;
 
-			player = GameObject.FindGameObjectWithTag ("Player");
+                PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
+            }
 
-			Debug.Log ("Player Destroyed");
-			Destroy (player);
-
-			PlayerSpawningPoint.doesPlayerExist = false;
-
-            PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
+            catch (Exception e)
+            {
+                Debug.Log("Error destroying a player. Error: " + e);
+            }
 		}
 	}
+
+    private void KillPlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        Debug.Log("Player Destroyed");
+        Destroy(player);
+
+        playerManager.ReduceLives();
+    }
 }

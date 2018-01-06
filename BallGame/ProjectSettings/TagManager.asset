@@ -8,6 +8,7 @@ TagManager:
   - CheckPoints
   - SpawningCheckpoints
   - StartingPoint
+  - PlayerLives
   layers:
   - Default
   - TransparentFX
