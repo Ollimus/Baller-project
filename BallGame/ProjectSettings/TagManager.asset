@@ -9,6 +9,7 @@ TagManager:
   - SpawningCheckpoints
   - StartingPoint
   - PlayerLives
+  - Button
   layers:
   - Default
   - TransparentFX

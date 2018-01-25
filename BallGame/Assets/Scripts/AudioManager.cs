@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource musicSource;
+   // public AudioSource musicSource;
     //public AudioClip music;
 
     // Use this for initialization
     void Start ()
     {
-        musicSource.Play();	
+       // musicSource.Play();	
 	}
 	
 	// Update is called once per frame
