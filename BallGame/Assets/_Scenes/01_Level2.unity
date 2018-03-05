@@ -562,7 +562,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1772916171}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
@@ -577,22 +577,22 @@ Prefab:
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
@@ -602,7 +602,7 @@ Prefab:
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
         type: 2}
@@ -967,11 +967,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 621347292}
---- !u!224 &633715039 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224479062721690390, guid: 91d677cce439138478abe811e7e714b4,
-    type: 2}
-  m_PrefabInternal: {fileID: 467702448}
 --- !u!1001 &650589572
 Prefab:
   m_ObjectHideFlags: 0
@@ -1527,6 +1522,11 @@ Prefab:
       propertyPath: defeatScreen
       value: 
       objectReference: {fileID: 2026882397}
+    - target: {fileID: 114650768609647278, guid: c8b59a252e66aae47b295e7fae0cf66c,
+        type: 2}
+      propertyPath: endLevelMenu
+      value: 
+      objectReference: {fileID: 84681899}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c8b59a252e66aae47b295e7fae0cf66c, type: 2}
   m_IsPrefabParent: 0
@@ -1795,7 +1795,7 @@ Prefab:
     - target: {fileID: 224296118119630170, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 224296118119630170, guid: 1d94372f263a12047a725915350f3dfa,
         type: 2}
@@ -2059,7 +2059,6 @@ RectTransform:
   - {fileID: 306308699}
   - {fileID: 54298205}
   - {fileID: 1419442656}
-  - {fileID: 633715039}
   - {fileID: 1194761543}
   m_Father: {fileID: 0}
   m_RootOrder: 0
