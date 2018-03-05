@@ -33,7 +33,7 @@ namespace Managers
         void Start()
         {
             //Checks whether scene has touchcontrols set up.
-            if (touchControls != null)
+            /*if (touchControls != null)
             {
                 //Receives and sets up information about user's operating system.
                 operatingSystemCheck = SystemInfo.operatingSystem;
@@ -48,7 +48,7 @@ namespace Managers
                 {
                     touchControls.SetActive(true);
                 }
-            }
+            }*/
 
             levelManager = GameObject.Find("SceneManager").GetComponent<LevelManager>();
         }

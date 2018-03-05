@@ -5,11 +5,13 @@ using System;
 
 public class PlayerMovementController : MonoBehaviour {
 
-    public float baseMovementSpeed = 3;
+    public float baseMovementSpeed = 6;
 	public float rotationalSpeed = 600;
 	private float jumpHeight = 8;
+    private float horizontalInput;
 
 	public TouchControlMovement touchControls;
+    private TouchControlJoystick joystick;
 
 	public Rigidbody2D rigi;
 	//public CircleCollider2D collider;
@@ -32,82 +34,69 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Start ()
     {
-		GameObject touchObject = GameObject.FindGameObjectWithTag ("TouchController");
-		touchControls = touchObject.GetComponent<TouchControlMovement>();
- 
+		touchControls = GameObject.FindGameObjectWithTag("TouchController").GetComponent<TouchControlMovement>();
+        joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
+
+        Debug.Log(joystick);
+
         rigi = GetComponent<Rigidbody2D>();
-		//collider = GetComponent<CircleCollider2D>();
-	}
+        //collider = GetComponent<CircleCollider2D>();
+    }
 
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.E))
-        {
-            Debug.Log(GetComponent<Collider>().bounds.size);
-            Debug.Log(GetComponent<Collider>().transform.position);
-        }
-
         CreateGroundChecks();
 
-        if (canPlayerMove)
-        { 
-            if (rightWalled == false)
-            {
-                MoveRight();
-            }
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
 
-            if (leftWalled == false)
-            {
-                MoveLeft();
-            }
+            HorizontalMovement(horizontalInput);
+        }
 
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                rigi.velocity = new Vector2(0, rigi.velocity.y);
-            }
+        else if (joystick != null && joystick.isJoystickActive)
+        {
+            horizontalInput = joystick.HorizontalJoystick();
 
-            if (Input.GetKeyDown(KeyCode.UpArrow) || isJumpButtonActive)
+            HorizontalMovement(horizontalInput);
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rigi.velocity = new Vector2(0, rigi.velocity.y);
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) || isJumpButtonActive)
+        {
+            try
             {
-                try
+                if (grounded)
                 {
-                    if (grounded)
-                    {
-                        rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
-                    }
+                    rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
                 }
+            }
 
-                catch (Exception e)
-                {
-                    Debug.Log("Error jumping: " + e);
-                }
+            catch (Exception e)
+            {
+                Debug.Log("Error jumping: " + e);
             }
         }
-	}
+    }
 
 	/*
 	 *Player turns and moves to right.
 	*/
-
-	private void MoveRight()
+	public void HorizontalMovement(float horizontalInput)
 	{
-		if (Input.GetKey (KeyCode.RightArrow) || isRightButtonActive)
-		{
-			rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
+        CreateGroundChecks();
 
-			rigi.angularVelocity = -rotationalSpeed;
-		}
-	}
-
-	private void MoveLeft()
-	{
-		if (Input.GetKey (KeyCode.LeftArrow) || isLeftButtonActive)
-		{
-			rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
-
-			rigi.angularVelocity = rotationalSpeed;
-		}
-	}
+        if (rightWalled == false || leftWalled == false)
+        {
+            rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
+            rigi.angularVelocity = -(horizontalInput * rotationalSpeed);
+        }
+    }
 
 	/*
 	 * Creates OverLap circles on bottom of the ball and on both sides of it. Checks whether the sides/bottom is touching objects.

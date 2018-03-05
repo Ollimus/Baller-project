@@ -46,6 +46,8 @@ public class KillZone : MonoBehaviour {
         Debug.Log("Player Destroyed");
         Destroy(player);
 
+        //player.GetComponent<Animation>().Play("Explosion");
+
         playerManager.ReduceLives();
     }
 }

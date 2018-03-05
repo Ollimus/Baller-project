@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-   // public AudioSource musicSource;
+    // public AudioSource musicSource;
     //public AudioClip music;
+    public bool muteAudio = true;
 
     // Use this for initialization
     void Start ()
