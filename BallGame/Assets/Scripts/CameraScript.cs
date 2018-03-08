@@ -11,6 +11,7 @@ public class CameraScript : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 
+    //LateUpdate updates 
 	void LateUpdate ()
 	{
 		if (player == null)

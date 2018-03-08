@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
-    int movementRange = 30;
     Vector2 startPos;
     float horizontal = 0f;
-    public bool isJoystickActive;
+    int movementRange = 30; //Allowed movement range for joystick.
+    float minimumInput = 0.4f; //Input value from joystick needs to be higher than this to register input. Higher value increases "sensitive" area around 0.
+    public bool isJoystickActive; //PlayerMovementController checks whether mobile joystick is active and giving input.
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
         transform.position = startPos;
     }
 
+    //Handles moving joystick image accordingly.
     public virtual void OnDrag(PointerEventData data)
     {
         Vector2 newPos = Vector2.zero;
@@ -39,10 +41,41 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
         transform.position = new Vector2(startPos.x + newPos.x, startPos.y);        
     }
 
+    /*
+     * Handles mobile joystick input to PlayerMovementController
+    */
     public float HorizontalJoystick()
     {
-        horizontal = Mathf.InverseLerp(transform.position.x - startPos.x, -1.0f, 1.0f);
+        if (transform.position.x - startPos.x > 0)
+        {
+            horizontal = Mathf.InverseLerp(0f, movementRange, (transform.position.x - startPos.x));
 
-        return horizontal = (transform.position.x - startPos.x) > 0 ? horizontal : -(horizontal);
+            if (horizontal > minimumInput && horizontal > 0)
+            {
+                return horizontal;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+
+        else
+        {
+            horizontal = Mathf.InverseLerp(0f, -movementRange, (transform.position.x - startPos.x));
+
+            horizontal = -horizontal;
+
+            if (horizontal < -minimumInput &&  horizontal < 0)
+            {
+                return horizontal;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
