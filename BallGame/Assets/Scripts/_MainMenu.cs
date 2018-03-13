@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TouchControlAbility : MonoBehaviour {
+public class _MainMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

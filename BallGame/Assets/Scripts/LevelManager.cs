@@ -10,7 +10,6 @@ namespace Managers
 {
     public class LevelManager : MonoBehaviour
     {
-
         Scene scene;
         int sceneNumber;
 
@@ -33,30 +32,38 @@ namespace Managers
 
         public void InitiateButtons(GameObject[] buttonArray)
         {
-            foreach (GameObject buttons in buttonArray)
+            try
             {
-                Button button = buttons.GetComponent<Button>();
-                string btnName = button.name;
-
-                if (btnName == nextLevelBtnName)
+                foreach (GameObject buttons in buttonArray)
                 {
-                    button.onClick.AddListener(() => NextLevel());
-                }
+                    Button button = buttons.GetComponent<Button>();
+                    string btnName = button.name;
 
-                if (btnName == retryLevelBtnName)
-                {
-                    button.onClick.AddListener(() => RetryLevel());
-                }
+                    if (btnName == nextLevelBtnName)
+                    {
+                        button.onClick.AddListener(() => NextLevel());
+                    }
 
-                if (btnName == mainMenuBtnName)
-                {
-                    button.onClick.AddListener(() => ChangeScene("00_MainMenu"));
-                }
+                    if (btnName == retryLevelBtnName)
+                    {
+                        button.onClick.AddListener(() => RetryLevel());
+                    }
 
-                if (btnName == resumeGameBtnName)
-                {
-                    button.onClick.AddListener(() => ResumeGame());
+                    if (btnName == mainMenuBtnName)
+                    {
+                        button.onClick.AddListener(() => ChangeScene("00_MainMenu"));
+                    }
+
+                    if (btnName == resumeGameBtnName)
+                    {
+                        button.onClick.AddListener(() => ResumeGame());
+                    }
                 }
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error setting up buttons. Error: " + e);
             }
         }
 

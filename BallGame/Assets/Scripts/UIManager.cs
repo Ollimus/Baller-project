@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Managers;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 namespace Managers
 {
@@ -11,20 +13,23 @@ namespace Managers
     {
         //Gameobjects to affected by UIManager
         public GameObject informationObject;
-        public GameObject endLevelMenu;
-        public GameObject pauseMenu;
-        public GameObject playerLives;
-        public GameObject defeatScreen;
+        private GameObject victoryMenu;
+        private GameObject pauseMenu;
+        private GameObject playerLives;
+        private GameObject defeatMenu;
+
+        private GameObject menuObject;
+        private GameObject[] menus;
 
         private Button button;
         private GameObject[] ButtonArray;
 
         public GameObject touchControls;
-        public bool testButtons = false;
+        public bool testButtonFunctionability = false;
 
         private LevelManager levelManager;
 
-        private GameObject playerLifeSprite;
+        private List<GameObject> playerLifeSpriteList = new List<GameObject>();
         private Text informationText;
         private Text completionTimeText;
         private IEnumerator coroutine;
@@ -32,25 +37,31 @@ namespace Managers
 
         void Start()
         {
-            //Checks whether scene has touchcontrols set up.
-            /*if (touchControls != null)
+            levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            informationObject = GameObject.Find("InformationText");
+            touchControls = GameObject.FindGameObjectWithTag("TouchButtons");
+
+            //Ignore setting up gameplay elements if active scene is main menu.
+            Scene scene = SceneManager.GetActiveScene();
+
+            if (scene.name != "00_MainMenu")
             {
-                //Receives and sets up information about user's operating system.
-                operatingSystemCheck = SystemInfo.operatingSystem;
-
-                //If user runs the game on windows/mac, disables touch controls. Otherwise activates them (for Android/IOS).
-                if (operatingSystemCheck.StartsWith("Windows") || operatingSystemCheck.StartsWith("Mac"))
+                try
                 {
-                    touchControls.SetActive(false);
+                    menuObject = GameObject.FindGameObjectWithTag("Menu");
+
+                    playerLifeSpriteList = GameObject.FindGameObjectsWithTag("PlayerLives").OrderBy(go => go.name).ToList();
+
+                    victoryMenu = menuObject.transform.GetChild(0).gameObject;
+                    pauseMenu = menuObject.transform.GetChild(1).gameObject;
+                    defeatMenu = menuObject.transform.GetChild(2).gameObject;
                 }
 
-                else
+                catch (Exception e)
                 {
-                    touchControls.SetActive(true);
+                    Debug.Log("Error setting up gameplay elements. Error: " + e);
                 }
-            }*/
-
-            levelManager = GameObject.Find("SceneManager").GetComponent<LevelManager>();
+            }
         }
 
         /*
@@ -68,7 +79,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error activating/deactiving menus and fetching buttons. Eror: " + e);
+                Debug.Log("Error activating/deactiving menus and fetching buttons. Error: " + e);
             }
         }
 
@@ -84,10 +95,10 @@ namespace Managers
                     ResumeGame();
             }
 
-            if (testButtons == true && (endLevelMenu || defeatScreen || pauseMenu))
+            if (testButtonFunctionability == true && (victoryMenu || defeatMenu || pauseMenu))
             {
                 ActivateMenuButtons();
-                testButtons = false;
+                testButtonFunctionability = false;
             }
 
 
@@ -98,9 +109,9 @@ namespace Managers
         {
             try
             {
-                completionTimeText = endLevelMenu.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
+                completionTimeText = victoryMenu.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
                 completionTimeText.text = completionTime;
-                endLevelMenu.SetActive(true);
+                victoryMenu.SetActive(true);
 
                 ActivateMenuButtons();
             }
@@ -115,7 +126,7 @@ namespace Managers
         {
             try
             {
-                defeatScreen.SetActive(true);
+                defeatMenu.SetActive(true);
                 ActivateMenuButtons();
                 PauseGame();
             }
@@ -164,21 +175,18 @@ namespace Managers
         //Handles sending information for player in UI.
         public void ShowInformationText(string inputText)
         {
-            if (!informationObject.activeInHierarchy)
+            try
             {
-                try
-                {
-                    informationText = informationObject.GetComponent<Text>();
-                    informationText.text = inputText;
-                    informationObject.SetActive(true);
-                    coroutine = FlashUIText(2.0f);
-                    StartCoroutine(coroutine);
-                }
+                informationText = informationObject.GetComponent<Text>();
+                informationText.text = inputText;
+                informationObject.SetActive(true);
+                coroutine = FlashUIText(2.0f);
+                StartCoroutine(coroutine);
+            }
 
-                catch (Exception e)
-                {
-                    Debug.Log("Error with inputting text to player. Error: " + e);
-                }
+            catch (Exception e)
+            {
+                Debug.Log("Error with inputting text to player. Error: " + e);
             }
         }
 
@@ -200,9 +208,8 @@ namespace Managers
         {
            try
             {
-                playerLifeSprite = GameObject.FindGameObjectWithTag("PlayerLives");
-
-                GameObject.Destroy(playerLifeSprite);
+                Destroy(playerLifeSpriteList[0]);
+                playerLifeSpriteList.RemoveAt(0);
             }
 
             catch (Exception e)

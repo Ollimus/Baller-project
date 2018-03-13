@@ -24,34 +24,14 @@ public class TouchControlMovement : MonoBehaviour {
 		}
 	}
 
-	public void touchControlRight()
-	{
-		player.isRightButtonActive = true;
-	}
-
-	public void touchControlLeft()
-	{
-		player.isLeftButtonActive = true;
-	}
-
-	public void releaseRightKey()
-	{
-		player.isRightButtonActive = false;
-	}
-
-	public void releaseLeftKey()
-	{
-		player.isLeftButtonActive = false;
-	}
-
-	public void touchControlJump()
+	public void TouchControlJump()
 	{
 		//jumpCheck = true;
 
 		player.isJumpButtonActive = true;
 	}
 
-	public void releaseJump()
+	public void ReleaseJump()
 	{
 		//jumpCheck = true;
 		player.isJumpButtonActive = false;

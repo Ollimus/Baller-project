@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Interfaces;
 
-public class PlayerMovementController : MonoBehaviour {
+public class PlayerMovementController : MonoBehaviour, IPlayerMovement {
 
     public float baseMovementSpeed = 6;
 	public float rotationalSpeed = 600;
 	private float jumpHeight = 8;
     private float horizontalInput;
 
-	public TouchControlMovement touchControls;
     private TouchControlJoystick joystick;
 
 	public Rigidbody2D rigi;
@@ -34,13 +34,8 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Start ()
     {
-		touchControls = GameObject.FindGameObjectWithTag("TouchController").GetComponent<TouchControlMovement>();
         joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
-
-        Debug.Log(joystick);
-
         rigi = GetComponent<Rigidbody2D>();
-        //collider = GetComponent<CircleCollider2D>();
     }
 
 
@@ -89,9 +84,13 @@ public class PlayerMovementController : MonoBehaviour {
 	*/
 	public void HorizontalMovement(float horizontalInput)
 	{
-        CreateGroundChecks();
+        if (horizontalInput > 0 && !rightWalled)
+        {
+            rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
+            rigi.angularVelocity = -(horizontalInput * rotationalSpeed);
+        }
 
-        if (rightWalled == false || leftWalled == false)
+        else if (horizontalInput < 0 && !leftWalled)
         {
             rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
             rigi.angularVelocity = -(horizontalInput * rotationalSpeed);
