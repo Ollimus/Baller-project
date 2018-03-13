@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Interfaces;
 
-public class PlayerMovementController : MonoBehaviour, IPlayerMovement {
+public class PlayerMovementController : MonoBehaviour {
 
     public float baseMovementSpeed = 6;
 	public float rotationalSpeed = 600;
