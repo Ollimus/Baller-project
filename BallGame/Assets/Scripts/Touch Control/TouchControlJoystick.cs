@@ -10,6 +10,8 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
     float horizontal = 0f;
     int movementRange = 30; //Allowed movement range for joystick.
     float minimumInput = 0.4f; //Input value from joystick needs to be higher than this to register input. Higher value increases "sensitive" area around 0.
+    float flatInputValue = 1f; //Use flat input if you want more precise control.
+
     public bool isJoystickActive; //PlayerMovementController checks whether mobile joystick is active and giving input.
 
     void Start()
@@ -52,7 +54,7 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
 
             if (horizontal > minimumInput && horizontal > 0)
             {
-                return horizontal;
+                return flatInputValue;
             }
 
             else
@@ -69,7 +71,7 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
 
             if (horizontal < -minimumInput &&  horizontal < 0)
             {
-                return horizontal;
+                return -flatInputValue;
             }
 
             else

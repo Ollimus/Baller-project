@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
-	public TextMesh gameTimer;
+	private TextMesh gameTimer;
 
 	private float gameTime;
 	private float timeMinutes;

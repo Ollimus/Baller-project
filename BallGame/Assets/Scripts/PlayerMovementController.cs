@@ -8,12 +8,12 @@ public class PlayerMovementController : MonoBehaviour {
     public float baseMovementSpeed = 6;
 	public float rotationalSpeed = 600;
 	private float jumpHeight = 8;
+    private float horizontalMovementSpeed = 1; //NOTE: DOES NOT USE AXIS INPUT, BECAUSE FLAT VALUE GIVES INCREASED/SMOOTHER MOBILITY WHILE JUMPING.
     private float horizontalInput;
 
     private TouchControlJoystick joystick;
 
 	public Rigidbody2D rigi;
-	//public CircleCollider2D collider;
 
 	private bool grounded = false;
 	private bool rightWalled = false;
@@ -42,12 +42,11 @@ public class PlayerMovementController : MonoBehaviour {
     {
         CreateGroundChecks();
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
-        {
-            horizontalInput = Input.GetAxis("Horizontal");
+        if (Input.GetKey(KeyCode.LeftArrow))
+            HorizontalMovement(-horizontalMovementSpeed);
 
-            HorizontalMovement(horizontalInput);
-        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+            HorizontalMovement(horizontalMovementSpeed);
 
         else if (joystick != null && joystick.isJoystickActive)
         {
