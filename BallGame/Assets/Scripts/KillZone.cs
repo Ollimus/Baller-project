@@ -15,7 +15,7 @@ public class KillZone : MonoBehaviour {
 
 	void Start()
 	{
-        PlayerSpawningPoint = GameObject.FindGameObjectWithTag("CheckPoints").GetComponentInParent<PlayerSpawningPoint>();
+        PlayerSpawningPoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
     }
 
@@ -23,31 +23,44 @@ public class KillZone : MonoBehaviour {
 	{
 		if (other.CompareTag ("Player"))
 		{
-            try
-            {
-                KillPlayer();
-                
-                PlayerSpawningPoint.doesPlayerExist = false;
+            KillPlayer();
 
-                PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
-            }
-
-            catch (Exception e)
-            {
-                Debug.Log("Error destroying a player. Error: " + e);
-            }
+            SetPlayerDead();
 		}
 	}
 
+    void SetPlayerDead()
+    {
+        try
+        {
+            PlayerSpawningPoint.doesPlayerExist = false;
+
+            PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
+        }
+
+        catch(Exception e)
+        {
+            Debug.Log("Error setting up player dead. Error: " + e);
+        }
+    }
+
     private void KillPlayer()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        try
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
 
-        Debug.Log("Player Destroyed");
-        Destroy(player);
+            Debug.Log("Player Destroyed");
+            Destroy(player);
 
-        //player.GetComponent<Animation>().Play("Explosion");
+            //player.GetComponent<Animation>().Play("Explosion");
 
-        playerManager.ReduceLives();
+            playerManager.ReduceLives();
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error destroying player. Error: " + e);
+        }
     }
 }

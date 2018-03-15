@@ -7,7 +7,6 @@ using Managers;
 public class CheckpointScript : MonoBehaviour
 {
     public string checkpointText = "Checkpoint unlocked!";
-   // private int 
 
     private UIManager manager;
 	private Transform location;
@@ -22,7 +21,7 @@ public class CheckpointScript : MonoBehaviour
 		{
             manager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
-			spawningGameObject = GameObject.FindGameObjectWithTag("SpawningCheckpoints");
+			spawningGameObject = GameObject.FindGameObjectWithTag("StartingPoint");
 
 			if (spawningGameObject != null)
 			{

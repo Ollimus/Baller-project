@@ -121,7 +121,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMovementSpeed: 4
   rotationalSpeed: 600
-  touchControls: {fileID: 0}
   rigi: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
