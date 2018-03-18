@@ -40,40 +40,37 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Update()
     {
-        CreateGroundChecks();
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-            HorizontalMovement(-horizontalMovementSpeed);
-
-        else if (Input.GetKey(KeyCode.RightArrow))
-            HorizontalMovement(horizontalMovementSpeed);
-
-        else if (joystick != null && joystick.isJoystickActive)
+        if (canPlayerMove)
         {
-            horizontalInput = joystick.HorizontalJoystick();
+            CreateGroundChecks();
 
-            HorizontalMovement(horizontalInput);
-        }
+            if (Input.GetKey(KeyCode.LeftArrow))
+                HorizontalMovement(-horizontalMovementSpeed);
 
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            rigi.velocity = new Vector2(0, rigi.velocity.y);
-        }
+            else if (Input.GetKey(KeyCode.RightArrow))
+                HorizontalMovement(horizontalMovementSpeed);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) || isJumpButtonActive)
-        {
-            try
+            else if (joystick != null && joystick.isJoystickActive)
             {
-                if (grounded)
-                {
-                    rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
-                }
+                horizontalInput = joystick.HorizontalJoystick();
+
+                HorizontalMovement(horizontalInput);
             }
 
-            catch (Exception e)
+            if (Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("Error jumping: " + e);
+                rigi.velocity = new Vector2(0, rigi.velocity.y);
             }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Jump();
+            }
+        }
+
+        else
+        {
+            rigi.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 
@@ -92,6 +89,22 @@ public class PlayerMovementController : MonoBehaviour {
         {
             rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
             rigi.angularVelocity = -(horizontalInput * rotationalSpeed);
+        }
+    }
+
+    public void Jump()
+    {
+        try
+        {
+            if (grounded)
+            {
+                    rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
+            }
+        }
+
+        catch (Exception e)
+        {
+            Debug.Log("Error jumping: " + e);
         }
     }
 

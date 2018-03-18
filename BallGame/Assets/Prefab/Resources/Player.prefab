@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50732954579599320}
   - component: {fileID: 58809009347882874}
   - component: {fileID: 114203380781945452}
-  - component: {fileID: 114934745230206460}
+  - component: {fileID: 95177824778396344}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -108,6 +108,23 @@ CircleCollider2D:
   m_Offset: {x: -0.007465899, y: 0.0074658394}
   serializedVersion: 2
   m_Radius: 1.1
+--- !u!95 &95177824778396344
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1148459872047414}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf087547366bfed4bb43dd28ea3ead0a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114203380781945452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,22 +146,6 @@ MonoBehaviour:
   isRightButtonActive: 0
   isJumpButtonActive: 0
   canPlayerMove: 1
---- !u!114 &114934745230206460
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1148459872047414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625cbabfe5db1534b9d320a2a9a190da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEnlargeActive: 0
-  isClimbActive: 0
-  playerBaseSize: {x: 0, y: 0}
-  enlargeAbilitySize: 10
-  shrinkAbilitySize: 2
 --- !u!212 &212092363395338460
 SpriteRenderer:
   m_ObjectHideFlags: 1

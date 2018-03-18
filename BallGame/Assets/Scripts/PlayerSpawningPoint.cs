@@ -79,12 +79,7 @@ public class PlayerSpawningPoint : MonoBehaviour
 	{
 		playerObject = GameObject.FindGameObjectWithTag("Player");
 
-		if (playerObject == null)
-        {
-			doesPlayerExist = false;
-		}
-
-		if (doesPlayerExist == false)
+		if (doesPlayerExist == false && playerObject == null)
 		{
             SpawnPlayerAtCheckpoint();
 		}

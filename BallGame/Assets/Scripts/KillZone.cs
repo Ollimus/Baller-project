@@ -11,19 +11,23 @@ public class KillZone : MonoBehaviour {
 	private PlayerSpawningPoint PlayerSpawningPoint;
     private PlayerManager playerManager;
 
+    private float respawnTime;
+
 	private float gameTime;
 
 	void Start()
 	{
         PlayerSpawningPoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+
+        respawnTime = PlayerSpawningPoint.respawnTimer;
     }
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.CompareTag ("Player"))
 		{
-            KillPlayer();
+            KillPlayer(other);
 
             SetPlayerDead();
 		}
@@ -44,16 +48,22 @@ public class KillZone : MonoBehaviour {
         }
     }
 
-    private void KillPlayer()
+    private void KillPlayer(Collider2D other)
     {
         try
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = other.transform.gameObject;
 
             Debug.Log("Player Destroyed");
-            Destroy(player);
 
-            //player.GetComponent<Animation>().Play("Explosion");
+            Animator anim = player.GetComponent<Animator>();
+            anim.Play("Explosion");
+
+            AnimatorStateInfo currInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+            float animationLength = currInfo.length;
+
+            Destroy(player, animationLength);
 
             playerManager.ReduceLives();
         }

@@ -37,6 +37,7 @@ namespace Managers
                 foreach (GameObject buttons in buttonArray)
                 {
                     Button button = buttons.GetComponent<Button>();
+
                     string btnName = button.name;
 
                     if (btnName == nextLevelBtnName)

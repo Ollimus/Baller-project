@@ -27,6 +27,7 @@ namespace Managers
         public GameObject touchControls;
         public bool testButtonFunctionability = false;
 
+        private Scene scene;
         private LevelManager levelManager;
 
         private List<GameObject> playerLifeSpriteList = new List<GameObject>();
@@ -35,14 +36,22 @@ namespace Managers
         private IEnumerator coroutine;
         private string operatingSystemCheck;
 
-        void Start()
+        void Awake()
         {
-            levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-            informationObject = GameObject.Find("InformationText");
-            touchControls = GameObject.FindGameObjectWithTag("TouchButtons");
+            try
+            {
+                levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+                informationObject = GameObject.Find("InformationText");
+                touchControls = GameObject.FindGameObjectWithTag("TouchButtons");
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error setting up managers. Error: " + e);
+            }
 
             //Ignore setting up gameplay elements if active scene is main menu.
-            Scene scene = SceneManager.GetActiveScene();
+            scene = SceneManager.GetActiveScene();
 
             if (scene.name != "00_MainMenu")
             {
@@ -52,9 +61,19 @@ namespace Managers
 
                     playerLifeSpriteList = GameObject.FindGameObjectsWithTag("PlayerLives").OrderBy(go => go.name).ToList();
 
+                    /*
+                     *Edit this to be better
+                    */
                     victoryMenu = menuObject.transform.GetChild(0).gameObject;
                     pauseMenu = menuObject.transform.GetChild(1).gameObject;
                     defeatMenu = menuObject.transform.GetChild(2).gameObject;
+
+                    menus = new GameObject[3];
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        menus[i] = menuObject.transform.GetChild(i).gameObject;
+                    }
                 }
 
                 catch (Exception e)
@@ -63,6 +82,12 @@ namespace Managers
                 }
             }
         }
+
+        /*private void Start()
+        {
+            if (scene.name != "00_MainMenu")
+                ActivateMenuButtons();
+        }*/
 
         /*
          *Done in Awake to make sure the player does not see the menus pop up.
@@ -100,8 +125,6 @@ namespace Managers
                 ActivateMenuButtons();
                 testButtonFunctionability = false;
             }
-
-
         }
 
         //Handles activation of End Menu

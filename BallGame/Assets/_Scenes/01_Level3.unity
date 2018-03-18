@@ -383,9 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc4fb9c5d92d8d4b8fc1ad0201b2597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 4538585339123868, guid: 1ea761fee4d07d146840c35fa356414a, type: 2}
-  checkpointLocation: {fileID: 0}
-  checkpointLocations: []
   doesPlayerExist: 0
   playerDeathTime: 0
   respawnTimer: 1
@@ -475,11 +472,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4126428558649648, guid: 36f173af6be7d8141adb2e3e7a35a223, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -16.27
+      value: 34.02
       objectReference: {fileID: 0}
     - target: {fileID: 4126428558649648, guid: 36f173af6be7d8141adb2e3e7a35a223, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.508
+      value: 9.42
       objectReference: {fileID: 0}
     - target: {fileID: 4126428558649648, guid: 36f173af6be7d8141adb2e3e7a35a223, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1056,6 +1053,22 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6f1f64be9f3b874d8f7a333139b466a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1013927666 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1090761380734302, guid: c368c9edc0e893b4abc1438bea25b7dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 261947034}
+--- !u!114 &1013927667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1013927666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6e5288a20a4374f9045d5330858730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1086350699 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4032817747116132, guid: c6f1f64be9f3b874d8f7a333139b466a,
