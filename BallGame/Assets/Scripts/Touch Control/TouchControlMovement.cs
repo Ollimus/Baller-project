@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class TouchControlMovement : MonoBehaviour {
+public class TouchControlMovement : MonoBehaviour, IPointerDownHandler
+{
 	
 	PlayerMovementController player;
-
-	//public bool jumpCheck;
 
 	void Start()
 	{
@@ -24,36 +24,18 @@ public class TouchControlMovement : MonoBehaviour {
 		}
 	}
 
-	public void touchControlRight()
-	{
-		player.isRightButtonActive = true;
-	}
+    public virtual void OnPointerDown(PointerEventData data)
+    {
+        player.Jump();
+    }
 
-	public void touchControlLeft()
+    public void TouchControlJump()
 	{
-		player.isLeftButtonActive = true;
-	}
-
-	public void releaseRightKey()
-	{
-		player.isRightButtonActive = false;
-	}
-
-	public void releaseLeftKey()
-	{
-		player.isLeftButtonActive = false;
-	}
-
-	public void touchControlJump()
-	{
-		//jumpCheck = true;
-
 		player.isJumpButtonActive = true;
 	}
 
-	public void releaseJump()
+	public void ReleaseJump()
 	{
-		//jumpCheck = true;
 		player.isJumpButtonActive = false;
 	}
 }

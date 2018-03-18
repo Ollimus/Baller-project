@@ -3,61 +3,208 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Managers;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
-public class UIManager : MonoBehaviour {
-
-    public GameObject menuScreen;
-    public GameObject informationObject;
-    private Text informationText;
-    private Text completionTimeText;
-    private bool isActivated = false;
-    private IEnumerator coroutine;
-
-    /*private void Update()
+namespace Managers
+{
+    public class UIManager : MonoBehaviour
     {
-        string test = "Teksti toimii";
+        //Gameobjects to affected by UIManager
+        public GameObject informationObject;
+        private GameObject victoryMenu;
+        private GameObject pauseMenu;
+        private GameObject playerLives;
+        private GameObject defeatMenu;
 
-        InformationTextUI(test);
-    }*/
+        private GameObject menuObject;
+        private GameObject[] menus;
 
-    private void Start()
-    {
+        private Button button;
+        private GameObject[] ButtonArray;
 
-        coroutine = BlinkingText(1.0f);
+        public GameObject touchControls;
+        public bool testButtonFunctionability = false;
 
-        StartCoroutine(coroutine);
-    }
+        private Scene scene;
+        private LevelManager levelManager;
 
-    public void ActivateMenu(string completionTime)
-    {
-        if (!isActivated)
+        private List<GameObject> playerLifeSpriteList = new List<GameObject>();
+        private Text informationText;
+        private Text completionTimeText;
+        private IEnumerator coroutine;
+        private string operatingSystemCheck;
+
+        void Awake()
         {
             try
             {
-                isActivated = true;
-                menuScreen.transform.SetSiblingIndex(-1);
-                completionTimeText = menuScreen.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
-                completionTimeText.text = completionTime;
-                Debug.Log(completionTimeText.text);
-                menuScreen.SetActive(true);
+                levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+                informationObject = GameObject.Find("InformationText");
+                touchControls = GameObject.FindGameObjectWithTag("TouchButtons");
             }
 
             catch (Exception e)
             {
-                Debug.Log("Error creating victory menu for player. Error: " + e);
+                Debug.Log("Error setting up managers. Error: " + e);
+            }
+
+            //Ignore setting up gameplay elements if active scene is main menu.
+            scene = SceneManager.GetActiveScene();
+
+            if (scene.name != "00_MainMenu")
+            {
+                try
+                {
+                    menuObject = GameObject.FindGameObjectWithTag("Menu");
+
+                    playerLifeSpriteList = GameObject.FindGameObjectsWithTag("PlayerLives").OrderBy(go => go.name).ToList();
+
+                    /*
+                     *Edit this to be better
+                    */
+                    victoryMenu = menuObject.transform.GetChild(0).gameObject;
+                    pauseMenu = menuObject.transform.GetChild(1).gameObject;
+                    defeatMenu = menuObject.transform.GetChild(2).gameObject;
+
+                    menus = new GameObject[3];
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        menus[i] = menuObject.transform.GetChild(i).gameObject;
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    Debug.Log("Error setting up gameplay elements. Error: " + e);
+                }
             }
         }
-    }
 
-    public void ShowInformationText(string inputText)
-    {
-        if (!informationObject.activeInHierarchy)
+        /*private void Start()
+        {
+            if (scene.name != "00_MainMenu")
+                ActivateMenuButtons();
+        }*/
+
+        /*
+         *Done in Awake to make sure the player does not see the menus pop up.
+         *Menus need to be activated, because non-activated gameobjects can't be found.
+        */
+        private void ActivateMenuButtons()
         {
             try
             {
-                informationObject.SetActive(true);
+                ButtonArray = GameObject.FindGameObjectsWithTag("Button");
+
+                levelManager.InitiateButtons(ButtonArray);
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error activating/deactiving menus and fetching buttons. Error: " + e);
+            }
+        }
+
+        private void Update()
+        {
+            //If player uses Escape, check whether pausemenu is actives. If not active, create menu and pause. If active, resume game.
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (!pauseMenu.activeInHierarchy)
+                    ActivatePauseMenu();
+
+                else
+                    ResumeGame();
+            }
+
+            if (testButtonFunctionability == true && (victoryMenu || defeatMenu || pauseMenu))
+            {
+                ActivateMenuButtons();
+                testButtonFunctionability = false;
+            }
+        }
+
+        //Handles activation of End Menu
+        public void ActivateVictoryScreen(string completionTime)
+        {
+            try
+            {
+                completionTimeText = victoryMenu.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
+                completionTimeText.text = completionTime;
+                victoryMenu.SetActive(true);
+
+                ActivateMenuButtons();
+            }
+
+            catch (Exception e)
+            {
+                 Debug.Log("Error creating victory menu for player. Error: " + e);
+            }
+        }
+
+        public void ActivateDefeatScreen()
+        {
+            try
+            {
+                defeatMenu.SetActive(true);
+                ActivateMenuButtons();
+                PauseGame();
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error starting defeat menu. Error: " + e);
+            }
+        }
+
+        //Activates pause menu and pauses the game
+        public void ActivatePauseMenu()
+        {
+            try
+            {
+                pauseMenu.SetActive(true);
+
+                PauseGame();
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error pausing game. Error: " + e);
+            }
+        }
+
+        //Resumes the game by removing menus and unpausing the game
+        public void ResumeGame()
+        {
+            try
+            {
+                pauseMenu.SetActive(false);
+
+                ActivateMenuButtons();
+
+                UnPauseGame();
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error Resuming Game. Error: " + e);
+            }
+
+        }
+
+        //Handles sending information for player in UI.
+        public void ShowInformationText(string inputText)
+        {
+            try
+            {
                 informationText = informationObject.GetComponent<Text>();
                 informationText.text = inputText;
+                informationObject.SetActive(true);
+                coroutine = FlashUIText(2.0f);
+                StartCoroutine(coroutine);
             }
 
             catch (Exception e)
@@ -65,16 +212,52 @@ public class UIManager : MonoBehaviour {
                 Debug.Log("Error with inputting text to player. Error: " + e);
             }
         }
-    }
 
-    private IEnumerator BlinkingText(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        Debug.Log("?");
-    }
+        //Makes the text disappear after a while
+        private IEnumerator FlashUIText(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+            informationObject.SetActive(false);
+        }
 
-    public void QuitApplication()
-    {
-        Application.Quit();
+        //Disables touch controls, mainly used to be called when game is used on android/ios when the game ends and activates end-game screen or player opens menu.
+        public void DisableTouchControl()
+        {
+            touchControls.SetActive(false);
+        }
+
+        //Finds a sprite tagged PlayerLives and deletes it.
+        public void RemovePlayerLifeSprite()
+        {
+           try
+            {
+                Destroy(playerLifeSpriteList[0]);
+                playerLifeSpriteList.RemoveAt(0);
+            }
+
+            catch (Exception e)
+            {
+                Debug.Log("Error removing a player life from UI. Error: " + e);
+            }
+        }
+
+        //PlaceHolderText for unfinished functions.
+        public void PlaceHolderText()
+        {
+            String placeholderText = "Functionality under construction!";
+
+            ShowInformationText(placeholderText);
+        }
+
+        //Make for clarity sake. Pauses and unpauses game time.
+        private void PauseGame()
+        {
+            Time.timeScale = 0f;
+        }
+
+        private void UnPauseGame()
+        {
+            Time.timeScale = 1f;
+        }
     }
 }

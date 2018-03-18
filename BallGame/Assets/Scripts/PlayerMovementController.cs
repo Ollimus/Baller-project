@@ -5,14 +5,15 @@ using System;
 
 public class PlayerMovementController : MonoBehaviour {
 
-    public float baseMovementSpeed = 3;
+    public float baseMovementSpeed = 6;
 	public float rotationalSpeed = 600;
 	private float jumpHeight = 8;
+    private float horizontalMovementSpeed = 1; //NOTE: DOES NOT USE AXIS INPUT, BECAUSE FLAT VALUE GIVES INCREASED/SMOOTHER MOBILITY WHILE JUMPING.
+    private float horizontalInput;
 
-	public TouchControlMovement touchControls;
+    private TouchControlJoystick joystick;
 
 	public Rigidbody2D rigi;
-	//public CircleCollider2D collider;
 
 	private bool grounded = false;
 	private bool rightWalled = false;
@@ -32,34 +33,28 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Start ()
     {
-		GameObject touchObject = GameObject.FindGameObjectWithTag ("TouchController");
-		touchControls = touchObject.GetComponent<TouchControlMovement>();
- 
+        joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
         rigi = GetComponent<Rigidbody2D>();
-		//collider = GetComponent<CircleCollider2D>();
-	}
+    }
 
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.E))
-        {
-            Debug.Log(GetComponent<Collider>().bounds.size);
-            Debug.Log(GetComponent<Collider>().transform.position);
-        }
-
-        CreateGroundChecks();
-
         if (canPlayerMove)
-        { 
-            if (rightWalled == false)
-            {
-                MoveRight();
-            }
+        {
+            CreateGroundChecks();
 
-            if (leftWalled == false)
+            if (Input.GetKey(KeyCode.LeftArrow))
+                HorizontalMovement(-horizontalMovementSpeed);
+
+            else if (Input.GetKey(KeyCode.RightArrow))
+                HorizontalMovement(horizontalMovementSpeed);
+
+            else if (joystick != null && joystick.isJoystickActive)
             {
-                MoveLeft();
+                horizontalInput = joystick.HorizontalJoystick();
+
+                HorizontalMovement(horizontalInput);
             }
 
             if (Input.GetKey(KeyCode.DownArrow))
@@ -67,47 +62,51 @@ public class PlayerMovementController : MonoBehaviour {
                 rigi.velocity = new Vector2(0, rigi.velocity.y);
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow) || isJumpButtonActive)
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                try
-                {
-                    if (grounded)
-                    {
-                        rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
-                    }
-                }
-
-                catch (Exception e)
-                {
-                    Debug.Log("Error jumping: " + e);
-                }
+                Jump();
             }
         }
-	}
+
+        else
+        {
+            rigi.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+    }
 
 	/*
 	 *Player turns and moves to right.
 	*/
-
-	private void MoveRight()
+	public void HorizontalMovement(float horizontalInput)
 	{
-		if (Input.GetKey (KeyCode.RightArrow) || isRightButtonActive)
-		{
-			rigi.velocity = new Vector2 (baseMovementSpeed, rigi.velocity.y);
+        if (horizontalInput > 0 && !rightWalled)
+        {
+            rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
+            rigi.angularVelocity = -(horizontalInput * rotationalSpeed);
+        }
 
-			rigi.angularVelocity = -rotationalSpeed;
-		}
-	}
+        else if (horizontalInput < 0 && !leftWalled)
+        {
+            rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
+            rigi.angularVelocity = -(horizontalInput * rotationalSpeed);
+        }
+    }
 
-	private void MoveLeft()
-	{
-		if (Input.GetKey (KeyCode.LeftArrow) || isLeftButtonActive)
-		{
-			rigi.velocity = new Vector2 (-baseMovementSpeed, rigi.velocity.y);
+    public void Jump()
+    {
+        try
+        {
+            if (grounded)
+            {
+                    rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
+            }
+        }
 
-			rigi.angularVelocity = rotationalSpeed;
-		}
-	}
+        catch (Exception e)
+        {
+            Debug.Log("Error jumping: " + e);
+        }
+    }
 
 	/*
 	 * Creates OverLap circles on bottom of the ball and on both sides of it. Checks whether the sides/bottom is touching objects.

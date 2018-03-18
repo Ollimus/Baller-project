@@ -8,6 +8,10 @@ TagManager:
   - CheckPoints
   - SpawningCheckpoints
   - StartingPoint
+  - PlayerLives
+  - Button
+  - TouchButtons
+  - Menu
   layers:
   - Default
   - TransparentFX
