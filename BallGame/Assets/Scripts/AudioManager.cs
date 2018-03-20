@@ -5,7 +5,7 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
-    public bool MuteAudio;
+    public bool muteAudio;
 
     public static AudioManager AudioInstance;
 
@@ -59,16 +59,7 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
-    private void Update()
-    {
-        if (MuteAudio)
-            MuteAll();
-
-        else
-            UnmuteAudio();
-    }
-
-    void MuteAll()
+    public void MuteAudio()
     {
         foreach (Sound sound in sounds)
         {
@@ -76,7 +67,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void UnmuteAudio()
+    public void UnmuteAudio()
     {
         foreach (Sound sound in sounds)
         {

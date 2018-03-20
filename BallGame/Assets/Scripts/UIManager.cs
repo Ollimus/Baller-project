@@ -29,6 +29,7 @@ namespace Managers
 
         private Scene scene;
         private LevelManager levelManager;
+        private AudioManager audioManager;
 
         private List<GameObject> playerLifeSpriteList = new List<GameObject>();
         private Text informationText;
@@ -43,6 +44,7 @@ namespace Managers
                 levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
                 informationObject = GameObject.Find("InformationText");
                 touchControls = GameObject.FindGameObjectWithTag("TouchButtons");
+                audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
             }
 
             catch (Exception e)
@@ -145,7 +147,8 @@ namespace Managers
             {
                 defeatMenu.SetActive(true);
                 ActivateMenuButtons();
-                PauseGame();
+
+                Time.timeScale = 0f;
             }
 
             catch (Exception e)
@@ -246,11 +249,13 @@ namespace Managers
         //Make for clarity sake. Pauses and unpauses game time.
         private void PauseGame()
         {
+            audioManager.MuteAudio();
             Time.timeScale = 0f;
         }
 
         private void UnPauseGame()
         {
+            audioManager.UnmuteAudio();
             Time.timeScale = 1f;
         }
     }
