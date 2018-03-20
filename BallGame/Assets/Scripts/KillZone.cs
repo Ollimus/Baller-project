@@ -11,7 +11,7 @@ public class KillZone : MonoBehaviour {
 	private PlayerSpawningPoint PlayerSpawningPoint;
     private PlayerManager playerManager;
 
-    private float respawnTime;
+    private AudioSource explosionAudio;
 
 	private float gameTime;
 
@@ -19,8 +19,6 @@ public class KillZone : MonoBehaviour {
 	{
         PlayerSpawningPoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-
-        respawnTime = PlayerSpawningPoint.respawnTimer;
     }
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -53,11 +51,13 @@ public class KillZone : MonoBehaviour {
         try
         {
             player = other.transform.gameObject;
-
-            Debug.Log("Player Destroyed");
-
+            
             Animator anim = player.GetComponent<Animator>();
             anim.Play("Explosion");
+
+            explosionAudio = player.GetComponent<AudioSource>();
+
+            explosionAudio.Play();
 
             AnimatorStateInfo currInfo = anim.GetCurrentAnimatorStateInfo(0);
 
@@ -72,5 +72,12 @@ public class KillZone : MonoBehaviour {
         {
             Debug.Log("Error destroying player. Error: " + e);
         }
+
+        Debug.Log("Player Destroyed");
+    }
+
+    private void TriggerDeathAnimation()
+    {
+
     }
 }

@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    // public AudioSource musicSource;
-    //public AudioClip music;
-    public bool muteAudio = true;
+    public Sound[] sounds;
 
     // Use this for initialization
     void Start ()
