@@ -52,16 +52,13 @@ public class KillZone : MonoBehaviour {
         {
             player = other.transform.gameObject;
             
+            //Play animation "Explosion" from animator.
             Animator anim = player.GetComponent<Animator>();
             anim.Play("Explosion");
 
-            explosionAudio = player.GetComponent<AudioSource>();
+            FindObjectOfType<AudioManager>().Play("PlayerDeath");
 
-            explosionAudio.Play();
-
-            AnimatorStateInfo currInfo = anim.GetCurrentAnimatorStateInfo(0);
-
-            float animationLength = currInfo.length;
+            float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
 
             Destroy(player, animationLength);
 

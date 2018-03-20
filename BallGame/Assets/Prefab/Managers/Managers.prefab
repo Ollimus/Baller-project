@@ -208,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1090761380734302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.66, y: -1.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4421778956819658}
@@ -311,8 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb83faf510fc4140a0a109e934dbcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  informationObject: {fileID: 0}
-  touchControls: {fileID: 0}
   testButtonFunctionability: 0
 --- !u!114 &114250143218867942
 MonoBehaviour:
@@ -378,10 +376,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
+  - name: Theme
+    clip: {fileID: 8300000, guid: 9715df852ab446f4e90ad55c3a2256d8, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: PlayerDeath
     clip: {fileID: 8300000, guid: 82a1d3dcb940b06428b200149b466e74, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  MuteAudio: 0
 --- !u!114 &114632939102035882
 MonoBehaviour:
   m_ObjectHideFlags: 1

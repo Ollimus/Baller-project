@@ -12,7 +12,7 @@ namespace Managers
     public class UIManager : MonoBehaviour
     {
         //Gameobjects to affected by UIManager
-        public GameObject informationObject;
+        private GameObject informationObject;
         private GameObject victoryMenu;
         private GameObject pauseMenu;
         private GameObject playerLives;
@@ -24,7 +24,7 @@ namespace Managers
         private Button button;
         private GameObject[] ButtonArray;
 
-        public GameObject touchControls;
+        private GameObject touchControls;
         public bool testButtonFunctionability = false;
 
         private Scene scene;
@@ -82,12 +82,6 @@ namespace Managers
                 }
             }
         }
-
-        /*private void Start()
-        {
-            if (scene.name != "00_MainMenu")
-                ActivateMenuButtons();
-        }*/
 
         /*
          *Done in Awake to make sure the player does not see the menus pop up.

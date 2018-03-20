@@ -12,6 +12,8 @@ public class GeneralManager : MonoBehaviour
 
     private void Awake()
     {
+        scene = SceneManager.GetActiveScene();
+
         if (scene.name == "00_MainMenu")
         {
             disableGameFunctions = true;

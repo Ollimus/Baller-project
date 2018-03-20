@@ -12,6 +12,7 @@ namespace Managers
     {
         Scene scene;
         int sceneNumber;
+        UIManager uiManager;
 
         /*IMPORTANT
          * -------
@@ -26,6 +27,11 @@ namespace Managers
 
         private void Start()
         {
+            uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+            if (uiManager == null)
+                Debug.LogWarning("UImanager not found. ");            
+
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
         }
@@ -127,8 +133,6 @@ namespace Managers
         {
             try
             {
-                UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-
                 uiManager.ResumeGame();
             }
 

@@ -37,7 +37,7 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
         Vector2 newPos = Vector2.zero;
 
         float delta = (int)(data.position.x - startPos.x);
-        delta = Mathf.Clamp(delta, -movementRange, movementRange);
+        delta = Mathf.Clamp(delta, -movementRange, movementRange);  //Clamps the value of delta between negative and positive movementRange
         newPos.x = delta;
 
         transform.position = new Vector2(startPos.x + newPos.x, startPos.y);        
