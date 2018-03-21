@@ -12,6 +12,7 @@ public class PlayerMovementController : MonoBehaviour {
     private float horizontalInput;
 
     private TouchControlJoystick joystick;
+    private AudioManager audioManager;
 
 	public Rigidbody2D rigi;
 
@@ -34,6 +35,7 @@ public class PlayerMovementController : MonoBehaviour {
     void Start ()
     {
         joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         rigi = GetComponent<Rigidbody2D>();
     }
 
@@ -98,7 +100,9 @@ public class PlayerMovementController : MonoBehaviour {
         {
             if (grounded)
             {
-                    rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
+                rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
+
+                audioManager.Play("JumpSound");
             }
         }
 

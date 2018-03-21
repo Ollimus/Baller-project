@@ -164,6 +164,8 @@ namespace Managers
             {
                 pauseMenu.SetActive(true);
 
+                ActivateMenuButtons();
+
                 PauseGame();
             }
 
@@ -179,8 +181,6 @@ namespace Managers
             try
             {
                 pauseMenu.SetActive(false);
-
-                ActivateMenuButtons();
 
                 UnPauseGame();
             }

@@ -95,27 +95,48 @@ public class PlayerSpawningPoint : MonoBehaviour
     /*
     *After respawn time has passed, spawn player at the latest unlocked checkpoint. 
     */
-    public void SpawnPlayerAtCheckpoint()
+    /*public void SpawnPlayerAtCheckpoint()
     {
         try
         {
-            if (Time.time >= playerDeathTime)
-            {
-                Debug.Log("Spawning Player");
+            StartCoroutine(StartDeathTimer());
 
-                doesPlayerExist = true;
+            Debug.Log("Spawning Player");
 
-                lastAddedObject = checkpointLocations.Count;
-                lastAddedObject -= 1;
+            doesPlayerExist = true;
 
-                checkpointLocation = checkpointLocations[lastAddedObject];
-                Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
-            }
+            lastAddedObject = checkpointLocations.Count;
+            lastAddedObject -= 1;
+
+            checkpointLocation = checkpointLocations[lastAddedObject];
+            Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
         }
 
         catch (Exception e)
         {
             Debug.Log("Error spawning the player. Error: " + e);
         }
+    }*/
+
+    public IEnumerator SpawnPlayerAtCheckpoint()
+    {
+            yield return new WaitForSecondsRealtime(respawnTimer);
+
+            Debug.Log("Spawning Player");
+
+            doesPlayerExist = true;
+
+            lastAddedObject = checkpointLocations.Count;
+            lastAddedObject -= 1;
+
+            checkpointLocation = checkpointLocations[lastAddedObject];
+            Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
+        
+    }
+
+    private IEnumerator StartDeathTimer()
+    {;
+        yield return new WaitForSeconds(respawnTimer);
+        Debug.Log(Time.time);
     }
 }

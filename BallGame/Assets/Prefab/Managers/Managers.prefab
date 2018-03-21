@@ -208,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1090761380734302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.66, y: -1.89, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4421778956819658}
@@ -378,17 +378,23 @@ MonoBehaviour:
   sounds:
   - name: Theme
     clip: {fileID: 8300000, guid: 9715df852ab446f4e90ad55c3a2256d8, type: 3}
-    volume: 0.1
+    volume: 0.4
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: PlayerDeath
     clip: {fileID: 8300000, guid: 82a1d3dcb940b06428b200149b466e74, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: JumpSound
+    clip: {fileID: 8300000, guid: 8a5b4adf6103886409fd2fc18930f3d4, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  MuteAudio: 0
+  muteAudio: 0
 --- !u!114 &114632939102035882
 MonoBehaviour:
   m_ObjectHideFlags: 1

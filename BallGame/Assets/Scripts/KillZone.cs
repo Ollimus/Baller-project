@@ -8,7 +8,7 @@ using Managers;
 public class KillZone : MonoBehaviour {
 
 	private GameObject player;
-	private PlayerSpawningPoint PlayerSpawningPoint;
+	private PlayerSpawningPoint playerSpawningpoint;
     private PlayerManager playerManager;
 
     private AudioSource explosionAudio;
@@ -17,7 +17,7 @@ public class KillZone : MonoBehaviour {
 
 	void Start()
 	{
-        PlayerSpawningPoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
+        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
     }
 
@@ -35,9 +35,9 @@ public class KillZone : MonoBehaviour {
     {
         try
         {
-            PlayerSpawningPoint.doesPlayerExist = false;
+            playerSpawningpoint.doesPlayerExist = false;
 
-            PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
+            playerSpawningpoint.playerDeathTime = (Time.time + playerSpawningpoint.respawnTimer);
         }
 
         catch(Exception e)
@@ -62,6 +62,8 @@ public class KillZone : MonoBehaviour {
 
             Destroy(player, animationLength);
 
+            StartCoroutine(playerSpawningpoint.SpawnPlayerAtCheckpoint());
+
             playerManager.ReduceLives();
         }
 
@@ -71,10 +73,5 @@ public class KillZone : MonoBehaviour {
         }
 
         Debug.Log("Player Destroyed");
-    }
-
-    private void TriggerDeathAnimation()
-    {
-
     }
 }
