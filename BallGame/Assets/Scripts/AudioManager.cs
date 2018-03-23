@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
     public bool muteAudio;
+    public List<Sound> themeNames = new List<Sound>();
+    private AudioSource activeSong;
 
     public static AudioManager AudioInstance;
 
@@ -38,12 +42,30 @@ public class AudioManager : MonoBehaviour
             sound.source.volume = sound.volume;
             sound.source.pitch = sound.pitch;
             sound.source.loop = sound.loop;
+
+            if (sound.isOST)
+                themeNames.Add(sound);
         }        
     }
 
     void Start()
     {
-        Play("Theme");
+       StartCoroutine(PlayRandomOST());
+    }
+
+    IEnumerator PlayRandomOST()
+    {
+        Sound song = themeNames[UnityEngine.Random.Range(0, themeNames.Count)];
+
+        string songName = song.name;
+
+        Debug.Log("Playing song: " + songName + " - " + song.clip.name);
+
+        Play(songName);
+
+        yield return new WaitForSeconds(song.clip.length);
+
+        StartCoroutine(PlayRandomOST());
     }
 
     public void Play(string name)

@@ -8,12 +8,13 @@ public class Sound{
 
     public AudioClip clip;
 
-    [Range(0f, 1f)]
+    [Range(0f, 2f)]
     public float volume;
     [Range(0f, 1f)]
     public float pitch;
 
     public bool loop;
+    public bool isOST;
 
     [HideInInspector]
     public AudioSource source;

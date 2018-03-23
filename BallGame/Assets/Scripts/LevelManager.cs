@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
-using Managers;
 
 namespace Managers
 {
-    public class LevelManager : MonoBehaviour
+    public partial class LevelManager : MonoBehaviour
     {
         Scene scene;
         int sceneNumber;
@@ -24,6 +23,22 @@ namespace Managers
         string mainMenuBtnName = "btnExitMainMenu";
         string resumeGameBtnName = "btnResume";
 
+        /*private void Awake()
+        {
+            string test = "btnLevel13232";
+
+            for (int i = 0; i < test.Length; i++)
+            {
+                if (Char.IsDigit(test[i]))
+                    Debug.Log(test[i]);
+            }
+        }*/
+
+        private void Awake()
+        {
+            if (SceneManager.GetActiveScene().name == "00_MainMenu")
+                ActivateMainMenuLevels();
+        }
 
         private void Start()
         {
@@ -74,12 +89,39 @@ namespace Managers
             }
         }
 
+        public void PauseGame()
+        {
+            Time.timeScale = 0f;
+        }
+
         //Makes sure game has been unpaused when loaded into another level.
-        private void UnPauseGame()
+        public void UnPauseGame()
         {
             Time.timeScale = 1f;
         }
 
+
+        private void ActivateMainMenuLevels()
+        {
+            GameObject[] ButtonArray = GameObject.FindGameObjectsWithTag("LevelButton");
+
+            foreach (GameObject gameobject in ButtonArray)
+            {
+                Button button = gameobject.GetComponent<Button>();
+
+                string name = button.name;
+
+                for (int i = 0; i < name.Length; i++)
+                {
+                    if (Char.IsDigit(name[i]))
+                    {
+                        string levelName = "01_Level" + name[i];
+
+                        button.onClick.AddListener(() => ChangeScene(levelName));
+                    }
+                }
+            }
+        }
 
         //Change to specific scene using level name as variable
         public void ChangeScene(string levelName)

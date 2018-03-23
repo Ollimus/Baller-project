@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using Managers;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
@@ -89,11 +88,11 @@ namespace Managers
          *Done in Awake to make sure the player does not see the menus pop up.
          *Menus need to be activated, because non-activated gameobjects can't be found.
         */
-        private void ActivateMenuButtons()
+        public void ActivateMenuButtons(string button)
         {
             try
             {
-                ButtonArray = GameObject.FindGameObjectsWithTag("Button");
+                ButtonArray = GameObject.FindGameObjectsWithTag(button);
 
                 levelManager.InitiateButtons(ButtonArray);
             }
@@ -118,7 +117,7 @@ namespace Managers
 
             if (testButtonFunctionability == true && (victoryMenu || defeatMenu || pauseMenu))
             {
-                ActivateMenuButtons();
+                ActivateMenuButtons("Button");
                 testButtonFunctionability = false;
             }
         }
@@ -132,7 +131,7 @@ namespace Managers
                 completionTimeText.text = completionTime;
                 victoryMenu.SetActive(true);
 
-                ActivateMenuButtons();
+                ActivateMenuButtons("Button");
             }
 
             catch (Exception e)
@@ -146,7 +145,7 @@ namespace Managers
             try
             {
                 defeatMenu.SetActive(true);
-                ActivateMenuButtons();
+                ActivateMenuButtons("Button");
 
                 Time.timeScale = 0f;
             }
@@ -164,9 +163,9 @@ namespace Managers
             {
                 pauseMenu.SetActive(true);
 
-                ActivateMenuButtons();
+                ActivateMenuButtons("Button");
 
-                PauseGame();
+                levelManager.PauseGame();
             }
 
             catch (Exception e)
@@ -182,7 +181,7 @@ namespace Managers
             {
                 pauseMenu.SetActive(false);
 
-                UnPauseGame();
+                levelManager.UnPauseGame();
             }
 
             catch (Exception e)
@@ -244,19 +243,6 @@ namespace Managers
             String placeholderText = "Functionality under construction!";
 
             ShowInformationText(placeholderText);
-        }
-
-        //Make for clarity sake. Pauses and unpauses game time.
-        private void PauseGame()
-        {
-            audioManager.MuteAudio();
-            Time.timeScale = 0f;
-        }
-
-        private void UnPauseGame()
-        {
-            audioManager.UnmuteAudio();
-            Time.timeScale = 1f;
         }
     }
 }

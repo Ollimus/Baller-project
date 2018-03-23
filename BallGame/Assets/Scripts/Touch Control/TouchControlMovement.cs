@@ -1,32 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TouchControlMovement : MonoBehaviour, IPointerDownHandler
 {
-	
-	PlayerMovementController player;
-
-	void Start()
-	{
-		/*GameObject playerObject = GameObject.FindGameObjectWithTag ("Player");
-		player = playerObject.GetComponent<PlayerMovementController>();*/
-	}
-
-	void Update()
-	{
-		GameObject playerObject = GameObject.FindGameObjectWithTag ("Player");
-
-		if (playerObject != null)
-		{
-			player = playerObject.GetComponent<PlayerMovementController>();
-		}
-	}
+    PlayerMovementController player;
 
     public virtual void OnPointerDown(PointerEventData data)
     {
-        player.Jump();
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
+        }            
+
+        player.Jump();            
     }
 
     public void TouchControlJump()

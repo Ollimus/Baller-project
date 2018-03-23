@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public class PlayerMovementController : MonoBehaviour {
@@ -79,7 +77,7 @@ public class PlayerMovementController : MonoBehaviour {
 	/*
 	 *Player turns and moves to right.
 	*/
-	public void HorizontalMovement(float horizontalInput)
+	public virtual void HorizontalMovement(float horizontalInput)
 	{
         if (horizontalInput > 0 && !rightWalled)
         {
