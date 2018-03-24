@@ -425,7 +425,7 @@ MonoBehaviour:
     isOST: 1
     source: {fileID: 0}
   muteAudio: 0
-  themeNames: []
+  OSTList: []
 --- !u!114 &114632939102035882
 MonoBehaviour:
   m_ObjectHideFlags: 1

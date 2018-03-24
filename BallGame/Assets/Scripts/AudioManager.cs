@@ -8,8 +8,10 @@ public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
     public bool muteAudio;
-    public List<Sound> themeNames = new List<Sound>();
-    private AudioSource activeSong;
+    public List<Sound> OSTList = new List<Sound>();
+    private List<Sound> playedOSTs = new List<Sound>();
+    private string activeSongName;
+    private Sound song;
 
     public static AudioManager AudioInstance;
 
@@ -44,7 +46,7 @@ public class AudioManager : MonoBehaviour
             sound.source.loop = sound.loop;
 
             if (sound.isOST)
-                themeNames.Add(sound);
+                OSTList.Add(sound);
         }        
     }
 
@@ -53,18 +55,31 @@ public class AudioManager : MonoBehaviour
        StartCoroutine(PlayRandomOST());
     }
 
+    /*
+     *Recursive function that constantly plays music. 
+    */
     IEnumerator PlayRandomOST()
     {
-        Sound song = themeNames[UnityEngine.Random.Range(0, themeNames.Count)];
+        //After the OST is extinguished, replace it with the full list.
+        if (OSTList.Count == 0)
+        {
+            Debug.Log("Shuffleing list.");
+            OSTList = playedOSTs;
+        }
 
-        string songName = song.name;
+        int randomSongIndex = UnityEngine.Random.Range(0, (OSTList.Count) - 1);
+        
+        song = OSTList[randomSongIndex];       
+        activeSongName = song.name;
 
-        Debug.Log("Playing song: " + songName + " - " + song.clip.name);
+        Debug.Log("Playing song: " + activeSongName + " - " + song.clip.name);
+        Play(activeSongName);
 
-        Play(songName);
+        //Adds played song into played songs list and then removes it, so it does not play again until all songs have been gone through
+        playedOSTs.Add(OSTList[randomSongIndex]);
+        OSTList.RemoveAt(randomSongIndex);
 
         yield return new WaitForSeconds(song.clip.length);
-
         StartCoroutine(PlayRandomOST());
     }
 
