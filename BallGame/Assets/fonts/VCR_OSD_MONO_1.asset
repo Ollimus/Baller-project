@@ -915,9 +915,19 @@ MonoBehaviour:
   m_kerningInfo:
     kerningPairs: []
   m_kerningPair:
-    AscII_Left: 0
-    AscII_Right: 0
-    XadvanceOffset: 0
+    m_FirstGlyph: 0
+    m_FirstGlyphAdjustments:
+      xPlacement: 0
+      yPlacement: 0
+      xAdvance: 0
+      yAdvance: 0
+    m_SecondGlyph: 0
+    m_SecondGlyphAdjustments:
+      xPlacement: 0
+      yPlacement: 0
+      xAdvance: 0
+      yAdvance: 0
+    xOffset: 0
   fallbackFontAssets: []
   fontCreationSettings:
     fontSourcePath: 
@@ -967,9 +977,10 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: VCR_OSD_MONO_1 Material
   m_Shader: {fileID: 4800000, guid: dca26082f9cb439469295791d9f76fe5, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: UNDERLAY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -1026,7 +1037,7 @@ Material:
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8333333
     - _ScaleRatioB: 0.5331365
-    - _ScaleRatioC: 0.35957694
+    - _ScaleRatioC: 0.35729992
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -1039,8 +1050,8 @@ Material:
     - _TextureHeight: 512
     - _TextureWidth: 512
     - _UnderlayDilate: 0.895
-    - _UnderlayOffsetX: -0.988
-    - _UnderlayOffsetY: -0.973
+    - _UnderlayOffsetX: 1
+    - _UnderlayOffsetY: -1
     - _UnderlaySoftness: 0
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
