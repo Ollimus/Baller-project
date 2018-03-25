@@ -1,38 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TouchControlBehavior : MonoBehaviour {
 
     public bool debuggingMode = true;
 
-	// Use this for initialization
-	void Start ()
+    // checks whether user is in mainmenu and disables touch controls if this is the same.
+    private void Awake()
     {
-        //Checks whether scene has touchcontrols set up.
-        /*if (touchControls != null)
-        {
-            //Receives and sets up information about user's operating system.
-            operatingSystemCheck = SystemInfo.operatingSystem;
+        string OS = SystemInfo.operatingSystem;
 
-            //If user runs the game on windows/mac, disables touch controls. Otherwise activates them (for Android/IOS).
-            if (operatingSystemCheck.StartsWith("Windows") || operatingSystemCheck.StartsWith("Mac"))
-            {
-                touchControls.SetActive(false);
-            }
-
-            else
-            {
-                touchControls.SetActive(true);
-            }
-        }*/
+        if (SceneManager.GetActiveScene().name == "00_MainMenu" || OS.Contains("Windows") || OS.Contains("Linux") || OS.Contains("Mac"))
+            FindObjectOfType<GeneralManager>().DisableManager(gameObject);
     }
 
-    // Update is called once per frame
-    void Update ()
+    private void Start()
     {
-		
-	}
-
-
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.LinuxPlayer)
+            FindObjectOfType<GeneralManager>().DisableManager(gameObject);
+    }    
 }

@@ -102,6 +102,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4421778956819658}
+  - component: {fileID: 114417389328099228}
   m_Layer: 0
   m_Name: TouchControlManager
   m_TagString: TouchController
@@ -208,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1090761380734302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.66, y: -1.89, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4421778956819658}
@@ -311,8 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb83faf510fc4140a0a109e934dbcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  informationObject: {fileID: 0}
-  touchControls: {fileID: 0}
   testButtonFunctionability: 0
 --- !u!114 &114250143218867942
 MonoBehaviour:
@@ -325,6 +324,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e5288a20a4374f9045d5330858730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableGameFunctions: 0
+--- !u!114 &114417389328099228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1493946919772296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562a85416b2a930438fbdad58108b08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debuggingMode: 0
 --- !u!114 &114468838923022228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -376,7 +388,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed71c372783fcf44e825b7dc6ba06f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muteAudio: 1
+  sounds:
+  - name: Theme
+    clip: {fileID: 8300000, guid: 9715df852ab446f4e90ad55c3a2256d8, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    isOST: 1
+    source: {fileID: 0}
+  - name: PlayerDeath
+    clip: {fileID: 8300000, guid: 82a1d3dcb940b06428b200149b466e74, type: 3}
+    volume: 2
+    pitch: 1
+    loop: 0
+    isOST: 0
+    source: {fileID: 0}
+  - name: JumpSound
+    clip: {fileID: 8300000, guid: 8a5b4adf6103886409fd2fc18930f3d4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    isOST: 0
+    source: {fileID: 0}
+  - name: Theme 2
+    clip: {fileID: 8300000, guid: 42966529e998dc04b92fa173e26cff62, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    isOST: 1
+    source: {fileID: 0}
+  - name: Theme 3
+    clip: {fileID: 8300000, guid: e104a89b0783f6441afea5c22e9196a1, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    isOST: 1
+    source: {fileID: 0}
+  muteAudio: 0
+  OSTList: []
 --- !u!114 &114632939102035882
 MonoBehaviour:
   m_ObjectHideFlags: 1

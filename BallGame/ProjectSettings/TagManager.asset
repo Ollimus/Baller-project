@@ -12,6 +12,8 @@ TagManager:
   - Button
   - TouchButtons
   - Menu
+  - LevelButton
+  - UnfinishedButton
   layers:
   - Default
   - TransparentFX

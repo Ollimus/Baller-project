@@ -8,19 +8,17 @@ using Managers;
 public class KillZone : MonoBehaviour {
 
 	private GameObject player;
-	private PlayerSpawningPoint PlayerSpawningPoint;
+	private PlayerSpawningPoint playerSpawningpoint;
     private PlayerManager playerManager;
 
-    private float respawnTime;
+    private AudioSource explosionAudio;
 
 	private float gameTime;
 
 	void Start()
 	{
-        PlayerSpawningPoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
+        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-
-        respawnTime = PlayerSpawningPoint.respawnTimer;
     }
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -37,9 +35,9 @@ public class KillZone : MonoBehaviour {
     {
         try
         {
-            PlayerSpawningPoint.doesPlayerExist = false;
+            playerSpawningpoint.doesPlayerExist = false;
 
-            PlayerSpawningPoint.playerDeathTime = (Time.time + PlayerSpawningPoint.respawnTimer);
+            playerSpawningpoint.playerDeathTime = (Time.time + playerSpawningpoint.respawnTimer);
         }
 
         catch(Exception e)
@@ -53,17 +51,18 @@ public class KillZone : MonoBehaviour {
         try
         {
             player = other.transform.gameObject;
-
-            Debug.Log("Player Destroyed");
-
+            
+            //Play animation "Explosion" from animator.
             Animator anim = player.GetComponent<Animator>();
             anim.Play("Explosion");
 
-            AnimatorStateInfo currInfo = anim.GetCurrentAnimatorStateInfo(0);
+            FindObjectOfType<AudioManager>().Play("PlayerDeath");
 
-            float animationLength = currInfo.length;
+            float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
 
             Destroy(player, animationLength);
+
+            StartCoroutine(playerSpawningpoint.SpawnPlayerAtCheckpoint());
 
             playerManager.ReduceLives();
         }
@@ -72,5 +71,7 @@ public class KillZone : MonoBehaviour {
         {
             Debug.Log("Error destroying player. Error: " + e);
         }
+
+        Debug.Log("Player Destroyed");
     }
 }

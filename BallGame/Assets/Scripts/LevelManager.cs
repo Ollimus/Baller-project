@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
-using Managers;
 
 namespace Managers
 {
-    public class LevelManager : MonoBehaviour
+    public partial class LevelManager : MonoBehaviour
     {
         Scene scene;
         int sceneNumber;
+        UIManager uiManager;
 
         /*IMPORTANT
          * -------
@@ -23,9 +23,30 @@ namespace Managers
         string mainMenuBtnName = "btnExitMainMenu";
         string resumeGameBtnName = "btnResume";
 
+        /*private void Awake()
+        {
+            string test = "btnLevel13232";
+
+            for (int i = 0; i < test.Length; i++)
+            {
+                if (Char.IsDigit(test[i]))
+                    Debug.Log(test[i]);
+            }
+        }*/
+
+        private void Awake()
+        {
+            if (SceneManager.GetActiveScene().name == "00_MainMenu")
+                ActivateMainMenuLevels();
+        }
 
         private void Start()
         {
+            uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+            if (uiManager == null)
+                Debug.LogWarning("UImanager not found. ");            
+
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
         }
@@ -68,12 +89,39 @@ namespace Managers
             }
         }
 
+        public void PauseGame()
+        {
+            Time.timeScale = 0f;
+        }
+
         //Makes sure game has been unpaused when loaded into another level.
-        private void UnPauseGame()
+        public void UnPauseGame()
         {
             Time.timeScale = 1f;
         }
 
+
+        private void ActivateMainMenuLevels()
+        {
+            GameObject[] ButtonArray = GameObject.FindGameObjectsWithTag("LevelButton");
+
+            foreach (GameObject gameobject in ButtonArray)
+            {
+                Button button = gameobject.GetComponent<Button>();
+
+                string name = button.name;
+
+                for (int i = 0; i < name.Length; i++)
+                {
+                    if (Char.IsDigit(name[i]))
+                    {
+                        string levelName = "01_Level" + name[i];
+
+                        button.onClick.AddListener(() => ChangeScene(levelName));
+                    }
+                }
+            }
+        }
 
         //Change to specific scene using level name as variable
         public void ChangeScene(string levelName)
@@ -88,22 +136,20 @@ namespace Managers
             {
                 Debug.Log("Error changing level: " + e);
             }
-
-
         }
 
         //Automatically go to the next scene when "Next level" -button is pressed.
         //Takes current level index in Start (ie. Level 1 = index 1) and adds 1 to that (ie. Level 2 is index 2).
         public void NextLevel()
         {
-            try
+            if (Application.CanStreamedLevelBeLoaded(scene.buildIndex + 1))
             {
                 SceneManager.LoadScene(scene.buildIndex + 1);
             }
 
-            catch (Exception e)
+            else
             {
-                Debug.Log("Error changing to the next level. Returning to main menu. Error: " + e);
+                Debug.Log("Error changing to the next level. Returning to main menu.");
                 ChangeScene("00_MainMenu");
             }
         }
@@ -127,8 +173,6 @@ namespace Managers
         {
             try
             {
-                UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-
                 uiManager.ResumeGame();
             }
 

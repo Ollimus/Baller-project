@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System;
 using Managers;
@@ -96,27 +95,25 @@ public class PlayerSpawningPoint : MonoBehaviour
     /*
     *After respawn time has passed, spawn player at the latest unlocked checkpoint. 
     */
-    public void SpawnPlayerAtCheckpoint()
+
+    public IEnumerator SpawnPlayerAtCheckpoint()
     {
-        try
-        {
-            if (Time.time >= playerDeathTime)
-            {
-                Debug.Log("Spawning Player");
+            yield return new WaitForSecondsRealtime(respawnTimer);
 
-                doesPlayerExist = true;
+            Debug.Log("Spawning Player");
 
-                lastAddedObject = checkpointLocations.Count;
-                lastAddedObject -= 1;
+            doesPlayerExist = true;
 
-                checkpointLocation = checkpointLocations[lastAddedObject];
-                Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
-            }
-        }
+            lastAddedObject = checkpointLocations.Count;
+            lastAddedObject -= 1;
 
-        catch (Exception e)
-        {
-            Debug.Log("Error spawning the player. Error: " + e);
-        }
+            checkpointLocation = checkpointLocations[lastAddedObject];
+            Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);        
+    }
+
+    private IEnumerator StartDeathTimer()
+    {;
+        yield return new WaitForSeconds(respawnTimer);
+        Debug.Log(Time.time);
     }
 }

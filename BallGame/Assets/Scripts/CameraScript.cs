@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 
-    //LateUpdate updates 
+    //LateUpdate updates at the end of the frame instead of as soon as possible.
 	void LateUpdate ()
 	{
 		if (player == null)
