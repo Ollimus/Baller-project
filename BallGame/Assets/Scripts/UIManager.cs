@@ -84,6 +84,18 @@ namespace Managers
             }
         }
 
+        private void Start()
+        {
+            GameObject[] unFinishedButton = GameObject.FindGameObjectsWithTag("UnfinishedButton");
+
+            foreach (GameObject obj in unFinishedButton)
+            {
+                Button button = obj.GetComponent<Button>();
+
+                button.onClick.AddListener(() => PlaceHolderText());
+            }
+        }
+
         /*
          *Done in Awake to make sure the player does not see the menus pop up.
          *Menus need to be activated, because non-activated gameobjects can't be found.
@@ -165,6 +177,8 @@ namespace Managers
 
                 ActivateMenuButtons("Button");
 
+                audioManager.MuteAudio();
+
                 levelManager.PauseGame();
             }
 
@@ -180,6 +194,8 @@ namespace Managers
             try
             {
                 pauseMenu.SetActive(false);
+
+                audioManager.UnmuteAudio();
 
                 levelManager.UnPauseGame();
             }

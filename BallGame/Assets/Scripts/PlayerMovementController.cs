@@ -32,7 +32,9 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Start ()
     {
-        joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
+        if (GameObject.FindGameObjectWithTag("TouchController") != null)
+            joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
+
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         rigi = GetComponent<Rigidbody2D>();
     }

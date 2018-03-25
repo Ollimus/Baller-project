@@ -136,22 +136,20 @@ namespace Managers
             {
                 Debug.Log("Error changing level: " + e);
             }
-
-
         }
 
         //Automatically go to the next scene when "Next level" -button is pressed.
         //Takes current level index in Start (ie. Level 1 = index 1) and adds 1 to that (ie. Level 2 is index 2).
         public void NextLevel()
         {
-            try
+            if (Application.CanStreamedLevelBeLoaded(scene.buildIndex + 1))
             {
                 SceneManager.LoadScene(scene.buildIndex + 1);
             }
 
-            catch (Exception e)
+            else
             {
-                Debug.Log("Error changing to the next level. Returning to main menu. Error: " + e);
+                Debug.Log("Error changing to the next level. Returning to main menu.");
                 ChangeScene("00_MainMenu");
             }
         }
