@@ -9,6 +9,7 @@ public class PlayerMovementController : MonoBehaviour {
     private float horizontalMovementSpeed = 1; //NOTE: DOES NOT USE AXIS INPUT, BECAUSE FLAT VALUE GIVES INCREASED/SMOOTHER MOBILITY WHILE JUMPING.
     private float horizontalInput;
 
+    private GameObject TouchController;
     private TouchControlJoystick joystick;
     private AudioManager audioManager;
 
@@ -30,18 +31,27 @@ public class PlayerMovementController : MonoBehaviour {
 
     public bool canPlayerMove = true;
 
+    private void Awake()
+    {
+        TouchController = GameObject.FindGameObjectWithTag("TouchController");
+    }
+
     void Start ()
     {
-        if (GameObject.FindGameObjectWithTag("TouchController") != null)
-            joystick = GameObject.FindGameObjectWithTag("TouchButtons").GetComponentInChildren<TouchControlJoystick>();
+        if (TouchController != null)
+            joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
 
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         rigi = GetComponent<Rigidbody2D>();
     }
-
-
+    
     void Update()
     {
+        //If TouchController is activated later for debugigng purposes. Not to be used otherwise.
+        if (TouchController.activeInHierarchy == true && joystick == null)
+            joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
+
+
         if (canPlayerMove)
         {
             CreateGroundChecks();
@@ -79,7 +89,7 @@ public class PlayerMovementController : MonoBehaviour {
 	/*
 	 *Player turns and moves to right.
 	*/
-	public virtual void HorizontalMovement(float horizontalInput)
+	public void HorizontalMovement(float horizontalInput)
 	{
         if (horizontalInput > 0 && !rightWalled)
         {
