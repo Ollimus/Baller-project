@@ -42,7 +42,7 @@ namespace Managers
             {
                 levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
                 informationObject = GameObject.Find("InformationText");
-                touchControls = GameObject.FindGameObjectWithTag("TouchButtons");
+                touchControls = GameObject.FindGameObjectWithTag("TouchController");
                 audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
             }
 

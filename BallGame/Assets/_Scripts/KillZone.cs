@@ -71,7 +71,5 @@ public class KillZone : MonoBehaviour {
         {
             Debug.Log("Error destroying player. Error: " + e);
         }
-
-        Debug.Log("Player Destroyed");
     }
 }

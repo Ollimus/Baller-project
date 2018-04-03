@@ -1932,20 +1932,15 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2022470843}
-    - target: {fileID: 114095513296710904, guid: 11192f1fd45f0cd43b016e043ac314be,
+    - target: {fileID: 114552793541669992, guid: 11192f1fd45f0cd43b016e043ac314be,
         type: 2}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.46666667
+      propertyPath: m_havePropertiesChanged
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114095513296710904, guid: 11192f1fd45f0cd43b016e043ac314be,
+    - target: {fileID: 114552793541669992, guid: 11192f1fd45f0cd43b016e043ac314be,
         type: 2}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.72156864
-      objectReference: {fileID: 0}
-    - target: {fileID: 114095513296710904, guid: 11192f1fd45f0cd43b016e043ac314be,
-        type: 2}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.75686276
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11192f1fd45f0cd43b016e043ac314be, type: 2}

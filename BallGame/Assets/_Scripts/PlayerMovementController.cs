@@ -31,24 +31,25 @@ public class PlayerMovementController : MonoBehaviour {
 
     public bool canPlayerMove = true;
 
-    private void Awake()
-    {
-        TouchController = GameObject.FindGameObjectWithTag("TouchController");
-    }
-
     void Start ()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        rigi = GetComponent<Rigidbody2D>();
+
+        TouchController = GameObject.FindGameObjectWithTag("TouchController");
+
         if (TouchController != null)
             joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
 
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        rigi = GetComponent<Rigidbody2D>();
     }
     
     void Update()
     {
-        //If TouchController is activated later for debugigng purposes. Not to be used otherwise.
-        if (TouchController.activeInHierarchy == true && joystick == null)
+        //Used for debugging
+        if (TouchController == null)
+            TouchController = GameObject.FindGameObjectWithTag("TouchController");
+
+        else if (joystick == null && TouchController.activeInHierarchy)
             joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
 
 
@@ -91,6 +92,9 @@ public class PlayerMovementController : MonoBehaviour {
 	*/
 	public void HorizontalMovement(float horizontalInput)
 	{
+        if (horizontalInput == 0)
+            rigi.velocity = new Vector2(0, rigi.velocity.y);
+
         if (horizontalInput > 0 && !rightWalled)
         {
             rigi.velocity = new Vector2(horizontalInput * baseMovementSpeed, rigi.velocity.y);
