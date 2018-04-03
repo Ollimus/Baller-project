@@ -87,8 +87,6 @@ public class PlayerSpawningPoint : MonoBehaviour
     //Receives transform location from CheckPoint script and adds it into the list of checkpoints.
 	public void AddCheckpoint(Transform location)
 	{
-		Debug.Log ("Adding a new checkpoint location");
-
 		checkpointLocations.Add(location);
 	}
 
@@ -100,8 +98,6 @@ public class PlayerSpawningPoint : MonoBehaviour
     {
             yield return new WaitForSecondsRealtime(respawnTimer);
 
-            Debug.Log("Spawning Player");
-
             doesPlayerExist = true;
 
             lastAddedObject = checkpointLocations.Count;
@@ -109,11 +105,5 @@ public class PlayerSpawningPoint : MonoBehaviour
 
             checkpointLocation = checkpointLocations[lastAddedObject];
             Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);        
-    }
-
-    private IEnumerator StartDeathTimer()
-    {;
-        yield return new WaitForSeconds(respawnTimer);
-        Debug.Log(Time.time);
     }
 }

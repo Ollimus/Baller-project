@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class AudioManager : MonoBehaviour
     private List<Sound> playedOSTs = new List<Sound>();
     private string activeSongName;
     private Sound song;
+    private float textFadeTime = 10f;
+
+    private TextMeshProUGUI songUIText;
 
     public static AudioManager AudioInstance;
 
@@ -52,7 +56,22 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-       StartCoroutine(PlayRandomOST());
+        songUIText = GameObject.Find("SongNameText").GetComponent<TextMeshProUGUI>();
+
+        if (songUIText == null)
+        {
+            Debug.LogError("Scene has no place for Song Name text!");
+        }
+
+        try
+        {
+            StartCoroutine(PlayRandomOST());
+        }
+
+        catch (Exception e)
+        {
+            Debug.LogError("Error playing random OSTs. Error: " +e);
+        }
     }
 
     /*
@@ -68,12 +87,13 @@ public class AudioManager : MonoBehaviour
         }
 
         int randomSongIndex = UnityEngine.Random.Range(0, (OSTList.Count) - 1);
-        
-        song = OSTList[randomSongIndex];       
+
+        song = OSTList[randomSongIndex];
         activeSongName = song.name;
 
-        Debug.Log("Playing song: " + activeSongName + " - " + song.clip.name);
         Play(activeSongName);
+
+        StartCoroutine(ShowCurrentSong(song));
 
         //Adds played song into played songs list and then removes it, so it does not play again until all songs have been gone through
         playedOSTs.Add(OSTList[randomSongIndex]);
@@ -81,6 +101,21 @@ public class AudioManager : MonoBehaviour
 
         yield return new WaitForSeconds(song.clip.length);
         StartCoroutine(PlayRandomOST());
+    }
+
+    IEnumerator ShowCurrentSong(Sound song)
+    {
+        songUIText.alpha = 1;
+
+        songUIText.text = "Song: \n" + song.clip.name;
+
+        yield return new WaitForSeconds(textFadeTime);
+
+        while (songUIText.alpha < 0)
+        {
+            Debug.Log(songUIText.alpha);
+            songUIText.alpha -= (0.01f * Time.deltaTime);
+        }
     }
 
     public void Play(string name)
