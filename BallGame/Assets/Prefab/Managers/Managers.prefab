@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb83faf510fc4140a0a109e934dbcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
   testButtonFunctionability: 0
 --- !u!114 &114250143218867942
 MonoBehaviour:
@@ -380,7 +381,7 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     loop: 0
-    isOST: 1
+    isOST: 0
     source: {fileID: 0}
   - name: PlayerDeath
     clip: {fileID: 8300000, guid: 82a1d3dcb940b06428b200149b466e74, type: 3}
@@ -401,7 +402,7 @@ MonoBehaviour:
     volume: 0.1
     pitch: 1
     loop: 0
-    isOST: 1
+    isOST: 0
     source: {fileID: 0}
   - name: Theme 3
     clip: {fileID: 8300000, guid: e104a89b0783f6441afea5c22e9196a1, type: 3}
@@ -525,7 +526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -200, y: 150}
+  m_AnchoredPosition: {x: -150, y: 150}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224812330430289008
@@ -543,6 +544,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 200, y: 150}
+  m_AnchoredPosition: {x: 150, y: 150}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}

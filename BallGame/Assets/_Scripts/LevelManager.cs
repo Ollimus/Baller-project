@@ -12,6 +12,7 @@ namespace Managers
         Scene scene;
         int sceneNumber;
         UIManager uiManager;
+        AudioManager audioManager;
 
         /*IMPORTANT
          * -------
@@ -23,16 +24,6 @@ namespace Managers
         string mainMenuBtnName = "btnExitMainMenu";
         string resumeGameBtnName = "btnResume";
 
-        /*private void Awake()
-        {
-            string test = "btnLevel13232";
-
-            for (int i = 0; i < test.Length; i++)
-            {
-                if (Char.IsDigit(test[i]))
-                    Debug.Log(test[i]);
-            }
-        }*/
 
         private void Awake()
         {
@@ -42,10 +33,17 @@ namespace Managers
 
         private void Start()
         {
-            uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+            try
+            {
+                uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
-            if (uiManager == null)
-                Debug.LogWarning("UImanager not found. ");            
+                audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+            }
+
+            catch (Exception e)
+            {
+                Debug.LogError("Error setting up managers for LevelManager. Error: " + e);
+            }         
 
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
@@ -128,13 +126,17 @@ namespace Managers
         {
             try
             {
-                Debug.Log("Changing level to: " + levelName);
+                /*if (uiManager.pauseMenu != null && uiManager.pauseMenu.activeInHierarchy)
+                    audioManager.UnmuteAudio();*/
+
+                audioManager.UnmuteAudio();
+
                 SceneManager.LoadScene(levelName);
             }
 
             catch (Exception e)
             {
-                Debug.Log("Error changing level: " + e);
+                Debug.LogError("Error changing level: " + e);
             }
         }
 

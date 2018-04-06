@@ -63,11 +63,19 @@ public class PlayerMovementController : MonoBehaviour {
             else if (Input.GetKey(KeyCode.RightArrow))
                 HorizontalMovement(horizontalMovementSpeed);
 
-            else if (joystick != null && joystick.isJoystickActive)
+            else if (joystick != null)
             {
-                horizontalInput = joystick.HorizontalJoystick();
+                if (joystick.isJoystickActive)
+                {
+                    horizontalInput = joystick.HorizontalJoystick();
 
-                HorizontalMovement(horizontalInput);
+                    HorizontalMovement(horizontalInput);
+                }
+
+                else if (joystick.isJoystickActive == false)
+                {
+                    HorizontalMovement(0);
+                }
             }
 
             if (Input.GetKey(KeyCode.DownArrow))

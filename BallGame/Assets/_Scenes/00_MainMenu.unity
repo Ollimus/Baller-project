@@ -168,12 +168,12 @@ Prefab:
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 400
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
@@ -1430,6 +1430,21 @@ Prefab:
     - target: {fileID: 4273909443859298, guid: c368c9edc0e893b4abc1438bea25b7dd, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627922704690346, guid: c368c9edc0e893b4abc1438bea25b7dd,
+        type: 2}
+      propertyPath: sounds.Array.data[3].isOST
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627922704690346, guid: c368c9edc0e893b4abc1438bea25b7dd,
+        type: 2}
+      propertyPath: sounds.Array.data[2].isOST
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627922704690346, guid: c368c9edc0e893b4abc1438bea25b7dd,
+        type: 2}
+      propertyPath: sounds.Array.data[0].isOST
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c368c9edc0e893b4abc1438bea25b7dd, type: 2}

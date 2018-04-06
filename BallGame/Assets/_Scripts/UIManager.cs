@@ -13,7 +13,8 @@ namespace Managers
         //Gameobjects to affected by UIManager
         private GameObject informationObject;
         private GameObject victoryMenu;
-        private GameObject pauseMenu;
+        [HideInInspector]
+        public GameObject pauseMenu;
         private GameObject playerLives;
         private GameObject defeatMenu;
 
@@ -104,7 +105,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error setting up gameplay elements. Error: " + e);
+                Debug.LogError("Error setting up gameplay elements. Error: " + e);
             }
         }
 
@@ -136,7 +137,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error activating/deactiving menus and fetching buttons. Error: " + e);
+                Debug.LogError("Error activating/deactiving menus and fetching buttons. Error: " + e);
             }
         }
 
@@ -154,7 +155,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                 Debug.Log("Error creating victory menu for player. Error: " + e);
+                 Debug.LogError("Error creating victory menu for player. Error: " + e);
             }
         }
 
@@ -170,7 +171,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error starting defeat menu. Error: " + e);
+                Debug.LogError("Error starting defeat menu. Error: " + e);
             }
         }
 
@@ -190,7 +191,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error pausing game. Error: " + e);
+                Debug.LogError("Error pausing game. Error: " + e);
             }
         }
 
@@ -227,7 +228,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error with inputting text to player. Error: " + e);
+                Debug.LogError("Error with inputting text to player. Error: " + e);
             }
         }
 
@@ -241,7 +242,8 @@ namespace Managers
         //Disables touch controls, mainly used to be called when game is used on android/ios when the game ends and activates end-game screen or player opens menu.
         public void DisableTouchControl()
         {
-            touchControls.SetActive(false);
+            if (touchControls != null)
+                touchControls.SetActive(false);
         }
 
         //Finds a sprite tagged PlayerLives and deletes it.
@@ -255,7 +257,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                Debug.Log("Error removing a player life from UI. Error: " + e);
+                Debug.LogError("Error removing a player life from UI. Error: " + e);
             }
         }
 
