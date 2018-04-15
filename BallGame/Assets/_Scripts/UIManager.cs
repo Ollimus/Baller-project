@@ -12,11 +12,12 @@ namespace Managers
     {
         //Gameobjects to affected by UIManager
         private GameObject informationObject;
-        private GameObject victoryMenu;
+        
         [HideInInspector]
         public GameObject pauseMenu;
         private GameObject playerLives;
         private GameObject defeatMenu;
+        private GameObject victoryMenu;
 
         private GameObject menuObject;
         private GameObject[] menus;
@@ -24,27 +25,28 @@ namespace Managers
         private Button button;
         private GameObject[] ButtonArray;
 
-        private GameObject touchControls;
-        public bool testButtonFunctionability = false;
-
         private Scene scene;
         private LevelManager levelManager;
         private AudioManager audioManager;
+        private PlayerManager playerManager;
+
+        private GameObject touchControls;
 
         private List<GameObject> playerLifeSpriteList = new List<GameObject>();
         private Text informationText;
         private Text completionTimeText;
         private IEnumerator coroutine;
         private string operatingSystemCheck;
+        private string sceneName;
 
         private void Start()
         {
             try
             {
-                levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+                levelManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
                 informationObject = GameObject.Find("InformationText");
-                touchControls = GameObject.FindGameObjectWithTag("TouchController");
-                audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+                audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+                playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
             }
 
             catch (Exception e)
@@ -54,29 +56,29 @@ namespace Managers
 
             ActivatePlaceholderTextForButtons();
 
+            sceneName = SceneManager.GetActiveScene().name;
+
             //Ignore setting up gameplay elements if active scene is main menu.
-            if (SceneManager.GetActiveScene().name != "00_MainMenu")
+            if (sceneName != "00_MainMenu")
             {
                 SetUpGameUI();
+                touchControls = GameObject.FindGameObjectWithTag("TouchController");
             }
         }
 
         private void Update()
         {
             //If player uses Escape, check whether pausemenu is actives. If not active, create menu and pause. If active, resume game.
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (sceneName != "00_MainMenu")
             {
-                if (!pauseMenu.activeInHierarchy)
-                    ActivatePauseMenu();
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    if (!pauseMenu.activeInHierarchy)
+                        ActivatePauseMenu();
 
-                else
-                    ResumeGame();
-            }
-
-            if (testButtonFunctionability == true && (victoryMenu || defeatMenu || pauseMenu))
-            {
-                ActivateMenuButtons("Button");
-                testButtonFunctionability = false;
+                    else
+                        ResumeGame();
+                }
             }
         }
 
@@ -150,6 +152,8 @@ namespace Managers
                 completionTimeText.text = completionTime;
                 victoryMenu.SetActive(true);
 
+                playerManager.SavePlayerData();
+
                 ActivateMenuButtons("Button");
             }
 
@@ -185,6 +189,8 @@ namespace Managers
                 ActivateMenuButtons("Button");
 
                 audioManager.MuteAudio();
+
+                
 
                 levelManager.PauseGame();
             }

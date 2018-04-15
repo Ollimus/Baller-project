@@ -12,22 +12,14 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
     public bool muteAudio;
     public List<Sound> OSTList = new List<Sound>();
+    public Sound song;
 
     private List<Sound> playedOSTs = new List<Sound>();
     private string activeSongName;
-    private Sound song;
-    private float textFadeTime = 10f;
-    private TextMeshProUGUI songDisplayText;
+    private ShowSongName songDisplayObject;
 
     private void Awake()
     {
-        songDisplayText = GameObject.Find("SongNameText").GetComponent<TextMeshProUGUI>();
-
-        if (songDisplayText == null)
-        {
-            Debug.LogError("Scene has no place for Song Name text!");
-        }
-
         /*
          * Makes sure only one instance of AudioManager is present
         */
@@ -89,10 +81,14 @@ public class AudioManager : MonoBehaviour
     */
     IEnumerator PlayRandomOST()
     {
+        if (songDisplayObject == null)
+        {
+            songDisplayObject = GameObject.FindGameObjectWithTag("SongNameText").GetComponent<ShowSongName>();
+        }
+
         //After the OST is extinguished, replace it with the songs that have been played.
         if (OSTList.Count == 0)
         {
-            Debug.Log("Shuffleing list.");
             OSTList = playedOSTs;
         }
 
@@ -103,7 +99,7 @@ public class AudioManager : MonoBehaviour
 
         Play(activeSongName);
 
-        StartCoroutine(ShowCurrentSong(song, songDisplayText));
+        StartCoroutine(songDisplayObject.ShowCurrentSong(song));
 
         //Adds played song into played songs list and then removes it, so it does not play again until all songs have been gone through
         playedOSTs.Add(OSTList[randomSongIndex]);
@@ -113,21 +109,14 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(PlayRandomOST());
     }
 
-    IEnumerator ShowCurrentSong(Sound song, TextMeshProUGUI displayText)
+
+
+    public string FetchSongName()
     {
-        displayText.alpha = 1;
-
-        displayText.text = "Song: \n" + song.clip.name;
-
-        yield return new WaitForSeconds(textFadeTime);
-
-        displayText.alpha = 0;
-    }
-
-    //Public method to be used by TextMesh text that displays song name in UI.
-    public void ShowSongNameInNewScene(TextMeshProUGUI displayText)
-    {
-        StartCoroutine(ShowCurrentSong(song, displayText));
+        if (song != null)
+            return song.clip.name;
+        else
+            return "";
     }
 
     /*

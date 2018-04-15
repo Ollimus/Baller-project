@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Managers
 {
@@ -11,8 +12,12 @@ namespace Managers
     {
         Scene scene;
         int sceneNumber;
+
         UIManager uiManager;
         AudioManager audioManager;
+        PlayerManager playerManager;
+
+        string number;
 
         /*IMPORTANT
          * -------
@@ -24,26 +29,22 @@ namespace Managers
         string mainMenuBtnName = "btnExitMainMenu";
         string resumeGameBtnName = "btnResume";
 
-
-        private void Awake()
-        {
-            if (SceneManager.GetActiveScene().name == "00_MainMenu")
-                ActivateMainMenuLevels();
-        }
-
         private void Start()
         {
             try
             {
-                uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-
-                audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+                uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+                playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
+                audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
             }
 
             catch (Exception e)
             {
                 Debug.LogError("Error setting up managers for LevelManager. Error: " + e);
-            }         
+            }
+
+            if (SceneManager.GetActiveScene().name == "00_MainMenu")
+                ActivateMainMenuLevels();;
 
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
@@ -113,11 +114,22 @@ namespace Managers
                 {
                     if (Char.IsDigit(name[i]))
                     {
-                        string levelName = "01_Level" + name[i];
-
-                        button.onClick.AddListener(() => ChangeScene(levelName));
+                        number += name[i];                        
                     }
                 }
+
+                string levelName = "01_Level" + number;
+                int levelNumber = Convert.ToInt32(number);
+
+                if (levelNumber <= playerManager.unlockedLevels)
+                    button.onClick.AddListener(() => ChangeScene(levelName));
+
+                else
+                {
+                    button.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+                }
+
+                number = string.Empty;
             }
         }
 
@@ -126,9 +138,6 @@ namespace Managers
         {
             try
             {
-                /*if (uiManager.pauseMenu != null && uiManager.pauseMenu.activeInHierarchy)
-                    audioManager.UnmuteAudio();*/
-
                 audioManager.UnmuteAudio();
 
                 SceneManager.LoadScene(levelName);

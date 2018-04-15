@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 114697657621048838}
   m_Layer: 0
   m_Name: PlayerManager
-  m_TagString: Untagged
+  m_TagString: PlayerManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 114627922704690346}
   m_Layer: 0
   m_Name: AudioManager
-  m_TagString: Untagged
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4970192736912622}
   m_Layer: 0
   m_Name: CheatingManager
-  m_TagString: Untagged
+  m_TagString: CheatingManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 114067269517934394}
   m_Layer: 0
   m_Name: UIManager
-  m_TagString: Untagged
+  m_TagString: UIManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 114839677125713742}
   m_Layer: 0
   m_Name: LevelManager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -284,7 +284,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
-  testButtonFunctionability: 0
 --- !u!114 &114250143218867942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -381,7 +380,7 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     loop: 0
-    isOST: 0
+    isOST: 1
     source: {fileID: 0}
   - name: PlayerDeath
     clip: {fileID: 8300000, guid: 82a1d3dcb940b06428b200149b466e74, type: 3}
@@ -402,7 +401,7 @@ MonoBehaviour:
     volume: 0.1
     pitch: 1
     loop: 0
-    isOST: 0
+    isOST: 1
     source: {fileID: 0}
   - name: Theme 3
     clip: {fileID: 8300000, guid: e104a89b0783f6441afea5c22e9196a1, type: 3}
@@ -413,6 +412,14 @@ MonoBehaviour:
     source: {fileID: 0}
   muteAudio: 0
   OSTList: []
+  song:
+    name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    isOST: 0
+    source: {fileID: 0}
 --- !u!114 &114697657621048838
 MonoBehaviour:
   m_ObjectHideFlags: 1

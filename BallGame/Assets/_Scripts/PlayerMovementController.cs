@@ -52,8 +52,12 @@ public class PlayerMovementController : MonoBehaviour {
         else if (joystick == null && TouchController.activeInHierarchy)
             joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
 
+        if (!canPlayerMove)
+        {
+            rigi.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
 
-        if (canPlayerMove)
+        else
         {
             CreateGroundChecks();
 
@@ -87,11 +91,6 @@ public class PlayerMovementController : MonoBehaviour {
             {
                 Jump();
             }
-        }
-
-        else
-        {
-            rigi.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 

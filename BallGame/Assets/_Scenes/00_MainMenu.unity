@@ -32,7 +32,7 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -163,7 +163,7 @@ Prefab:
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -15
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
@@ -173,7 +173,7 @@ Prefab:
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224739563103707646, guid: 6bf286c0a484c994193616d50626b404,
         type: 2}
@@ -214,6 +214,10 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005190200397374, guid: 6bf286c0a484c994193616d50626b404, type: 2}
+      propertyPath: m_TagString
+      value: SongNameText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bf286c0a484c994193616d50626b404, type: 2}
@@ -1431,19 +1435,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114627922704690346, guid: c368c9edc0e893b4abc1438bea25b7dd,
+    - target: {fileID: 114697657621048838, guid: c368c9edc0e893b4abc1438bea25b7dd,
         type: 2}
-      propertyPath: sounds.Array.data[3].isOST
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114627922704690346, guid: c368c9edc0e893b4abc1438bea25b7dd,
-        type: 2}
-      propertyPath: sounds.Array.data[2].isOST
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114627922704690346, guid: c368c9edc0e893b4abc1438bea25b7dd,
-        type: 2}
-      propertyPath: sounds.Array.data[0].isOST
+      propertyPath: removeSaves
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
