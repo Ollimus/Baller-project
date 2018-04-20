@@ -28,7 +28,7 @@ public class PlayerSpawningPoint : MonoBehaviour
 
         catch (Exception e)
         {
-            Debug.Log("Error setting up Player Prefab. Error: " + e);
+            Debug.LogError("Error setting up Player Prefab. Error: " + e);
         }
 	}
 
@@ -72,17 +72,6 @@ public class PlayerSpawningPoint : MonoBehaviour
             Debug.Log("Error with Spawning Start function: " + e);
         }
     }
-
-    //Searches for Player -object and if one does not exist, sets player existance false.
-    void Update ()
-	{
-		playerObject = GameObject.FindGameObjectWithTag("Player");
-
-		if (doesPlayerExist == false && playerObject == null)
-		{
-            SpawnPlayerAtCheckpoint();
-		}
-	}
 
     //Receives transform location from CheckPoint script and adds it into the list of checkpoints.
 	public void AddCheckpoint(Transform location)

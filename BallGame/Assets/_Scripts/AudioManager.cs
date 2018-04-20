@@ -43,8 +43,11 @@ public class AudioManager : MonoBehaviour
         else
         {
             return;
-        }
+        }      
+    }
 
+    void Start()
+    {
         /*
          * Set up every sound attached to the sound array as audiosource-
         */
@@ -60,11 +63,8 @@ public class AudioManager : MonoBehaviour
             // Every sound tagged as OST gets added to OST array to be played by music player.
             if (sound.isOST)
                 OSTList.Add(sound);
-        }        
-    }
+        }
 
-    void Start()
-    {
         try
         {
             StartCoroutine(PlayRandomOST());
@@ -109,15 +109,6 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(PlayRandomOST());
     }
 
-
-
-    public string FetchSongName()
-    {
-        if (song != null)
-            return song.clip.name;
-        else
-            return "";
-    }
 
     /*
      * Finds and plays sounds based on the _SONG NAME_.

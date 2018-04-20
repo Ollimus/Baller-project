@@ -7,25 +7,48 @@ namespace Managers
 {
     public class PlayerManager : MonoBehaviour
     {
+        public static PlayerManager PlayerDataInstance;
+
         private UIManager UImanager;
         private int playerLives;
 
-        public bool removeSaves = false;
-
-        private int unlockedSkins = 1;
-        public int unlockedLevels = 1;
-
         private void Awake()
         {
-            unlockedLevels = PlayerPrefs.GetInt("Levels", 1);
+
+
+            /*
+             * Makes sure only one instance of PlayerDataManager is present
+            */
+            if (PlayerDataInstance == null)
+                PlayerDataInstance = this;
+
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            UImanager = gameObject.transform.parent.GetComponentInChildren<UIManager>();
+
+            /*
+             * Makes sure PlayerDataManager  is not a child of anything, because a child cannot be indestructable.
+            */
+            if (gameObject.transform.parent != null)
+            {
+                gameObject.transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }
+
+            else
+            {
+                return;
+            }
         }
 
         //Set player lives to 5 at start of every screen.
         void Start()
         {
             playerLives = 3;
-
-            UImanager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         }
 
         //Reduces player lives by 1. If player does not have lives left, end the game.
@@ -34,6 +57,9 @@ namespace Managers
         {
             try
             {
+                if (UImanager == null)
+                    UImanager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+
                 playerLives -= 1;
 
                 UImanager.RemovePlayerLifeSprite();
@@ -48,12 +74,6 @@ namespace Managers
             }
         }
 
-        public void SavePlayerData()
-        {
-            unlockedLevels++;
-            PlayerPrefs.SetInt("Levels", unlockedLevels);
 
-            Debug.Log("After save: " + unlockedLevels);
-        }
     }
 }

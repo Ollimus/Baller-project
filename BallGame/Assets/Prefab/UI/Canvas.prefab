@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 114837683280273674}
   m_Layer: 5
   m_Name: SongNameText
-  m_TagString: Untagged
+  m_TagString: SongNameText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,9 +7,6 @@ namespace Managers
 {
     public class Cheats : MonoBehaviour
     {
-        private void Update()
-        {
-            
-        }
+
     }
 }

@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4273909443859298}
-  - component: {fileID: 114250143218867942}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -126,6 +125,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1830165840902958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4820612186425150}
+  - component: {fileID: 114571854478700356}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: SaveManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1837153049795874
 GameObject:
   m_ObjectHideFlags: 1
@@ -203,8 +218,22 @@ Transform:
   - {fileID: 4901337427151298}
   - {fileID: 4161856012018888}
   - {fileID: 4970192736912622}
+  - {fileID: 4820612186425150}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4820612186425150
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1830165840902958}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4273909443859298}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4901337427151298
 Transform:
@@ -284,18 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
---- !u!114 &114250143218867942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1090761380734302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6e5288a20a4374f9045d5330858730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableGameFunctions: 0
 --- !u!114 &114359077525885780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -336,6 +353,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Delegates: []
   delegates: []
+--- !u!114 &114571854478700356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1830165840902958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8153097eb97a88e419ccd169d73dbf05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockedLevels: 1
+  specialSkins: 0
 --- !u!114 &114579670807289836
 MonoBehaviour:
   m_ObjectHideFlags: 1

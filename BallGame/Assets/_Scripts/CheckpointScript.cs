@@ -6,7 +6,7 @@ public class CheckpointScript : MonoBehaviour
 {
     public string checkpointText = "Checkpoint unlocked!";
 
-    private UIManager manager;
+    private UIManager uiManager;
 	private Transform location;
 	private GameObject spawningGameObject;
 	private PlayerSpawningPoint spawningPoints;
@@ -17,14 +17,9 @@ public class CheckpointScript : MonoBehaviour
 	{
 		try
 		{
-            manager = GameObject.Find("UIManager").GetComponent<UIManager>();
+            uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
-			spawningGameObject = GameObject.FindGameObjectWithTag("StartingPoint");
-
-			if (spawningGameObject != null)
-			{
-				spawningPoints = spawningGameObject.GetComponent<PlayerSpawningPoint>();
-			}
+			spawningPoints = GameObject.FindGameObjectWithTag("StartingPoint").GetComponent<PlayerSpawningPoint>();
 		}
 
 		catch (Exception e)
@@ -45,7 +40,7 @@ public class CheckpointScript : MonoBehaviour
 
                 try
                 {
-                    manager.ShowInformationText(checkpointText);
+                    uiManager.ShowInformationText(checkpointText);
                 }
 
                 catch (Exception e)

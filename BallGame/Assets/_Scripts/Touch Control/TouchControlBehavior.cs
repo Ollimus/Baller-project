@@ -9,6 +9,6 @@ public class TouchControlBehavior : MonoBehaviour {
         string OS = SystemInfo.operatingSystem;
 
         if (SceneManager.GetActiveScene().name == "00_MainMenu" || OS.Contains("Windows") || OS.Contains("Linux") || OS.Contains("Mac"))
-            FindObjectOfType<GeneralManager>().DisableManager(gameObject);
+            gameObject.SetActive(false);
     }
 }

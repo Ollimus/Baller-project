@@ -18,7 +18,7 @@ public class KillZone : MonoBehaviour {
 	void Start()
 	{
         playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
     }
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -42,7 +42,7 @@ public class KillZone : MonoBehaviour {
 
         catch(Exception e)
         {
-            Debug.Log("Error setting up player dead. Error: " + e);
+            Debug.LogError("Error setting up player dead. Error: " + e);
         }
     }
 
@@ -69,7 +69,7 @@ public class KillZone : MonoBehaviour {
 
         catch (Exception e)
         {
-            Debug.Log("Error destroying player. Error: " + e);
+            Debug.LogError("Error destroying player. Error: " + e);
         }
     }
 }

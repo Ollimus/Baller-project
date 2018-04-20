@@ -33,7 +33,12 @@ public class PlayerMovementController : MonoBehaviour {
 
     void Start ()
     {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (AudioManager.AudioInstance != null)
+            audioManager = AudioManager.AudioInstance;
+
+        else
+            Debug.LogError("Audiomanager not found. Cannot activate player movement sounds. Error.");
+
         rigi = GetComponent<Rigidbody2D>();
 
         TouchController = GameObject.FindGameObjectWithTag("TouchController");

@@ -15,7 +15,7 @@ namespace Managers
 
         UIManager uiManager;
         AudioManager audioManager;
-        PlayerManager playerManager;
+        SaveManager saveManager;
 
         string number;
 
@@ -33,9 +33,13 @@ namespace Managers
         {
             try
             {
-                uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-                playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
-                audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+                uiManager = gameObject.transform.parent.GetComponentInChildren<UIManager>();
+
+                if (SaveManager.SaveManagerInstance != null)
+                    saveManager = SaveManager.SaveManagerInstance;
+
+                if (AudioManager.AudioInstance != null)
+                    audioManager = AudioManager.AudioInstance;
             }
 
             catch (Exception e)
@@ -121,7 +125,7 @@ namespace Managers
                 string levelName = "01_Level" + number;
                 int levelNumber = Convert.ToInt32(number);
 
-                if (levelNumber <= playerManager.unlockedLevels)
+                if (levelNumber <= saveManager.unlockedLevels)
                     button.onClick.AddListener(() => ChangeScene(levelName));
 
                 else

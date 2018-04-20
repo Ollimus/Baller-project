@@ -28,7 +28,7 @@ namespace Managers
         private Scene scene;
         private LevelManager levelManager;
         private AudioManager audioManager;
-        private PlayerManager playerManager;
+        private SaveManager saveManager;
 
         private GameObject touchControls;
 
@@ -43,10 +43,14 @@ namespace Managers
         {
             try
             {
-                levelManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+                levelManager = gameObject.transform.parent.GetComponentInChildren<LevelManager>();
                 informationObject = GameObject.Find("InformationText");
-                audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-                playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
+
+                if (SaveManager.SaveManagerInstance != null)
+                    saveManager = SaveManager.SaveManagerInstance;
+
+                if (AudioManager.AudioInstance != null)
+                    audioManager = AudioManager.AudioInstance;
             }
 
             catch (Exception e)
@@ -152,7 +156,7 @@ namespace Managers
                 completionTimeText.text = completionTime;
                 victoryMenu.SetActive(true);
 
-                playerManager.SavePlayerData();
+                saveManager.UnlockNewLevel();
 
                 ActivateMenuButtons("Button");
             }
@@ -255,7 +259,7 @@ namespace Managers
         //Finds a sprite tagged PlayerLives and deletes it.
         public void RemovePlayerLifeSprite()
         {
-           try
+            try
             {
                 Destroy(playerLifeSpriteList[0]);
                 playerLifeSpriteList.RemoveAt(0);

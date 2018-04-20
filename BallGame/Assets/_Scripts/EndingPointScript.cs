@@ -17,7 +17,7 @@ public class EndingPointScript : MonoBehaviour
 		timeObject = GameObject.Find ("GameTime");
 		timer = timeObject.GetComponent<GameTimer>();
 
-        menu = GameObject.Find("UIManager").GetComponent<UIManager>();
+        menu = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 	}
 
     //When player touches endpoint flag, stop the timer, get the endtime and activate the menu with completion time

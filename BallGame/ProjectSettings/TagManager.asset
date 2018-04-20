@@ -20,6 +20,7 @@ TagManager:
   - UIManager
   - LevelManager
   - CheatingManager
+  - SaveManager
   layers:
   - Default
   - TransparentFX
