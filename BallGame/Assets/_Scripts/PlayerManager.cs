@@ -10,12 +10,9 @@ namespace Managers
         public static PlayerManager PlayerDataInstance;
 
         private UIManager UImanager;
-        private int playerLives;
 
         private void Awake()
         {
-
-
             /*
              * Makes sure only one instance of PlayerDataManager is present
             */
@@ -45,12 +42,6 @@ namespace Managers
             }
         }
 
-        //Set player lives to 5 at start of every screen.
-        void Start()
-        {
-            playerLives = 3;
-        }
-
         //Reduces player lives by 1. If player does not have lives left, end the game.
         //Also removes one player life sprite from UI.
         public void ReduceLives()
@@ -60,11 +51,9 @@ namespace Managers
                 if (UImanager == null)
                     UImanager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
-                playerLives -= 1;
-
                 UImanager.RemovePlayerLifeSprite();
 
-                if (playerLives == 0)
+                if (UImanager.playerLifeSpriteList.Count == 0)
                     UImanager.ActivateDefeatScreen();
             }
 

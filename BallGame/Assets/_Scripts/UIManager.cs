@@ -32,7 +32,8 @@ namespace Managers
 
         private GameObject touchControls;
 
-        private List<GameObject> playerLifeSpriteList = new List<GameObject>();
+        [HideInInspector]
+        public List<GameObject> playerLifeSpriteList = new List<GameObject>();
         private Text informationText;
         private Text completionTimeText;
         private IEnumerator coroutine;
