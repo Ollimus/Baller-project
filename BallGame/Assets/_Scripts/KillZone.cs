@@ -26,25 +26,8 @@ public class KillZone : MonoBehaviour {
 		if (other.CompareTag ("Player"))
 		{
             KillPlayer(other);
-
-            SetPlayerDead();
 		}
 	}
-
-    void SetPlayerDead()
-    {
-        try
-        {
-            playerSpawningpoint.doesPlayerExist = false;
-
-            playerSpawningpoint.playerDeathTime = (Time.time + playerSpawningpoint.respawnTimer);
-        }
-
-        catch(Exception e)
-        {
-            Debug.LogError("Error setting up player dead. Error: " + e);
-        }
-    }
 
     private void KillPlayer(Collider2D other)
     {

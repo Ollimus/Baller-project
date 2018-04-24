@@ -164,7 +164,7 @@ namespace Managers
 
             else
             {
-                Debug.Log("Error changing to the next level. Returning to main menu.");
+                Debug.LogError("Error changing to the next level. Returning to main menu.");
                 ChangeScene("00_MainMenu");
             }
         }

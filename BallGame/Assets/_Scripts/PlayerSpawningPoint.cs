@@ -6,7 +6,7 @@ using Managers;
 
 public class PlayerSpawningPoint : MonoBehaviour
 {
-	private GameObject player;
+	public GameObject player;
 	private Transform checkpointLocation;
     private GameObject startingPoint;
 	private GameObject playerObject;
@@ -14,22 +14,11 @@ public class PlayerSpawningPoint : MonoBehaviour
 
     int lastAddedObject;
     public bool doesPlayerExist = false;
-	public float playerDeathTime;
 	public int respawnTimer = 2;
 
 	void Start()
 	{
         CreatePlayer();
-
-        try
-        {
-            player = Resources.Load("Player") as GameObject;
-        }
-
-        catch (Exception e)
-        {
-            Debug.LogError("Error setting up Player Prefab. Error: " + e);
-        }
 	}
 
     void CreatePlayer()
@@ -37,6 +26,7 @@ public class PlayerSpawningPoint : MonoBehaviour
         try
         {
             playerObject = GameObject.FindGameObjectWithTag("Player");
+            
             startingPoint = transform.gameObject;
 
             //If starting location does not exist, spawn at the first placed checkpoint location.
@@ -49,27 +39,19 @@ public class PlayerSpawningPoint : MonoBehaviour
             //If player and starting point do not exist, create player at latest checkpoint location
             if (playerObject == null && startingPoint != null)
             {
-                doesPlayerExist = true;
                 Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
             }
 
             //If player object does not exist, but starting point does, spawn player at the spawning point location.
             else if (playerObject == null)
             {
-                doesPlayerExist = true;
                 Instantiate(player, transform.position, transform.rotation);
-            }
-
-            //Otherwise player has been created with the level.
-            else
-            {
-                doesPlayerExist = true;
             }
         }
 
         catch (Exception e)
         {
-            Debug.Log("Error with Spawning Start function: " + e);
+            Debug.LogError("Error with Spawning Start function: " + e);
         }
     }
 

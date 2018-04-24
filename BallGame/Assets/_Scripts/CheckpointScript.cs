@@ -24,7 +24,7 @@ public class CheckpointScript : MonoBehaviour
 
 		catch (Exception e)
 		{
-			Debug.Log("Spawning handling gameobject not found. Error: " + e);
+			Debug.LogError("Spawning handling gameobject not found. Error: " + e);
 		}
 	}
 
@@ -38,15 +38,7 @@ public class CheckpointScript : MonoBehaviour
 				spawningPoints.AddCheckpoint (location);
 				isCheckpointActivated = true;
 
-                try
-                {
-                    uiManager.ShowInformationText(checkpointText);
-                }
-
-                catch (Exception e)
-                {
-                    Debug.Log("Error with displaying information. Error: " + e);
-                }
+                uiManager.ShowInformationText(checkpointText);
 			}
 		}
 

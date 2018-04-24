@@ -82,9 +82,7 @@ public class AudioManager : MonoBehaviour
     IEnumerator PlayRandomOST()
     {
         if (songDisplayObject == null)
-        {
             songDisplayObject = GameObject.FindGameObjectWithTag("SongNameText").GetComponent<ShowSongName>();
-        }
 
         //After the OST is extinguished, replace it with the songs that have been played.
         if (OSTList.Count == 0)

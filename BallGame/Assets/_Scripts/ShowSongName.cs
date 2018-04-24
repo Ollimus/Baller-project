@@ -14,29 +14,24 @@ public class ShowSongName : MonoBehaviour
 
     private void Start()
     {
-        try
-        {
-            songDisplayText = gameObject.GetComponent<TextMeshProUGUI>();
 
-            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found.");
+            return;
         }
 
-        catch (Exception e)
-        {
-            Debug.LogError("Error setting up required variables for ShowSongName. Error: " + e);
-        }
-
-        if (audioManager.song != null)
-        {
+        if (audioManager.song.clip != null)
             StartCoroutine(ShowCurrentSong(audioManager.song));
-        }
-
-
+        else
+            Debug.LogError("Cannot display the song name from ShowSongName -script.");
     }
 
     public IEnumerator ShowCurrentSong(Sound song)
     {
-        songDisplayText = this.GetComponent<TextMeshProUGUI>();
+        songDisplayText = GetComponent<TextMeshProUGUI>();
 
         songDisplayText.alpha = 1;
 
@@ -56,10 +51,4 @@ public class ShowSongName : MonoBehaviour
     {
         songDisplayText.alpha = 0;
     }
-
-    public void FetchTextDetails()
-    {
-
-    }
-
 }
