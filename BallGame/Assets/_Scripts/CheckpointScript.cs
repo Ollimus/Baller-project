@@ -9,7 +9,7 @@ public class CheckpointScript : MonoBehaviour
     private UIManager uiManager;
 	private Transform location;
 	private GameObject spawningGameObject;
-	private PlayerSpawningPoint spawningPoints;
+	private PlayerSpawner spawningPoints;
 
 	private bool isCheckpointActivated = false;
 
@@ -19,7 +19,7 @@ public class CheckpointScript : MonoBehaviour
 		{
             uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
-			spawningPoints = GameObject.FindGameObjectWithTag("StartingPoint").GetComponent<PlayerSpawningPoint>();
+			spawningPoints = GameObject.FindGameObjectWithTag("StartingPoint").GetComponent<PlayerSpawner>();
 		}
 
 		catch (Exception e)

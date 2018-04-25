@@ -8,7 +8,7 @@ using Managers;
 public class KillZone : MonoBehaviour {
 
 	private GameObject player;
-	private PlayerSpawningPoint playerSpawningpoint;
+	private PlayerSpawner playerSpawningpoint;
     private PlayerManager playerManager;
 
     private AudioSource explosionAudio;
@@ -17,7 +17,7 @@ public class KillZone : MonoBehaviour {
 
 	void Start()
 	{
-        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
+        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawner>();
         playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
     }
 
