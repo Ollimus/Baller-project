@@ -1,6 +1,13 @@
+Project
+
+This 2d platform game codenamed "Baller" -project is personal hobby project developed by me. The main goal of the project is to learn game programming and development from scratch. All the assets and code included in the project is free-to-share assets. The target platforms for the game are Android (phone, tablet) and PC enviroments.
+
+
+
+
 Editor Scene Hierachy Guide
 
-Consists of the following forder structure. If gameobject is not specified as prefab, it must be created on it's own to include prefabs.
+Consists of the following folder structure. If gameobject is not specified as prefab, it must be created on it's own to include prefabs.
 
 Non-menu Scene:
 
@@ -49,3 +56,14 @@ World
 	- Props (Bonus visual things in the world like trees, flowers etc.)
 	- Terrain (Contains anything player can jump on etc.)
 		- Ground (Prefabs).
+
+
+
+
+AudioManager
+
+Contains all the audiosources and clips of the whole game ranging from sound effects to music.
+
+
+How to add new audio to AudioManager?
+	- Audio array, based on Sound -script, is located within AudioManager áutomatically creates audiolisteners for the manager. Sound -script has multiple settings to easily change settings for the created audiolistener. **NOTE**: Remember to check soundtrack -boolean as true, if added audio is a soundtrack. This makes the AudioManager to recognize it as OST and add it to the soundtrack player.

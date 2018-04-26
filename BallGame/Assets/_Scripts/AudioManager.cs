@@ -61,7 +61,7 @@ public class AudioManager : MonoBehaviour
             sound.source.loop = sound.loop;
 
             // Every sound tagged as OST gets added to OST array to be played by music player.
-            if (sound.isOST)
+            if (sound.soundtrack)
                 OSTList.Add(sound);
         }
 
