@@ -12,6 +12,7 @@ namespace Managers
     {
         //Gameobjects to affected by UIManager
         private GameObject informationObject;
+        private ShowSongName songUIText;
         
         [HideInInspector]
         public GameObject pauseMenu;
@@ -189,13 +190,16 @@ namespace Managers
         {
             try
             {
+                if (songUIText == null)
+                    songUIText = GameObject.FindGameObjectWithTag("SongNameText").GetComponent<ShowSongName>();
+
                 pauseMenu.SetActive(true);
 
                 ActivateMenuButtons("Button");
 
                 audioManager.MuteAudio();
 
-                
+                songUIText.DisplaySongName();
 
                 levelManager.PauseGame();
             }
@@ -211,9 +215,15 @@ namespace Managers
         {
             try
             {
+                if (songUIText == null)
+                    songUIText = GameObject.FindGameObjectWithTag("SongNameText").GetComponent<ShowSongName>();
+
+
                 pauseMenu.SetActive(false);
 
                 audioManager.UnmuteAudio();
+
+                songUIText.HideSongName();
 
                 levelManager.UnPauseGame();
             }

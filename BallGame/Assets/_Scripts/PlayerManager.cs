@@ -46,23 +46,22 @@ namespace Managers
         //Also removes one player life sprite from UI.
         public void ReduceLives()
         {
-            try
+            if (UImanager == null)
             {
-                if (UImanager == null)
-                    UImanager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+                UImanager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
+                if (UImanager == null)
+                {
+                    Debug.LogError("No UIManager found, cannot reduce player lives.");
+                    return;
+                }                    
+            }
+
+            if (UImanager.playerLifeSpriteList.Count > 0)
                 UImanager.RemovePlayerLifeSprite();
 
-                if (UImanager.playerLifeSpriteList.Count == 0)
-                    UImanager.ActivateDefeatScreen();
-            }
-
-            catch (Exception e)
-            {
-                Debug.Log("Error with reducing lives. Error: " + e);
-            }
+            else if (UImanager.playerLifeSpriteList.Count == 0)
+                UImanager.ActivateDefeatScreen();
         }
-
-
     }
 }

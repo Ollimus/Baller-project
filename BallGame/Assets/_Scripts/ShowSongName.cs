@@ -42,7 +42,7 @@ public class ShowSongName : MonoBehaviour
         songDisplayText.alpha = 0;
     }
 
-    public void ShowSongNameInPause()
+    public void DisplaySongName()
     {
         songDisplayText.alpha = 1;
     }

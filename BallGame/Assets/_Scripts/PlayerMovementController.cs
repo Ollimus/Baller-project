@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System;
 
-public class PlayerMovementController : MonoBehaviour {
+public class PlayerMovementController : MonoBehaviour
+{
 
     public float baseMovementSpeed = 6;
-	public float rotationalSpeed = 600;
-	private float jumpHeight = 8;
+    public float rotationalSpeed = 600;
+    private float jumpHeight = 8;
     private float horizontalMovementSpeed = 1; //NOTE: DOES NOT USE AXIS INPUT, BECAUSE FLAT VALUE GIVES INCREASED/SMOOTHER MOBILITY WHILE JUMPING.
     private float horizontalInput;
 
@@ -13,25 +14,26 @@ public class PlayerMovementController : MonoBehaviour {
     private TouchControlJoystick joystick;
     private AudioManager audioManager;
 
-	public Rigidbody2D rigi;
+    public Rigidbody2D rigi;
 
-	private bool grounded = false;
-	private bool rightWalled = false;
-	private bool leftWalled = false;
-	private float groundRadius = 0.05f;
-	public LayerMask whatIsGround;
+    private bool grounded = false;
+    private bool rightWalled = false;
+    private bool leftWalled = false;
+    private float groundRadius = 0.05f;
+    public LayerMask whatIsGround;
 
-	private Vector2 groundCheckLocation;
-	private Vector2 rightWallCheckLocation;
-	private Vector2 leftWallCheckLocation;
+    private Collider2D playerCollider;
+    private Vector2 groundCheckLocation;
+    private Vector2 rightWallCheckLocation;
+    private Vector2 leftWallCheckLocation;
 
-	public bool isLeftButtonActive;
-	public bool isRightButtonActive;
-	public bool isJumpButtonActive;
+    public bool isLeftButtonActive;
+    public bool isRightButtonActive;
+    public bool isJumpButtonActive;
 
     public bool canPlayerMove = true;
 
-    void Start ()
+    void Start()
     {
         if (AudioManager.AudioInstance != null)
             audioManager = AudioManager.AudioInstance;
@@ -41,13 +43,16 @@ public class PlayerMovementController : MonoBehaviour {
 
         rigi = GetComponent<Rigidbody2D>();
 
+        playerCollider = GetComponent<Collider2D>();
+
         TouchController = GameObject.FindGameObjectWithTag("TouchController");
 
+        //If touchcontrol is active, get joystick gameobject as well.
         if (TouchController != null)
             joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
 
     }
-    
+
     void Update()
     {
         //Used for debugging
@@ -99,11 +104,11 @@ public class PlayerMovementController : MonoBehaviour {
         }
     }
 
-	/*
+    /*
 	 *Player turns and moves to right.
 	*/
-	public void HorizontalMovement(float horizontalInput)
-	{
+    public void HorizontalMovement(float horizontalInput)
+    {
         if (horizontalInput == 0)
             rigi.velocity = new Vector2(0, rigi.velocity.y);
 
@@ -122,46 +127,37 @@ public class PlayerMovementController : MonoBehaviour {
 
     public void Jump()
     {
-        try
+        if (grounded)
         {
-            if (grounded)
-            {
-                rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
+            rigi.velocity = new Vector2(rigi.velocity.x, jumpHeight);
 
-                audioManager.Play("JumpSound");
-            }
-        }
-
-        catch (Exception e)
-        {
-            Debug.Log("Error jumping: " + e);
+            audioManager.Play("JumpSound");
         }
     }
 
-	/*
+    /*
 	 * Creates OverLap circles on bottom of the ball and on both sides of it. Checks whether the sides/bottom is touching objects.
 	 *
 	*/
-	void CreateGroundChecks()
-	{
-		try
-		{
-			groundCheckLocation = rigi.transform.position;
-			groundCheckLocation.y -= (GetComponent<Collider2D>().bounds.size.y) / 2;
-			grounded = Physics2D.OverlapCircle (groundCheckLocation, groundRadius, whatIsGround);
+    void CreateGroundChecks()
+    {
+        if (playerCollider == null)
+        {
+            playerCollider = GetComponent<Collider2D>();
+            return;
+        }
 
-			rightWallCheckLocation = rigi.transform.position;
-			rightWallCheckLocation.x += (GetComponent<Collider2D>().bounds.size.x)/2;
-			rightWalled = Physics2D.OverlapCircle(rightWallCheckLocation, groundRadius, whatIsGround);
+        groundCheckLocation = rigi.transform.position;
+        groundCheckLocation.y -= (playerCollider.bounds.size.y) / 2;
+        grounded = Physics2D.OverlapCircle(groundCheckLocation, groundRadius, whatIsGround);
 
-			leftWallCheckLocation = rigi.transform.position;
-			leftWallCheckLocation.x -= (GetComponent<Collider2D>().bounds.size.x)/2;
-			leftWalled = Physics2D.OverlapCircle(leftWallCheckLocation, groundRadius, whatIsGround);
-		}
+        rightWallCheckLocation = rigi.transform.position;
+        rightWallCheckLocation.x += (playerCollider.bounds.size.x) / 2;
+        rightWalled = Physics2D.OverlapCircle(rightWallCheckLocation, groundRadius, whatIsGround);
 
-		catch (Exception e)
-		{
-			Debug.Log("Location checks failed. Error: " + e);
-		}
-	}
+        leftWallCheckLocation = rigi.transform.position;
+        leftWallCheckLocation.x -= (playerCollider.bounds.size.x) / 2;
+        leftWalled = Physics2D.OverlapCircle(leftWallCheckLocation, groundRadius, whatIsGround);
+
+    }
 }
