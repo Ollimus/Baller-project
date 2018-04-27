@@ -25,8 +25,6 @@ public class ShowSongName : MonoBehaviour
 
         if (audioManager.song.clip != null)
             StartCoroutine(ShowCurrentSong(audioManager.song));
-        else
-            Debug.LogError("Cannot display the song name from ShowSongName -script.");
     }
 
     public IEnumerator ShowCurrentSong(Sound song)

@@ -43,14 +43,11 @@ public class AudioManager : MonoBehaviour
         else
         {
             return;
-        }      
+        }
     }
 
     void Start()
     {
-        /*
-         * Set up every sound attached to the sound array as audiosource-
-        */
         foreach (Sound sound in sounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
@@ -65,15 +62,13 @@ public class AudioManager : MonoBehaviour
                 OSTList.Add(sound);
         }
 
-        try
+        if (OSTList.Count == 0)
         {
+            Debug.LogError("No soundtracks set, cannot start playing soundtracks. Is this intended?");
+        }
+        
+        else
             StartCoroutine(PlayRandomOST());
-        }
-
-        catch (Exception e)
-        {
-            Debug.LogError("Error playing random OSTs. Error: " +e);
-        }
     }
 
     /*

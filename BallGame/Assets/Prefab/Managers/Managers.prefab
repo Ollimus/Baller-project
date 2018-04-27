@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
+  playerLifeSpriteList: []
 --- !u!114 &114359077525885780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -364,8 +365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8153097eb97a88e419ccd169d73dbf05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResetLevelsBeforeThisVersion: 0
   unlockedLevels: 1
   specialSkins: 0
+  levelFinishTime: 0
 --- !u!114 &114579670807289836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -410,35 +413,35 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     loop: 0
-    isOST: 1
+    soundtrack: 1
     source: {fileID: 0}
   - name: PlayerDeath
     clip: {fileID: 8300000, guid: 82a1d3dcb940b06428b200149b466e74, type: 3}
     volume: 2
     pitch: 1
     loop: 0
-    isOST: 0
+    soundtrack: 0
     source: {fileID: 0}
   - name: JumpSound
     clip: {fileID: 8300000, guid: 8a5b4adf6103886409fd2fc18930f3d4, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    isOST: 0
+    soundtrack: 1
     source: {fileID: 0}
   - name: Theme 2
     clip: {fileID: 8300000, guid: 42966529e998dc04b92fa173e26cff62, type: 3}
     volume: 0.1
     pitch: 1
     loop: 0
-    isOST: 1
+    soundtrack: 1
     source: {fileID: 0}
   - name: Theme 3
     clip: {fileID: 8300000, guid: e104a89b0783f6441afea5c22e9196a1, type: 3}
     volume: 0.1
     pitch: 1
     loop: 0
-    isOST: 1
+    soundtrack: 1
     source: {fileID: 0}
   muteAudio: 0
   OSTList: []
@@ -448,7 +451,7 @@ MonoBehaviour:
     volume: 0
     pitch: 0
     loop: 0
-    isOST: 0
+    soundtrack: 0
     source: {fileID: 0}
 --- !u!114 &114697657621048838
 MonoBehaviour:
