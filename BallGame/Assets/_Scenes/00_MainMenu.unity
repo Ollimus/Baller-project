@@ -1535,51 +1535,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_MaxSize
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_MinSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_RichText
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_BestFit
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_FontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_VerticalOverflow
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502575895355322, guid: 86ce8844144e7f442a7e464bbc143324,
-        type: 2}
-      propertyPath: m_FontData.m_HorizontalOverflow
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 86ce8844144e7f442a7e464bbc143324, type: 2}
   m_IsPrefabParent: 0

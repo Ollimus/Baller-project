@@ -351,6 +351,11 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114835500570512650, guid: 11192f1fd45f0cd43b016e043ac314be,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11192f1fd45f0cd43b016e043ac314be, type: 2}
   m_IsPrefabParent: 0
