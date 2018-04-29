@@ -3,20 +3,26 @@ using UnityEngine.Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager AudioInstance;
+
     public Sound[] sounds;
     public bool muteAudio;
     public List<Sound> OSTList = new List<Sound>();
+    public Sound song;
+
     private List<Sound> playedOSTs = new List<Sound>();
     private string activeSongName;
-    private Sound song;
-
-    public static AudioManager AudioInstance;
+    private ShowSongName songDisplayObject;
 
     private void Awake()
     {
+        /*
+         * Makes sure only one instance of AudioManager is present
+        */
         if (AudioInstance == null)
             AudioInstance = this;
         else
@@ -25,6 +31,9 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        /*
+         * Makes sure audiomanager is not a child of anything, because a child cannot be indestructable.
+        */
         if (gameObject.transform.parent != null)
         {
             gameObject.transform.parent = null;
@@ -35,7 +44,10 @@ public class AudioManager : MonoBehaviour
         {
             return;
         }
+    }
 
+    void Start()
+    {
         foreach (Sound sound in sounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
@@ -45,14 +57,18 @@ public class AudioManager : MonoBehaviour
             sound.source.pitch = sound.pitch;
             sound.source.loop = sound.loop;
 
-            if (sound.isOST)
+            // Every sound tagged as OST gets added to OST array to be played by music player.
+            if (sound.soundtrack)
                 OSTList.Add(sound);
-        }        
-    }
+        }
 
-    void Start()
-    {
-       StartCoroutine(PlayRandomOST());
+        if (OSTList.Count == 0)
+        {
+            Debug.LogError("No soundtracks set, cannot start playing soundtracks. Is this intended?");
+        }
+        
+        else
+            StartCoroutine(PlayRandomOST());
     }
 
     /*
@@ -60,20 +76,23 @@ public class AudioManager : MonoBehaviour
     */
     IEnumerator PlayRandomOST()
     {
-        //After the OST is extinguished, replace it with the full list.
+        if (songDisplayObject == null)
+            songDisplayObject = GameObject.FindGameObjectWithTag("SongNameText").GetComponent<ShowSongName>();
+
+        //After the OST is extinguished, replace it with the songs that have been played.
         if (OSTList.Count == 0)
         {
-            Debug.Log("Shuffleing list.");
             OSTList = playedOSTs;
         }
 
-        int randomSongIndex = UnityEngine.Random.Range(0, (OSTList.Count) - 1);
-        
-        song = OSTList[randomSongIndex];       
+        int randomSongIndex = UnityEngine.Random.Range(0, OSTList.Count);
+
+        song = OSTList[randomSongIndex];
         activeSongName = song.name;
 
-        Debug.Log("Playing song: " + activeSongName + " - " + song.clip.name);
         Play(activeSongName);
+
+        StartCoroutine(songDisplayObject.ShowCurrentSong(song));
 
         //Adds played song into played songs list and then removes it, so it does not play again until all songs have been gone through
         playedOSTs.Add(OSTList[randomSongIndex]);
@@ -83,6 +102,10 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(PlayRandomOST());
     }
 
+
+    /*
+     * Finds and plays sounds based on the _SONG NAME_.
+    */
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);

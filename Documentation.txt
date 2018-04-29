@@ -1,0 +1,69 @@
+Project
+
+This 2d platform game codenamed "Baller" -project is personal hobby project developed by me. The main goal of the project is to learn game programming and development from scratch. All the assets and code included in the project is free-to-share assets. The target platforms for the game are Android (phone, tablet) and PC enviroments.
+
+
+
+
+Editor Scene Hierachy Guide
+
+Consists of the following folder structure. If gameobject is not specified as prefab, it must be created on it's own to include prefabs.
+
+Non-menu Scene:
+
+Canvas (Prefab)
+	- GameTime
+	- InformationText (Pop-up messages for player)
+	- SongNameText (Name of the song that appears for player in UI)
+	- Menu
+		- VictoryMenu (Activated when player reaches the end flag.)
+		- PauseMenu (Activated when player pauses by back button on Android or Escape on PC. Note: Also stops in-game time and music.)
+		- DefeatMenu (Activated when player loses the game.)
+	- PlayerLives (Has player lives sprites that are shown on UI)
+		- Live1
+		- Live2
+		- Live3
+
+Main Camera (Prefab)
+
+Hazards
+	- Kill Zone (Invisible area under the playing area to kill player if he falls off.)
+	- Other hazard prefabs.
+
+Managers (Prefab contains all managers within prefab)
+	- TouchControlManager (Contains touch control gameobjects)
+		- JumpMoveButton (Jump button for touch control)
+		- Joystick (Touch Control joystick)
+	- PlayerManager (Handles player life reduction and achievement related things) ** Non-destroyable object **
+	- AudioManager (Creates OSTs and other sound effects)	** Non-destroyable object **
+	- UIManager (Handles anything related to UI)
+	- LevelManager (Handles anything related to changing scenes)
+	- SaveManager (Handles anything to player data saving.) ** Non-destroyable object **
+
+Player (Prefab)
+	- Groundcheck (For jump check).
+
+Checkpoints
+	- StartingPoint (Player always is spawned in the starting point. If no checkpoint is unlocked, player will also spawn here after death.)
+	- SpawnCheckpoint (Unlocked when player touches it, player will spawn there after death. The latest checkpoint is always the checkpoint the player spawns at.)
+	- Endingpoint (When player touches this point, the game will end.)
+
+Background (Contains backgrounds.)
+	- Background images
+
+World
+	- Pickups (Pickup objects in the world)
+	- Props (Bonus visual things in the world like trees, flowers etc.)
+	- Terrain (Contains anything player can jump on etc.)
+		- Ground (Prefabs).
+
+
+
+
+AudioManager
+
+Contains all the audiosources and clips of the whole game ranging from sound effects to music.
+
+
+How to add new audio to AudioManager?
+	- Audio array, based on Sound -script, is located within AudioManager áutomatically creates audiolisteners for the manager. Sound -script has multiple settings to easily change settings for the created audiolistener. **NOTE**: Remember to check soundtrack -boolean as true, if added audio is a soundtrack. This makes the AudioManager to recognize it as OST and add it to the soundtrack player.

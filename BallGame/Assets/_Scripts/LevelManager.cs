@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Managers
 {
@@ -11,7 +12,12 @@ namespace Managers
     {
         Scene scene;
         int sceneNumber;
+
         UIManager uiManager;
+        AudioManager audioManager;
+        SaveManager saveManager;
+
+        string number;
 
         /*IMPORTANT
          * -------
@@ -23,29 +29,26 @@ namespace Managers
         string mainMenuBtnName = "btnExitMainMenu";
         string resumeGameBtnName = "btnResume";
 
-        /*private void Awake()
-        {
-            string test = "btnLevel13232";
-
-            for (int i = 0; i < test.Length; i++)
-            {
-                if (Char.IsDigit(test[i]))
-                    Debug.Log(test[i]);
-            }
-        }*/
-
-        private void Awake()
-        {
-            if (SceneManager.GetActiveScene().name == "00_MainMenu")
-                ActivateMainMenuLevels();
-        }
-
         private void Start()
         {
-            uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+            try
+            {
+                uiManager = gameObject.transform.parent.GetComponentInChildren<UIManager>();
 
-            if (uiManager == null)
-                Debug.LogWarning("UImanager not found. ");            
+                if (SaveManager.SaveManagerInstance != null)
+                    saveManager = SaveManager.SaveManagerInstance;
+
+                if (AudioManager.AudioInstance != null)
+                    audioManager = AudioManager.AudioInstance;
+            }
+
+            catch (Exception e)
+            {
+                Debug.LogError("Error setting up managers for LevelManager. Error: " + e);
+            }
+
+            if (SceneManager.GetActiveScene().name == "00_MainMenu")
+                ActivateMainMenuLevels();;
 
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
@@ -115,11 +118,22 @@ namespace Managers
                 {
                     if (Char.IsDigit(name[i]))
                     {
-                        string levelName = "01_Level" + name[i];
-
-                        button.onClick.AddListener(() => ChangeScene(levelName));
+                        number += name[i];                        
                     }
                 }
+
+                string levelName = "01_Level" + number;
+                int levelNumber = Convert.ToInt32(number);
+
+                if (levelNumber <= saveManager.unlockedLevels)
+                    button.onClick.AddListener(() => ChangeScene(levelName));
+
+                else
+                {
+                    button.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+                }
+
+                number = string.Empty;
             }
         }
 
@@ -128,13 +142,14 @@ namespace Managers
         {
             try
             {
-                Debug.Log("Changing level to: " + levelName);
+                audioManager.UnmuteAudio();
+
                 SceneManager.LoadScene(levelName);
             }
 
             catch (Exception e)
             {
-                Debug.Log("Error changing level: " + e);
+                Debug.LogError("Error changing level: " + e);
             }
         }
 
@@ -149,7 +164,7 @@ namespace Managers
 
             else
             {
-                Debug.Log("Error changing to the next level. Returning to main menu.");
+                Debug.LogError("Error changing to the next level. Returning to main menu.");
                 ChangeScene("00_MainMenu");
             }
         }

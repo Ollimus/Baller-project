@@ -8,7 +8,7 @@ using Managers;
 public class KillZone : MonoBehaviour {
 
 	private GameObject player;
-	private PlayerSpawningPoint playerSpawningpoint;
+	private PlayerSpawner playerSpawningpoint;
     private PlayerManager playerManager;
 
     private AudioSource explosionAudio;
@@ -17,8 +17,8 @@ public class KillZone : MonoBehaviour {
 
 	void Start()
 	{
-        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawningPoint>();
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawner>();
+        playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
     }
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -26,25 +26,8 @@ public class KillZone : MonoBehaviour {
 		if (other.CompareTag ("Player"))
 		{
             KillPlayer(other);
-
-            SetPlayerDead();
 		}
 	}
-
-    void SetPlayerDead()
-    {
-        try
-        {
-            playerSpawningpoint.doesPlayerExist = false;
-
-            playerSpawningpoint.playerDeathTime = (Time.time + playerSpawningpoint.respawnTimer);
-        }
-
-        catch(Exception e)
-        {
-            Debug.Log("Error setting up player dead. Error: " + e);
-        }
-    }
 
     private void KillPlayer(Collider2D other)
     {
@@ -69,9 +52,7 @@ public class KillZone : MonoBehaviour {
 
         catch (Exception e)
         {
-            Debug.Log("Error destroying player. Error: " + e);
+            Debug.LogError("Error destroying player. Error: " + e);
         }
-
-        Debug.Log("Player Destroyed");
     }
 }

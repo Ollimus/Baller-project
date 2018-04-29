@@ -6,18 +6,16 @@ using Managers;
 
 public class EndingPointScript : MonoBehaviour
 {
-	private GameObject timeObject;
     private UIManager menu;
 	public GameTimer timer;
     private string completionTime;
 
     //Set time and menu objects
 	void Start()
-	{
-		timeObject = GameObject.Find ("GameTime");
-		timer = timeObject.GetComponent<GameTimer>();
+    { 
+		timer = GameObject.Find("GameTime").GetComponent<GameTimer>();
 
-        menu = GameObject.Find("UIManager").GetComponent<UIManager>();
+        menu = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 	}
 
     //When player touches endpoint flag, stop the timer, get the endtime and activate the menu with completion time
