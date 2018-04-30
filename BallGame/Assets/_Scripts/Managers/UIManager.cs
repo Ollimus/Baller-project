@@ -197,8 +197,6 @@ namespace Managers
 
                 ActivateMenuButtons("Button");
 
-                audioManager.MuteAudio();
-
                 songUIText.DisplaySongName();
 
                 levelManager.PauseGame();
@@ -220,8 +218,6 @@ namespace Managers
 
 
                 pauseMenu.SetActive(false);
-
-                audioManager.UnmuteAudio();
 
                 songUIText.HideSongName();
 
