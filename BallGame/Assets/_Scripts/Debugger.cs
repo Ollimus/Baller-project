@@ -5,7 +5,7 @@ using Managers;
 
 namespace Managers
 {
-    public class Cheats : MonoBehaviour
+    public class Debugger : MonoBehaviour
     {
 
     }

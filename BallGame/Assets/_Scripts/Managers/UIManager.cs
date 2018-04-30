@@ -13,7 +13,7 @@ namespace Managers
         //Gameobjects to affected by UIManager
         private GameObject informationObject;
         private ShowSongName songUIText;
-        
+
         [HideInInspector]
         public GameObject pauseMenu;
         private GameObject playerLives;
@@ -165,7 +165,7 @@ namespace Managers
 
             catch (Exception e)
             {
-                 Debug.LogError("Error creating victory menu for player. Error: " + e);
+                Debug.LogError("Error creating victory menu for player. Error: " + e);
             }
         }
 
@@ -197,8 +197,6 @@ namespace Managers
 
                 ActivateMenuButtons("Button");
 
-                audioManager.MuteAudio();
-
                 songUIText.DisplaySongName();
 
                 levelManager.PauseGame();
@@ -221,8 +219,6 @@ namespace Managers
 
                 pauseMenu.SetActive(false);
 
-                audioManager.UnmuteAudio();
-
                 songUIText.HideSongName();
 
                 levelManager.UnPauseGame();
@@ -238,26 +234,25 @@ namespace Managers
         //Handles sending information for player in UI.
         public void ShowInformationText(string inputText)
         {
-            try
+            if (informationObject == null)
             {
-                informationText = informationObject.GetComponent<Text>();
-                informationText.text = inputText;
-                informationObject.SetActive(true);
-                coroutine = FlashUIText(2.0f);
-                StartCoroutine(coroutine);
+                Debug.LogError("Cannot show information text. Text or object is null.");
+                return;
             }
 
-            catch (Exception e)
-            {
-                Debug.LogError("Error with inputting text to player. Error: " + e);
-            }
+            informationText = informationObject.GetComponent<Text>();
+            informationText.text = inputText;
+            informationObject.SetActive(true);
+
+            coroutine = FlashUIText(2.0f, informationObject);
+            StartCoroutine(coroutine);
         }
 
         //Makes the text disappear after a while
-        private IEnumerator FlashUIText(float waitTime)
+        private IEnumerator FlashUIText(float waitTime, GameObject flashingObject)
         {
             yield return new WaitForSeconds(waitTime);
-            informationObject.SetActive(false);
+            flashingObject.SetActive(false);
         }
 
         //Disables touch controls, mainly used to be called when game is used on android/ios when the game ends and activates end-game screen or player opens menu.

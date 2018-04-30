@@ -44,36 +44,20 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
     */
     public float HorizontalJoystick()
     {
-        if (transform.position.x - startPos.x > 0)
+        bool isAxisPositive = transform.position.x > startPos.x;
+
+        if (isAxisPositive)
         {
             horizontal = Mathf.InverseLerp(0f, movementRange, (transform.position.x - startPos.x));
 
-            if (horizontal > minimumInput && horizontal > 0)
-            {
-                return flatInputValue;
-            }
-
-            else
-            {
-                return 0;
-            }
+            return (horizontal > minimumInput && horizontal > 0) ? flatInputValue : 0;
         }
 
         else
         {
-            horizontal = Mathf.InverseLerp(0f, -movementRange, (transform.position.x - startPos.x));
+            horizontal = -(Mathf.InverseLerp(0f, -movementRange, (transform.position.x - startPos.x)));
 
-            horizontal = -horizontal;
-
-            if (horizontal < -minimumInput &&  horizontal < 0)
-            {
-                return -flatInputValue;
-            }
-
-            else
-            {
-                return 0;
-            }
+            return (horizontal < minimumInput && horizontal < 0) ? -flatInputValue : 0;
         }
     }
 }

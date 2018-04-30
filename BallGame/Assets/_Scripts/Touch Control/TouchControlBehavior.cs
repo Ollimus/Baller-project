@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TouchControlBehavior : MonoBehaviour {
 
-    // checks whether user is in mainmenu and disables touch controls if this is the same.
+//Will be used in the future.
+public class TouchControlBehavior : MonoBehaviour
+{
     private void Start()
     {
         string OS = SystemInfo.operatingSystem;
