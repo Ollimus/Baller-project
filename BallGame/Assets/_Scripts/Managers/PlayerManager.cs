@@ -46,6 +46,7 @@ namespace Managers
         //Also removes one player life sprite from UI.
         public void ReduceLives()
         {
+            //Since PlayerManager is persistent gameobject, null check has to be done when this is used.
             if (UImanager == null)
             {
                 UImanager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
@@ -56,11 +57,10 @@ namespace Managers
                     return;
                 }                    
             }
-
             if (UImanager.playerLifeSpriteList.Count > 0)
                 UImanager.RemovePlayerLifeSprite();
 
-            else if (UImanager.playerLifeSpriteList.Count == 0)
+            if (UImanager.playerLifeSpriteList.Count == 0)
                 UImanager.ActivateDefeatScreen();
         }
     }

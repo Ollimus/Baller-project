@@ -44,28 +44,52 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
     */
     public float HorizontalJoystick()
     {
-        if (transform.position.x - startPos.x > 0)
+        bool isAxisPositive = transform.position.x > startPos.x;
+
+        if (isAxisPositive)
         {
             horizontal = Mathf.InverseLerp(0f, movementRange, (transform.position.x - startPos.x));
 
-            if (horizontal > minimumInput && horizontal > 0)
-            {
-                return flatInputValue;
-            }
-
-            else
-            {
-                return 0;
-            }
+            return (horizontal > minimumInput && horizontal > 0) ? flatInputValue : 0;
         }
 
         else
         {
-            horizontal = Mathf.InverseLerp(0f, -movementRange, (transform.position.x - startPos.x));
+            horizontal = -(Mathf.InverseLerp(0f, -movementRange, (transform.position.x - startPos.x)));
 
-            horizontal = -horizontal;
+            return (horizontal < minimumInput && horizontal < 0) ? -flatInputValue : 0;
+        }
+    }
+}
 
-            if (horizontal < -minimumInput &&  horizontal < 0)
+/*
+ *     public float HorizontalJoystick()
+    {
+        bool isAxisPositive = transform.position.x > startPos.x; 
+
+        if (isAxisPositive)
+        {
+            horizontal = Check(movementRange);
+        }
+
+        else
+        {
+            horizontal = Check(-movementRange);
+        }
+    }
+
+    private float Check(float range)
+    {
+        horizontal = Mathf.InverseLerp(0f, range, (transform.position.x - startPos.x));
+        
+        if (range > 0)
+        {
+            return (horizontal > minimumInput && horizontal > 0) ? flatInputValue : 0;
+        }
+
+        else
+        {
+            if (horizontal < -minimumInput && horizontal < 0)
             {
                 return -flatInputValue;
             }
@@ -76,4 +100,4 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
             }
         }
     }
-}
+*/
