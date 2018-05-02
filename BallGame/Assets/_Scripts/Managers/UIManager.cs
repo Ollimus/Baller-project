@@ -46,7 +46,7 @@ namespace Managers
             try
             {
                 levelManager = gameObject.transform.parent.GetComponentInChildren<LevelManager>();
-                informationObject = GameObject.Find("InformationText");
+                informationObject = GameObject.FindGameObjectWithTag("InformationText");
 
                 if (SaveManager.SaveManagerInstance != null)
                     saveManager = SaveManager.SaveManagerInstance;
@@ -60,7 +60,7 @@ namespace Managers
                 Debug.LogError("Error setting up managers. Error: " + e);
             }
 
-            ActivatePlaceholderTextForButtons();
+            //ActivatePlaceholderTextForButtons();
 
             sceneName = SceneManager.GetActiveScene().name;
 
@@ -90,31 +90,24 @@ namespace Managers
 
         void SetUpGameUI()
         {
-            try
+            menuObject = GameObject.FindGameObjectWithTag("Menu");
+
+            playerLifeSpriteList = GameObject.FindGameObjectsWithTag("PlayerLives").OrderBy(go => go.name).ToList();
+
+            /*
+             *Edit this to be better
+            */
+            victoryMenu = menuObject.transform.GetChild(0).gameObject;
+            pauseMenu = menuObject.transform.GetChild(1).gameObject;
+            defeatMenu = menuObject.transform.GetChild(2).gameObject;
+
+            menus = new GameObject[3];
+
+            for (int i = 0; i < 3; i++)
             {
-                menuObject = GameObject.FindGameObjectWithTag("Menu");
-
-                playerLifeSpriteList = GameObject.FindGameObjectsWithTag("PlayerLives").OrderBy(go => go.name).ToList();
-
-                /*
-                 *Edit this to be better
-                */
-                victoryMenu = menuObject.transform.GetChild(0).gameObject;
-                pauseMenu = menuObject.transform.GetChild(1).gameObject;
-                defeatMenu = menuObject.transform.GetChild(2).gameObject;
-
-                menus = new GameObject[3];
-
-                for (int i = 0; i < 3; i++)
-                {
-                    menus[i] = menuObject.transform.GetChild(i).gameObject;
-                }
+                menus[i] = menuObject.transform.GetChild(i).gameObject;
             }
 
-            catch (Exception e)
-            {
-                Debug.LogError("Error setting up gameplay elements. Error: " + e);
-            }
         }
 
         //Finds UnFinishedButtons tags and adds listener for placeholder text.
@@ -136,17 +129,16 @@ namespace Managers
         */
         public void ActivateMenuButtons(string button)
         {
-            try
-            {
-                ButtonArray = GameObject.FindGameObjectsWithTag(button);
+            ButtonArray = GameObject.FindGameObjectsWithTag(button);
 
-                levelManager.InitiateButtons(ButtonArray);
+            if (ButtonArray == null)
+            {
+                Debug.LogError("UIManager cannot find any button -tag buttons. Cannot activate menu buttons.");
+                return;
             }
 
-            catch (Exception e)
-            {
-                Debug.LogError("Error activating/deactiving menus and fetching buttons. Error: " + e);
-            }
+            levelManager.InitiateUIButtons(ButtonArray, this);
+
         }
 
         //Handles activation of End Menu

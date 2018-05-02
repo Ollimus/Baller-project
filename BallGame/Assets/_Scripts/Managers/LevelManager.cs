@@ -31,64 +31,56 @@ namespace Managers
 
         private void Start()
         {
-            try
-            {
-                uiManager = gameObject.transform.parent.GetComponentInChildren<UIManager>();
 
                 if (SaveManager.SaveManagerInstance != null)
                     saveManager = SaveManager.SaveManagerInstance;
 
                 if (AudioManager.AudioInstance != null)
                     audioManager = AudioManager.AudioInstance;
-            }
 
-            catch (Exception e)
-            {
-                Debug.LogError("Error setting up managers for LevelManager. Error: " + e);
-            }
 
             if (SceneManager.GetActiveScene().name == "00_MainMenu")
-                ActivateMainMenuLevels();;
+                ActivateMainMenuLevels(); ;
 
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
         }
 
-        public void InitiateButtons(GameObject[] buttonArray)
+        public void InitiateUIButtons(GameObject[] buttonArray, UIManager uiManag)
         {
-            try
+            uiManager = uiManag;
+
+            if (uiManager == null)
             {
-                foreach (GameObject buttons in buttonArray)
-                {
-                    Button button = buttons.GetComponent<Button>();
-
-                    string btnName = button.name;
-
-                    if (btnName == nextLevelBtnName)
-                    {
-                        button.onClick.AddListener(() => NextLevel());
-                    }
-
-                    if (btnName == retryLevelBtnName)
-                    {
-                        button.onClick.AddListener(() => RetryLevel());
-                    }
-
-                    if (btnName == mainMenuBtnName)
-                    {
-                        button.onClick.AddListener(() => ChangeScene("00_MainMenu"));
-                    }
-
-                    if (btnName == resumeGameBtnName)
-                    {
-                        button.onClick.AddListener(() => ResumeGame());
-                    }
-                }
+                Debug.LogError("uiManager is null.");
+                return;
             }
 
-            catch (Exception e)
+            foreach (GameObject buttons in buttonArray)
             {
-                Debug.Log("Error setting up buttons. Error: " + e);
+                Button button = buttons.GetComponent<Button>();
+
+                string btnName = button.name;
+
+                if (btnName == nextLevelBtnName)
+                {
+                    button.onClick.AddListener(() => NextLevel());
+                }
+
+                if (btnName == retryLevelBtnName)
+                {
+                    button.onClick.AddListener(() => RetryLevel());
+                }
+
+                if (btnName == mainMenuBtnName)
+                {
+                    button.onClick.AddListener(() => ChangeScene("00_MainMenu"));
+                }
+
+                if (btnName == resumeGameBtnName)
+                {
+                    button.onClick.AddListener(() => ResumeGame());
+                }
             }
         }
 
@@ -118,7 +110,7 @@ namespace Managers
                 {
                     if (Char.IsDigit(name[i]))
                     {
-                        number += name[i];                        
+                        number += name[i];
                     }
                 }
 
@@ -188,6 +180,9 @@ namespace Managers
         {
             try
             {
+                if (uiManager == null)
+                    uiManager = GameObject.FindGameObjectWithTag("UiManager").GetComponent<UIManager>();
+
                 uiManager.ResumeGame();
             }
 

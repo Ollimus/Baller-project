@@ -15,7 +15,7 @@ public class ShowSongName : MonoBehaviour
     private void Start()
     {
 
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager = AudioManager.AudioInstance;
 
         if (audioManager == null)
         {

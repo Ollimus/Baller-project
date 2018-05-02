@@ -10,8 +10,7 @@ public class KillZone : MonoBehaviour {
 	private GameObject player;
 	private PlayerSpawner playerSpawningpoint;
     private PlayerManager playerManager;
-
-    private AudioSource explosionAudio;
+  
 
 	private float gameTime;
 
@@ -19,14 +18,15 @@ public class KillZone : MonoBehaviour {
 	{
         playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawner>();
         playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
+
+        if (playerManager == null)
+            Debug.LogError("Cannot reduce player lives. PlayerManager not found.");
     }
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.CompareTag ("Player"))
-		{
             KillPlayer(other);
-		}
 	}
 
     private void KillPlayer(Collider2D other)
@@ -39,10 +39,12 @@ public class KillZone : MonoBehaviour {
             Animator anim = player.GetComponent<Animator>();
             anim.Play("Explosion");
 
-            FindObjectOfType<AudioManager>().Play("PlayerDeath");
+            player.GetComponent<PlayerMovementController>().DisableMovement();  //If playermovement is not disabled, player can move as animation.
 
+            AudioManager.AudioInstance.Play("PlayerDeath");
+
+            //Get the length of death animation and kill the player after the animation has fully played.
             float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
-
             Destroy(player, animationLength);
 
             StartCoroutine(playerSpawningpoint.SpawnPlayerAtCheckpoint());

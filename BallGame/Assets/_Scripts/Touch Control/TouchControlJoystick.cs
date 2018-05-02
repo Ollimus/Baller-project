@@ -11,9 +11,14 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
 
     public bool isJoystickActive; //PlayerMovementController checks whether mobile joystick is active and giving input.
 
+    PlayerMovementController player;
+
     void Start()
     {
         startPos = transform.position;
+
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
     }
 
     public virtual void OnPointerDown(PointerEventData data)
@@ -36,28 +41,43 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
         delta = Mathf.Clamp(delta, -movementRange, movementRange);  //Clamps the value of delta between negative and positive movementRange
         newPos.x = delta;
 
-        transform.position = new Vector2(startPos.x + newPos.x, startPos.y);        
+        transform.position = new Vector2(startPos.x + newPos.x, startPos.y);
+
+        JoyStickMovement();
     }
 
-    /*
-     * Handles mobile joystick input to PlayerMovementController
-    */
-    public float HorizontalJoystick()
+    public void RefreshPlayerCache(GameObject playerObject)
     {
-        bool isAxisPositive = transform.position.x > startPos.x;
+        player = playerObject.GetComponent<PlayerMovementController>();
 
-        if (isAxisPositive)
+        if (player == null)
+            Debug.LogError("Touch Control Joystick did not receive Player Object.");
+    }
+
+    private void Update()
+    {
+        if (player != null)
+            JoyStickMovement();
+    }
+
+
+    private void JoyStickMovement()
+    {
+        if (player == null)
+            return; 
+
+        if (transform.position.x > startPos.x)
         {
             horizontal = Mathf.InverseLerp(0f, movementRange, (transform.position.x - startPos.x));
 
-            return (horizontal > minimumInput && horizontal > 0) ? flatInputValue : 0;
+            player.HorizontalMovement((horizontal > minimumInput && horizontal > 0) ? flatInputValue : 0);
         }
 
         else
         {
             horizontal = -(Mathf.InverseLerp(0f, -movementRange, (transform.position.x - startPos.x)));
 
-            return (horizontal < minimumInput && horizontal < 0) ? -flatInputValue : 0;
+            player.HorizontalMovement((horizontal < -minimumInput && horizontal < 0) ? -flatInputValue : 0);
         }
     }
 }

@@ -31,7 +31,7 @@ public class PlayerMovementController : MonoBehaviour
     public bool isRightButtonActive;
     public bool isJumpButtonActive;
 
-    public bool canPlayerMove = true;
+   // public bool canPlayerMove = true;
 
     void Start()
     {
@@ -49,58 +49,32 @@ public class PlayerMovementController : MonoBehaviour
 
         //If touchcontrol is active, get joystick gameobject as well.
         if (TouchController != null)
+        {
             joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
-
+            joystick.RefreshPlayerCache(gameObject);
+        }       
     }
 
     void Update()
     {
-        //Used for debugging
-        if (TouchController == null)
-            TouchController = GameObject.FindGameObjectWithTag("TouchController");
+        DebugTouchControl();    //Literally what it says.
 
-        else if (joystick == null && TouchController.activeInHierarchy)
-            joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
+        CreateGroundChecks();
 
-        if (!canPlayerMove)
+        if (Input.GetKey(KeyCode.LeftArrow))
+            HorizontalMovement(-horizontalMovementSpeed);
+
+        else if (Input.GetKey(KeyCode.RightArrow))
+            HorizontalMovement(horizontalMovementSpeed);
+
+        if (Input.GetKey(KeyCode.DownArrow))
         {
-            rigi.constraints = RigidbodyConstraints2D.FreezeAll;
+            rigi.velocity = new Vector2(0, rigi.velocity.y);
         }
 
-        else
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            CreateGroundChecks();
-
-            if (Input.GetKey(KeyCode.LeftArrow))
-                HorizontalMovement(-horizontalMovementSpeed);
-
-            else if (Input.GetKey(KeyCode.RightArrow))
-                HorizontalMovement(horizontalMovementSpeed);
-
-            else if (joystick != null)
-            {
-                if (joystick.isJoystickActive)
-                {
-                    horizontalInput = joystick.HorizontalJoystick();
-
-                    HorizontalMovement(horizontalInput);
-                }
-
-                else if (joystick.isJoystickActive == false)
-                {
-                    HorizontalMovement(0);
-                }
-            }
-
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                rigi.velocity = new Vector2(0, rigi.velocity.y);
-            }
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                Jump();
-            }
+            Jump();
         }
     }
 
@@ -158,6 +132,19 @@ public class PlayerMovementController : MonoBehaviour
         leftWallCheckLocation = rigi.transform.position;
         leftWallCheckLocation.x -= (playerCollider.bounds.size.x) / 2;
         leftWalled = Physics2D.OverlapCircle(leftWallCheckLocation, groundRadius, whatIsGround);
+    }
 
+    public void DisableMovement()
+    {
+        rigi.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    void DebugTouchControl()
+    {
+        if (TouchController == null)
+            TouchController = GameObject.FindGameObjectWithTag("TouchController");
+
+        else if (joystick == null && TouchController.activeInHierarchy)
+            joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
     }
 }
