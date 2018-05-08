@@ -43,22 +43,11 @@ public class PlayerMovementController : MonoBehaviour
 
         rigi = GetComponent<Rigidbody2D>();
 
-        playerCollider = GetComponent<Collider2D>();
-
-        TouchController = GameObject.FindGameObjectWithTag("TouchController");
-
-        //If touchcontrol is active, get joystick gameobject as well.
-        if (TouchController != null)
-        {
-            joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
-            joystick.RefreshPlayerCache(gameObject);
-        }       
+        playerCollider = GetComponent<Collider2D>();    
     }
 
     void Update()
     {
-        DebugTouchControl();    //Literally what it says.
-
         CreateGroundChecks();
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -137,14 +126,5 @@ public class PlayerMovementController : MonoBehaviour
     public void DisableMovement()
     {
         rigi.constraints = RigidbodyConstraints2D.FreezeAll;
-    }
-
-    void DebugTouchControl()
-    {
-        if (TouchController == null)
-            TouchController = GameObject.FindGameObjectWithTag("TouchController");
-
-        else if (joystick == null && TouchController.activeInHierarchy)
-            joystick = TouchController.GetComponentInChildren<TouchControlJoystick>();
     }
 }

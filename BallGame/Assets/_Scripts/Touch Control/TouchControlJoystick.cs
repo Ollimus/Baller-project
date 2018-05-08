@@ -17,8 +17,10 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
     {
         startPos = transform.position;
 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
+
         if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
+            Debug.LogError("Player was not found on TC start-up.");
     }
 
     public virtual void OnPointerDown(PointerEventData data)
@@ -63,9 +65,6 @@ public class TouchControlJoystick : MonoBehaviour, IDragHandler, IPointerUpHandl
 
     private void JoyStickMovement()
     {
-        if (player == null)
-            return; 
-
         if (transform.position.x > startPos.x)
         {
             horizontal = Mathf.InverseLerp(0f, movementRange, (transform.position.x - startPos.x));

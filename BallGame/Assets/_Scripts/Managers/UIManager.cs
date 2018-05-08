@@ -28,7 +28,6 @@ namespace Managers
 
         private Scene scene;
         private LevelManager levelManager;
-        private AudioManager audioManager;
         private SaveManager saveManager;
 
         private GameObject touchControls;
@@ -50,9 +49,6 @@ namespace Managers
 
                 if (SaveManager.SaveManagerInstance != null)
                     saveManager = SaveManager.SaveManagerInstance;
-
-                if (AudioManager.AudioInstance != null)
-                    audioManager = AudioManager.AudioInstance;
             }
 
             catch (Exception e)
