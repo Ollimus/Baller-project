@@ -96,7 +96,7 @@ public class AudioManager : MonoBehaviour
         int randomSongIndex = UnityEngine.Random.Range(0, OSTList.Count);
 
         song = OSTList[randomSongIndex];
-        ConfigAudio(song);
+        SetOSTAudioSource(song);
 
         //activeSongName = song.name;
         //Play(activeSongName);
@@ -111,16 +111,13 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(PlayRandomOST());
     }
 
-    void ConfigAudio(Sound ost)
+    void SetOSTAudioSource(Sound ost)
     {
-       
 
         OSTSource.clip = ost.clip;
         OSTSource.volume = ost.volume;
         OSTSource.pitch = ost.pitch;
         OSTSource.loop = ost.loop;
-
-        Debug.Log(OSTSource.clip);
 
         OSTSource.Play();
     }
