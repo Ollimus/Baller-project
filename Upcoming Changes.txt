@@ -7,6 +7,9 @@ Upcoming Features:
 - Few more maps.
 - Simple player personalization system (Change skin in-game).
 - Weather system that affects player movements in-game like wind that pushes player in certain direction (direction visible on HUD) or lower/higher gravity areas. (Also can be later used for "Hardcore mode" for easier maps?). *This is related to player movement changes*
+
+
+Features that might be tied to google play services:
 - Simple achievement system.
 - Best times for maps.
 
@@ -15,6 +18,7 @@ Upcoming Features:
 
 Upcoming Changes:
 - Reworking player movement to be more dynamic. Idea is to have general movement script that is used by both mobile and PC (like it is currently) and supported by script array that have different movement speeds/conditions for different conditions (Higher/Smaller jumps, more resistance when moving in certain directions, water maps etc.).
+		- Movement reworked somewhat and will be kept as it is for now.
 
 
 Known Bugs:

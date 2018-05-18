@@ -3,6 +3,11 @@ Project
 This 2d platform game codenamed "Baller" -project is personal hobby project developed by me. The main goal of the project is to learn game programming and development from scratch. All the assets and code included in the project is free-to-share assets. The target platforms for the game are Android (phone, tablet) and PC enviroments.
 
 
+Editor:
+
+- Input (Editor Menu)
+	-Contains options for Keyboard controls and Touch Control controls. Activated TC will allow editor user to test touch controls ingame.
+
 
 
 Editor Scene Hierachy Guide

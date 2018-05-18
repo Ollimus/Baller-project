@@ -134,8 +134,6 @@ namespace Managers
         {
             try
             {
-                audioManager.UnmuteAudio();
-
                 SceneManager.LoadScene(levelName);
             }
 
