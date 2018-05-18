@@ -113,7 +113,6 @@ public class AudioManager : MonoBehaviour
 
     void SetOSTAudioSource(Sound ost)
     {
-
         OSTSource.clip = ost.clip;
         OSTSource.volume = ost.volume;
         OSTSource.pitch = ost.pitch;
@@ -143,15 +142,21 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound sound in sounds)
         {
-            sound.source.volume = 0f;
+            if (sound.source != null)
+                sound.source.volume = 0f;
         }
+
+        OSTSource.volume = 0f;
     }
 
     public void UnmuteAudio()
     {
         foreach (Sound sound in sounds)
         {
-            sound.source.volume = sound.volume;
+            if (sound.source != null)
+                sound.source.volume = 0f;
         }
+
+        OSTSource.volume = 0f;
     }
 }
