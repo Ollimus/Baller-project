@@ -21,6 +21,7 @@ TagManager:
   - LevelManager
   - CheatingManager
   - SaveManager
+  - InformationText
   layers:
   - Default
   - TransparentFX

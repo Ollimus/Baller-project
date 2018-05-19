@@ -12,8 +12,6 @@ public class SaveManager : MonoBehaviour {
     private int unlockedSkins = 1;
     public int unlockedLevels = 1;
     public int specialSkins;
-    private bool resetPlayerProgress = false;
-    private bool resetLevels = false;
     public int levelFinishTime;
 
     private void Awake()

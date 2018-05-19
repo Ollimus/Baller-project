@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     private List<Sound> playedOSTs = new List<Sound>();
     private string activeSongName;
     private ShowSongName songDisplayObject;
+    private AudioSource OSTSource;
 
     private void Awake()
     {
@@ -48,18 +49,25 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        OSTSource = GetComponent<AudioSource>();
+
         foreach (Sound sound in sounds)
         {
-            sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.clip = sound.clip;
-
-            sound.source.volume = sound.volume;
-            sound.source.pitch = sound.pitch;
-            sound.source.loop = sound.loop;
-
             // Every sound tagged as OST gets added to OST array to be played by music player.
             if (sound.soundtrack)
+            {
                 OSTList.Add(sound);
+            }
+            
+            else
+            {
+                sound.source = gameObject.AddComponent<AudioSource>();
+                sound.source.clip = sound.clip;
+
+                sound.source.volume = sound.volume;
+                sound.source.pitch = sound.pitch;
+                sound.source.loop = sound.loop;
+            }            
         }
 
         if (OSTList.Count == 0)
@@ -88,9 +96,10 @@ public class AudioManager : MonoBehaviour
         int randomSongIndex = UnityEngine.Random.Range(0, OSTList.Count);
 
         song = OSTList[randomSongIndex];
-        activeSongName = song.name;
+        SetOSTAudioSource(song);
 
-        Play(activeSongName);
+        //activeSongName = song.name;
+        //Play(activeSongName);
 
         StartCoroutine(songDisplayObject.ShowCurrentSong(song));
 
@@ -100,6 +109,16 @@ public class AudioManager : MonoBehaviour
 
         yield return new WaitForSeconds(song.clip.length);
         StartCoroutine(PlayRandomOST());
+    }
+
+    void SetOSTAudioSource(Sound ost)
+    {
+        OSTSource.clip = ost.clip;
+        OSTSource.volume = ost.volume;
+        OSTSource.pitch = ost.pitch;
+        OSTSource.loop = ost.loop;
+
+        OSTSource.Play();
     }
 
 
@@ -123,15 +142,21 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound sound in sounds)
         {
-            sound.source.volume = 0f;
+            if (sound.source != null)
+                sound.source.volume = 0f;
         }
+
+        OSTSource.volume = 0f;
     }
 
     public void UnmuteAudio()
     {
         foreach (Sound sound in sounds)
         {
-            sound.source.volume = sound.volume;
+            if (sound.source != null)
+                sound.source.volume = 0f;
         }
+
+        OSTSource.volume = 0f;
     }
 }
