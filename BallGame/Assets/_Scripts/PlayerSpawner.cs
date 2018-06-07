@@ -7,16 +7,16 @@ using Managers;
 public class PlayerSpawner : MonoBehaviour
 {
     public GameObject player;
+    public int respawnTimer = 2;
+
     private Transform checkpointLocation;
     private Transform startingPoint;
     private List<Transform> checkpointLocations = new List<Transform>();    //List of checkpoint locations
-
     int lastAddedObject;
-    public int respawnTimer = 2;
+
 
     void Start()
     {
-
         startingPoint = transform;
 
         //Creates starting point as the first spawnable location.
@@ -64,7 +64,6 @@ public class PlayerSpawner : MonoBehaviour
         yield return new WaitForSecondsRealtime(respawnTimer);
 
         lastAddedObject = checkpointLocations.Count -1;
-
         checkpointLocation = checkpointLocations[lastAddedObject];
 
         Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
