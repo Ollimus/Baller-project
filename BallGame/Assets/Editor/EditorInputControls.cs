@@ -1,28 +1,17 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class EditorInputControls : EditorWindow
 {
-   //bool touchControlsActivated;
-
-    void Start()
-    {
-        /*bool touchControlActivated = PlayerPrefs.GetInt("InputControlSetting", 0) == 0 ? true : false;
-
-        if (touchControlActivated)
-            KeyboardControls();
-        else if (!touchControlActivated)
-            MobileControls();*/
-    }
-
     [MenuItem("Input/Keyboard")]
     public static void KeyboardControls()
     {
         if (TouchControlBehavior.TouchInstance == null) return;
 
-        TouchControlBehavior.TouchInstance.SetActive(false);
+        EditorPrefs.SetInt("InputControlSetting", 0);
 
-        PlayerPrefs.SetInt("InputControlSetting", 0);
+        TouchControlBehavior.TouchInstance.ControlControls(false);
     }
 
     [MenuItem("Input/Mobile Controls")]    
@@ -30,8 +19,8 @@ public class EditorInputControls : EditorWindow
     {
         if (TouchControlBehavior.TouchInstance == null) return;
 
-        TouchControlBehavior.TouchInstance.SetActive(true);
+        EditorPrefs.SetInt("InputControlSetting", 1);
 
-        PlayerPrefs.SetInt("InputControlSetting", 1);
+        TouchControlBehavior.TouchInstance.ControlControls(true);
     }
 }

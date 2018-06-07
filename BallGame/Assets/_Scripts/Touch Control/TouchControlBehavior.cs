@@ -1,25 +1,51 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
-
-//Will be used in the future.
-public class TouchControlBehavior : MonoBehaviour
+namespace Managers
 {
-    public static GameObject TouchInstance;
-
-    private void Start()
+    [ExecuteInEditMode]
+    public class TouchControlBehavior : MonoBehaviour
     {
-        if (TouchInstance == null)
-            TouchInstance = gameObject;
-        else
+        public static TouchControlBehavior TouchInstance;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (TouchInstance == null)
+                TouchInstance = this;
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
 
-        string OS = SystemInfo.operatingSystem;
+        private void Start()
+        {
+            string OS = SystemInfo.operatingSystem;
 
-        if (SceneManager.GetActiveScene().name == "00_MainMenu" || OS.Contains("Windows") || OS.Contains("Linux") || OS.Contains("Mac"))
-            gameObject.SetActive(false);
+            if (EditorPrefs.GetInt("InputControlSetting") == 1)
+            {
+                ControlControls(true);
+                return;
+            }
+
+            else if (EditorPrefs.GetInt("InputControlSetting") == 0)
+            {
+                ControlControls(false);
+                return;
+            }
+
+            if (SceneManager.GetActiveScene().name == "00_MainMenu" || OS.Contains("Windows") || OS.Contains("Linux") || OS.Contains("Mac"))
+                gameObject.SetActive(false);
+        }
+
+        public void ControlControls(bool activate)
+        {
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                gameObject.transform.GetChild(i).gameObject.SetActive(activate);
+            }
+        }
     }
 }
