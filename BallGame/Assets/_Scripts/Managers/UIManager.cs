@@ -28,7 +28,7 @@ namespace Managers
 
         private Scene scene;
         private LevelManager levelManager;
-        private SaveManager saveManager;
+        private PlayerManager playerManager;
 
         private GameObject touchControls;
 
@@ -47,8 +47,8 @@ namespace Managers
                 levelManager = gameObject.transform.parent.GetComponentInChildren<LevelManager>();
                 informationObject = GameObject.FindGameObjectWithTag("InformationText");
 
-                if (SaveManager.SaveManagerInstance != null)
-                    saveManager = SaveManager.SaveManagerInstance;
+                if (PlayerManager.PlayerDataInstance != null)
+                    playerManager = PlayerManager.PlayerDataInstance;
             }
 
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Managers
                 completionTimeText.text = completionTime;
                 victoryMenu.SetActive(true);
 
-                saveManager.UnlockNewLevel();
+                playerManager.UnlockNewLevel();
 
                 ActivateMenuButtons("Button");
             }

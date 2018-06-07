@@ -1,81 +1,88 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System;
 
-public class SaveManager : MonoBehaviour {
-
-    public static SaveManager SaveManagerInstance;
-
-    public float ResetLevelsBeforeThisVersion; //Make it private
-
-    //Variables used for data saves.
-    private int unlockedSkins = 1;
-    public int unlockedLevels = 1;
-    public int specialSkins;
-    public int levelFinishTime;
-
-    private void Awake()
+namespace Managers
+{
+    public class SaveManager : MonoBehaviour
     {
-        if (SaveManagerInstance == null)
-            SaveManagerInstance = this;
+        public static SaveManager Instance;
 
-        else
+        public bool resetSave;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance == null)
+                Instance = this;
+
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            /*
+             * Makes sure PlayerDataManager  is not a child of anything, because a child cannot be indestructable.
+            */
+            if (gameObject.transform.parent != null)
+            {
+                gameObject.transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }
+
+            else
+            {
+                return;
+            }
         }
 
-        LoadSaves();
-
-        /*
-         * Makes sure PlayerDataManager  is not a child of anything, because a child cannot be indestructable.
-        */
-        if (gameObject.transform.parent != null)
+        private void Start()
         {
-            gameObject.transform.parent = null;
-            DontDestroyOnLoad(gameObject);
+            if (resetSave)
+            {
+                File.Delete(Application.persistentDataPath + "/playerSave.dat");
+            }                
         }
 
-        else
+        public void Save(PlayerData data)
         {
-            return;
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            FileStream file = File.OpenWrite(Application.persistentDataPath + "/playerSave.dat");
+
+            bFormatter.Serialize(file, data);
+            file.Close();
         }
-    }
 
-    private void Start()
-    {
-        CheckVersion();
-    }
-
-    private void CheckVersion()
-    {
-        float versionNumber = float.Parse(Application.version);
-
-        if (versionNumber < ResetLevelsBeforeThisVersion)
+        public PlayerData Load()
         {
-            PlayerPrefs.DeleteKey("Levels");
+            if (File.Exists(Application.persistentDataPath + "/playerSave.dat"))
+            {
+                BinaryFormatter bFormatter = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/playerSave.dat", FileMode.Open);
+                PlayerData playerData = (PlayerData)bFormatter.Deserialize(file);
+                file.Close();
+
+                return playerData;
+            }        
+            
+            else
+            {
+                return CreatePlayerFile();
+            }
         }
-    }
 
-    private void LoadSaves()
-    {
-        unlockedLevels = PlayerPrefs.GetInt("Levels", 1);   //Default starting level is 1. Levelmanager checks by level whether you can start a level.
-        unlockedSkins = PlayerPrefs.GetInt("Skins", -1);
-        specialSkins = PlayerPrefs.GetInt("specialSkins", -1);
-    }
+        private PlayerData CreatePlayerFile()
+        {
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/playerSave.dat");
 
-    //Unlocks the next level and saves it.
-    public void UnlockNewLevel()
-    {
-        unlockedLevels++;
+            PlayerData playerFile = new PlayerData();
 
-        PlayerPrefs.SetInt("Levels", unlockedLevels);
-    }
+            bFormatter.Serialize(file, playerFile);
+            file.Close();
 
-    public void SavePlayerData()
-    {
-        PlayerPrefs.SetInt("Levels", unlockedLevels);
-        PlayerPrefs.SetInt("UnlockableSkins", unlockedSkins);
-        PlayerPrefs.SetInt("SpecialSkins", specialSkins);
+            return playerFile;
+        }
     }
 }
