@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
-
+using Managers;
+    
 [ExecuteInEditMode]
 public class EditorInputControls : EditorWindow
 {
@@ -11,7 +12,7 @@ public class EditorInputControls : EditorWindow
 
         EditorPrefs.SetInt("InputControlSetting", 0);
 
-        TouchControlBehavior.TouchInstance.ControlControls(false);
+        TouchControlBehavior.TouchInstance.DisplayTouchControls(false);
     }
 
     [MenuItem("Input/Mobile Controls")]    
@@ -21,6 +22,6 @@ public class EditorInputControls : EditorWindow
 
         EditorPrefs.SetInt("InputControlSetting", 1);
 
-        TouchControlBehavior.TouchInstance.ControlControls(true);
+        TouchControlBehavior.TouchInstance.DisplayTouchControls(true);
     }
 }

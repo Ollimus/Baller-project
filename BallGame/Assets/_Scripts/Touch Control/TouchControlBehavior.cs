@@ -26,13 +26,13 @@ namespace Managers
 
             if (EditorPrefs.GetInt("InputControlSetting") == 1)
             {
-                ControlControls(true);
+                DisplayTouchControls(true);
                 return;
             }
 
             else if (EditorPrefs.GetInt("InputControlSetting") == 0)
             {
-                ControlControls(false);
+                DisplayTouchControls(false);
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace Managers
                 gameObject.SetActive(false);
         }
 
-        public void ControlControls(bool activate)
+        public void DisplayTouchControls(bool activate)
         {
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
