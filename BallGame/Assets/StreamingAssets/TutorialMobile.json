@@ -1,0 +1,29 @@
+{"tutorialtexts":
+[{
+"key" : "Movement",
+"value":"Drag joystick to left or right to move the character."
+},
+
+{
+"key":"Jump", "value":"Press Jump -button to jump. "
+},
+
+{
+"key":"Aerial", "value":"You can control character in air. Release joystick to make your character movement stop mid-air!"
+},
+
+{
+"key":"Checkpoint", "value":"Touch a checkpoint to unlock it."
+},
+
+{
+"key":"Hazard", "value":"Hazards come in many forms. Touching a hazard will kill you."
+},
+
+{
+"key":"Complete", "value":"Completing the level will unlock the next level!"
+}
+
+
+]
+}

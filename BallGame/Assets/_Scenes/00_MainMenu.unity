@@ -1620,7 +1620,7 @@ GameObject:
   - component: {fileID: 579840236}
   m_Layer: 5
   m_Name: btnTutorial
-  m_TagString: LevelButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

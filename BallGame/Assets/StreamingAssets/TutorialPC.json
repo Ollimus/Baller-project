@@ -1,0 +1,28 @@
+{"tutorialtexts":
+[{
+"key" : "Movement",
+"value":"Press arrow keys to move left and right."
+},
+
+{
+"key":"Jump", "value":"Press Up arrow or Spacebar to jump!"
+},
+
+{
+"key":"Aerial", "value":"You can control character in air."
+},
+
+{
+"key":"Checkpoint", "value":"Touch a checkpoint to unlock it."
+},
+
+{
+"key":"Hazard", "value":"Hazards come in many forms. Touching a hazard will kill you."
+},
+
+{
+"key":"Complete", "value":"Completing the level will unlock the next level!"
+}
+
+]
+}
