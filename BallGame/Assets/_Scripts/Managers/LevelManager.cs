@@ -109,7 +109,7 @@ namespace Managers
                     }
                 }
 
-                string levelName = "01_Level" + number;
+                string levelName = "01_Level" + number;                     //Fix this. Does not work with other levels, use different approach.
                 int levelNumber = Convert.ToInt16(number);
 
                 if (levelNumber <= playerManager.PlayerData.UnlockedLevels)

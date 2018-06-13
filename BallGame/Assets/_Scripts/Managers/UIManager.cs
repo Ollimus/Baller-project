@@ -56,8 +56,6 @@ namespace Managers
                 Debug.LogError("Error setting up managers. Error: " + e);
             }
 
-            //ActivatePlaceholderTextForButtons();
-
             sceneName = SceneManager.GetActiveScene().name;
 
             //Ignore setting up gameplay elements if active scene is main menu.
