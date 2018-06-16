@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Managers;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class PlayerMovementController : MonoBehaviour
 
         else
             Debug.LogError("Audiomanager not found. Cannot activate player movement sounds. Error.");
+
+        if (TouchControlBehavior.TouchInstance.touchControlEnabled)
+            TouchControlBehavior.TouchInstance.RefreshPlayerCache(this);
+
 
         rigi = GetComponent<Rigidbody2D>();
 
