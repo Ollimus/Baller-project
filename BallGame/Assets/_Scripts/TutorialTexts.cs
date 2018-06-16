@@ -16,49 +16,89 @@ public class TutorialTexts : MonoBehaviour {
     {
         if (Application.isEditor)
         {
+            string filePath = Application.streamingAssetsPath;
+
             if (debugMobileTutorial)
             {
-                CreateDictionaryFromJSON(mobileFileName);
+                ReadJsonFileData(filePath, mobileFileName, null);
                 return;
             }
 
             else
-                CreateDictionaryFromJSON(pcFileName);
+            {
+                ReadJsonFileData(filePath, pcFileName, null);
+                return;
+            }
         }
 
         RuntimePlatform playerPlatform = Application.platform;
 
         if (playerPlatform == RuntimePlatform.WindowsPlayer || playerPlatform == RuntimePlatform.OSXPlayer || playerPlatform == RuntimePlatform.LinuxPlayer)
         {
-            CreateDictionaryFromJSON(pcFileName);
+            string filePath = Application.streamingAssetsPath;
+
+            ReadJsonFileData(filePath , pcFileName, null);
         }
 
-        else if (playerPlatform == RuntimePlatform.Android || playerPlatform == RuntimePlatform.Android)
+        else if (playerPlatform == RuntimePlatform.Android)
         {
-            CreateDictionaryFromJSON(mobileFileName);
+            string filePath = "jar:file://" + Application.dataPath + "/assets/";
+
+            string extractedJson = ExtractedJsonFile(filePath, mobileFileName);
+
+            ReadJsonFileData(filePath, mobileFileName, extractedJson);
+        }
+
+        else if (playerPlatform == RuntimePlatform.IPhonePlayer)
+        {
+            string filePath = Application.dataPath + "/Raw";
+            ReadJsonFileData(filePath, mobileFileName, null);
         }
 	}
 
-    private void CreateDictionaryFromJSON (string fileName)
+    private string ExtractedJsonFile(string filePath, string fileName)
+    {
+        string newPath = Path.Combine(filePath, fileName);
+
+        WWW reader = new WWW(newPath);
+
+        while (!reader.isDone) { }
+        
+        return reader.text;
+    }
+
+
+    private void ReadJsonFileData (string filePath, string fileName, string extracedJson)
     {
         tutorialDict = new Dictionary<string, string>();
+        filePath = Path.Combine(filePath, fileName);
 
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+        if (extracedJson != null)
+        {
+            CreateDictionary(extracedJson);
+            return;
+        }
 
         if (File.Exists(filePath))
         {
-            string dataAsJson = File.ReadAllText(filePath);
-            TextData loadedData = JsonUtility.FromJson<TextData>(dataAsJson);
+            string jsonDataFile = File.ReadAllText(filePath);
 
-            for (int i = 0; i < loadedData.tutorialtexts.Length; i++)
-            {
-                tutorialDict.Add(loadedData.tutorialtexts[i].key, loadedData.tutorialtexts[i].value);
-            }
+            CreateDictionary(jsonDataFile);
         }
 
         else
         {
             Debug.LogError("Cannot find file!");
+        }
+    }
+
+    private void CreateDictionary(string dataAsJson)
+    {
+        TextData loadedData = JsonUtility.FromJson<TextData>(dataAsJson);
+
+        for (int i = 0; i < loadedData.tutorialtexts.Length; i++)
+        {
+            tutorialDict.Add(loadedData.tutorialtexts[i].key, loadedData.tutorialtexts[i].value);
         }
     }
 
