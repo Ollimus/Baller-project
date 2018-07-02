@@ -16,11 +16,7 @@ public class KillZone : MonoBehaviour {
 
 	void Start()
 	{
-        playerSpawningpoint = GameObject.FindGameObjectWithTag("StartingPoint").GetComponentInParent<PlayerSpawner>();
-        playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
-
-        if (playerManager == null)
-            Debug.LogError("Cannot reduce player lives. PlayerManager not found.");
+        playerManager = PlayerManager.PlayerDataInstance;
     }
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -47,7 +43,7 @@ public class KillZone : MonoBehaviour {
             float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
             Destroy(player, animationLength);
 
-            StartCoroutine(playerSpawningpoint.SpawnPlayerAtCheckpoint());
+            playerManager.StartPlayerAtLatestCheckpoint();
 
             playerManager.ReduceLives();
         }

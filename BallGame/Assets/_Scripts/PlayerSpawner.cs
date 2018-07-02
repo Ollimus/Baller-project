@@ -6,32 +6,26 @@ using Managers;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    public GameObject player;
-    private Transform checkpointLocation;
-    private Transform startingPoint;
-    private List<Transform> checkpointLocations = new List<Transform>();    //List of checkpoint locations
-
-    int lastAddedObject;
     public int respawnTimer = 2;
+
+    private PlayerManager playerManager;
+    private Transform startingPoint;
 
     void Start()
     {
 
         startingPoint = transform;
 
+        playerManager = PlayerManager.PlayerDataInstance;
+
         //Creates starting point as the first spawnable location.
         if (startingPoint != null)
-            checkpointLocations.Add(startingPoint);
+            playerManager.checkpointLocations.Add(startingPoint);
         else
         {
             Debug.LogError("No starting location.");
             return;
         }
-
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        if (playerObject == null)
-            SpawnPlayer();
     }
 
     /*
@@ -39,38 +33,12 @@ public class PlayerSpawner : MonoBehaviour
     */
     void SpawnPlayer()
     {
-        if (player != null)
-            Instantiate(player, startingPoint, startingPoint);
-
-        else
-        {
-            Debug.LogError("Player prefab is not assigned to PlayerSpawner.");
-            return;
-        }
+        playerManager.StartPlayerRespawn(startingPoint);
     }
 
     //Receives transform location from CheckPoint script and adds it into the list of checkpoints.
     public void AddCheckpoint(Transform location)
     {
-        checkpointLocations.Add(location);
-    }
-
-    /*
-    *After respawn time has passed, spawn player at the latest unlocked checkpoint. 
-    */
-
-    public IEnumerator SpawnPlayerAtCheckpoint()
-    {
-        Debug.Log(respawnTimer);
-
-        yield return new WaitForSecondsRealtime(respawnTimer);
-
-        Debug.Log("Triggered 2st.");
-
-        lastAddedObject = checkpointLocations.Count -1;
-
-        checkpointLocation = checkpointLocations[lastAddedObject];
-
-        Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
+        playerManager.checkpointLocations.Add(location);
     }
 }

@@ -456,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc4fb9c5d92d8d4b8fc1ad0201b2597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   respawnTimer: 1
 --- !u!4 &443889485
 Transform:
@@ -727,48 +726,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4126428558649648, guid: 36f173af6be7d8141adb2e3e7a35a223,
     type: 2}
   m_PrefabInternal: {fileID: 568968035}
---- !u!1001 &580545134
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 19.894
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.398
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0.043970328
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4258162083797966, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a62c0ad892bfe214cb53326036f27fd0, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &593607598
 Prefab:
   m_ObjectHideFlags: 0

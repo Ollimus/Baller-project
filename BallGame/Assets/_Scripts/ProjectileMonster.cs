@@ -38,7 +38,18 @@ public class ProjectileMonster : MonoBehaviour {
             if (!projectiles[i].activeInHierarchy)
             {
                 projectiles[i].transform.position = transform.position;
-                projectiles[i].transform.rotation = transform.rotation;
+
+                //Get the Screen positions of the object
+                Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+                //Get the Screen position of the mouse
+                Vector2 mouseOnScreen = (Vector2)Camera.main.WorldToViewportPoint(playerCollision.transform.position);
+
+                //Get the angle between the points
+                float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
+
+                projectiles[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+
                 projectiles[i].GetComponent<SeekingMissile>().TargetReference(playerCollision.transform);
                 projectiles[i].SetActive(true);
 

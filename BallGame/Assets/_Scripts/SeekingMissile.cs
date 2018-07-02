@@ -36,8 +36,6 @@ public class SeekingMissile : MonoBehaviour
 
         anim.Rebind();
 
-        // when gameobjective gets deactivated, it stops the couritne of killzone.
-
         gameObject.SetActive(false);
     }
 

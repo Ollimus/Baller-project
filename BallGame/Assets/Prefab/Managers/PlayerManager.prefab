@@ -51,3 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921aafa7f94a02941be0a468ced75993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1148459872047414, guid: 1ea761fee4d07d146840c35fa356414a, type: 2}
+  respawnTimer: 4
+  checkpointLocations: []
