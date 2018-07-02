@@ -61,7 +61,11 @@ public class PlayerSpawner : MonoBehaviour
 
     public IEnumerator SpawnPlayerAtCheckpoint()
     {
+        Debug.Log(respawnTimer);
+
         yield return new WaitForSecondsRealtime(respawnTimer);
+
+        Debug.Log("Triggered 2st.");
 
         lastAddedObject = checkpointLocations.Count -1;
 

@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class EditorInputControls : EditorWindow
 {
-   //bool touchControlsActivated;
+   bool touchControlsActivated;
 
     void Start()
     {
-        /*bool touchControlActivated = PlayerPrefs.GetInt("InputControlSetting", 0) == 0 ? true : false;
+        bool touchControlActivated = PlayerPrefs.GetInt("InputControlSetting", 0) == 0 ? true : false;
 
         if (touchControlActivated)
             KeyboardControls();
         else if (!touchControlActivated)
-            MobileControls();*/
+            MobileControls();
     }
 
     [MenuItem("Input/Keyboard")]
