@@ -14,6 +14,7 @@ namespace Managers
         public List<Transform> checkpointLocations = new List<Transform>();
 
         private UIManager UImanager;
+        private bool IsPlayerRespawning = false;
 
         private void Awake()
         {
@@ -72,6 +73,9 @@ namespace Managers
         //That's respawning coroutine is called from here, a static instance, instead.
         public void StartPlayerAtLatestCheckpoint()
         {
+            if (IsPlayerRespawning)
+                return;
+
             Transform checkpointLocation = checkpointLocations[checkpointLocations.Count - 1];
 
             StartCoroutine(SpawnPlayerAtCheckpoint(checkpointLocation));
@@ -79,15 +83,23 @@ namespace Managers
 
         public void StartPlayerRespawn(Transform spawningLocation)
         {
+            if (IsPlayerRespawning)
+                return;
+
             StartCoroutine(SpawnPlayerAtCheckpoint(spawningLocation));
         }
 
         private IEnumerator SpawnPlayerAtCheckpoint(Transform spawningLocation)
         {
+            IsPlayerRespawning = true;
+
             yield return new WaitForSecondsRealtime(respawnTimer);
 
             if (spawningLocation != null)
+            {
                 Instantiate(player, spawningLocation.position, spawningLocation.rotation);
+                IsPlayerRespawning = false;
+            }
         }
     }
 }
