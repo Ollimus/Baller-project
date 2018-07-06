@@ -6,14 +6,18 @@ public class ProjectileMonster : MonoBehaviour {
 
     public GameObject projectile;
     public int projectileAmount = 20;
-    public float fireRate = 0.5f;
+    public float fireRate = 1f;
 
     private Collider2D playerCollision;
     private List<GameObject> projectiles = new List<GameObject>();
+    private float cooldown;
+
+    //In 0 rotation, the angle of the rocket is pointing left corner, 255 is the rotation it requires for to be aiming up.
+    //This way, it points the same way than the game object that it is attached to.
+    private readonly int spriteAngle = 225;
 
     private void Start()
     {
-
         for (int i = 0; i < projectileAmount; i++)
         {
             GameObject projectileObject = Instantiate(projectile);
@@ -25,7 +29,9 @@ public class ProjectileMonster : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D collision)
     {
         playerCollision = collision;
-        Invoke("Fire", fireRate);
+
+        if (cooldown < Time.time)
+            Invoke("Fire", 0);  //Warning; Adding delay to fire invoke will cause it to fire multiple times.
     }
 
     private void Fire()
@@ -33,28 +39,35 @@ public class ProjectileMonster : MonoBehaviour {
         if (playerCollision == null)
             return;
 
+        cooldown = Time.time + fireRate;
+
         for (int i = 0; i < projectiles.Count; i++)
         {
             if (!projectiles[i].activeInHierarchy)
             {
+                if (playerCollision == null)
+                {
+                    Debug.LogError("Cannot target player.");
+                    return;
+                }
+
                 projectiles[i].transform.position = transform.position;
 
-                //Get the Screen positions of the object
-                Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+                Vector3 vectorToTarget = playerCollision.transform.position - transform.position;
 
-                //Get the Screen position of the mouse
-                Vector2 mouseOnScreen = (Vector2)Camera.main.WorldToViewportPoint(playerCollision.transform.position);
+                //Calculate the angle of target in radians and multiply it to degrees. 
+                //As explained, the spriteAngle is the correction to make the missile point player.
+                float angle = (Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg) - spriteAngle;
+                
+                //Rotate missile correctly pointing to player.
+                Quaternion correctedRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                projectiles[i].transform.rotation = correctedRotation;
 
-                //Get the angle between the points
-                float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
-
-                projectiles[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-
-                projectiles[i].GetComponent<SeekingMissile>().TargetReference(playerCollision.transform);
+                //Get the component of missile, give it player transform and call the function.
+                projectiles[i].GetComponent<Missile>().TargetReference(playerCollision.transform);
                 projectiles[i].SetActive(true);
 
                 break;
-                //projectileObject.GetComponent<SeekingMissile>().TargetReference(collision.transform);
             }
         }
     }
