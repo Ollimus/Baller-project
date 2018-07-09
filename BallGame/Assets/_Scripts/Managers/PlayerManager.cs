@@ -66,13 +66,19 @@ namespace Managers
                 UImanager.RemovePlayerLifeSprite();
 
             if (UImanager.playerLifeSpriteList.Count == 0)
+            {
                 UImanager.ActivateDefeatScreen();
+                StopAllCoroutines();
+                IsPlayerRespawning = false;
+            }
         }
 
         //IF respawning coroutine is attached to deactiving object, the coroutine execution will stop. 
         //That's respawning coroutine is called from here, a static instance, instead.
         public void StartPlayerAtLatestCheckpoint()
         {
+            
+
             if (IsPlayerRespawning)
                 return;
 

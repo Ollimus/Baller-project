@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class ProjectileMonster : MonoBehaviour {
+public class ProjectileMonster : MonoBehaviour
+{
 
     public GameObject projectile;
-    public int projectileAmount = 20;
+    private int projectileAmount = 5;
     public float fireRate = 1f;
 
     private Collider2D playerCollision;
@@ -18,11 +20,39 @@ public class ProjectileMonster : MonoBehaviour {
 
     private void Start()
     {
+        DynamicObjects dynamic = DynamicObjects.DynamicObjectInstance;
+        Transform objectPooler;
+
+        if (dynamic == null)
+        {
+            Debug.Log("Error finding location for dynamic objects.");
+            return;
+        }
+
+        else
+        {
+            objectPooler = dynamic.CreateNewFolder(projectile.name);
+        }
+
         for (int i = 0; i < projectileAmount; i++)
         {
-            GameObject projectileObject = Instantiate(projectile);
-            projectileObject.SetActive(false);
-            projectiles.Add(projectileObject);
+            if (objectPooler.childCount == projectileAmount)
+            {
+                foreach (Transform childTransform in objectPooler)
+                {
+                    projectiles.Add(childTransform.gameObject);
+                }
+            }
+
+            else
+            {
+                GameObject projectileObject = Instantiate(projectile);
+
+                projectileObject.transform.parent = objectPooler.transform;
+                projectileObject.SetActive(false);
+
+                projectiles.Add(projectileObject);
+            }
         }
     }
 
@@ -41,7 +71,7 @@ public class ProjectileMonster : MonoBehaviour {
 
         cooldown = Time.time + fireRate;
 
-        for (int i = 0; i < projectiles.Count; i++)
+        for (int i = 0; i < projectileAmount; i++)
         {
             if (!projectiles[i].activeInHierarchy)
             {
@@ -58,7 +88,7 @@ public class ProjectileMonster : MonoBehaviour {
                 //Calculate the angle of target in radians and multiply it to degrees. 
                 //As explained, the spriteAngle is the correction to make the missile point player.
                 float angle = (Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg) - spriteAngle;
-                
+
                 //Rotate missile correctly pointing to player.
                 Quaternion correctedRotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 projectiles[i].transform.rotation = correctedRotation;
