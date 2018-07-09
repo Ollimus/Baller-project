@@ -14,7 +14,6 @@ namespace Managers
         int sceneNumber;
 
         UIManager uiManager;
-        AudioManager audioManager;
         SaveManager saveManager;
 
         string number;
@@ -31,12 +30,8 @@ namespace Managers
 
         private void Start()
         {
-
-                if (SaveManager.SaveManagerInstance != null)
-                    saveManager = SaveManager.SaveManagerInstance;
-
-                if (AudioManager.AudioInstance != null)
-                    audioManager = AudioManager.AudioInstance;
+            if (SaveManager.SaveManagerInstance != null)
+                saveManager = SaveManager.SaveManagerInstance;
 
 
             if (SceneManager.GetActiveScene().name == "00_MainMenu")

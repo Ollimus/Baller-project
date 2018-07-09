@@ -22,6 +22,8 @@ TagManager:
   - CheatingManager
   - SaveManager
   - InformationText
+  - DynamicObjects
+  - Missile
   layers:
   - Default
   - TransparentFX
