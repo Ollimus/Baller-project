@@ -6,14 +6,17 @@ using Managers;
 
 public class PlayerSpawner : MonoBehaviour
 {
+    public GameObject player;
     public int respawnTimer = 2;
 
-    private PlayerManager playerManager;
+    private Transform checkpointLocation;
     private Transform startingPoint;
+    private List<Transform> checkpointLocations = new List<Transform>();    //List of checkpoint locations
+    int lastAddedObject;
+
 
     void Start()
     {
-
         startingPoint = transform;
 
         playerManager = PlayerManager.PlayerDataInstance;
@@ -40,5 +43,19 @@ public class PlayerSpawner : MonoBehaviour
     public void AddCheckpoint(Transform location)
     {
         playerManager.checkpointLocations.Add(location);
+    }
+
+    /*
+    *After respawn time has passed, spawn player at the latest unlocked checkpoint. 
+    */
+
+    public IEnumerator SpawnPlayerAtCheckpoint()
+    {
+        yield return new WaitForSecondsRealtime(respawnTimer);
+
+        lastAddedObject = checkpointLocations.Count -1;
+        checkpointLocation = checkpointLocations[lastAddedObject];
+
+        Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
     }
 }

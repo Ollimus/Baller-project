@@ -14,7 +14,6 @@ public class ShowSongName : MonoBehaviour
 
     private void Start()
     {
-
         audioManager = AudioManager.AudioInstance;
 
         if (audioManager == null)
@@ -29,10 +28,10 @@ public class ShowSongName : MonoBehaviour
 
     public IEnumerator ShowCurrentSong(Sound song)
     {
-        songDisplayText = GetComponent<TextMeshProUGUI>();
+        if (songDisplayText == null)
+            songDisplayText = GetComponent<TextMeshProUGUI>();
 
         songDisplayText.alpha = 1;
-
         songDisplayText.text = "Song: \n" + song.clip.name;
 
         yield return new WaitForSeconds(txtFadeTime);

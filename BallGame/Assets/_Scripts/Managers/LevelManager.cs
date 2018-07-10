@@ -14,7 +14,7 @@ namespace Managers
         int sceneNumber;
 
         UIManager uiManager;
-        SaveManager saveManager;
+        PlayerManager playerManager;
 
         string number;
 
@@ -30,12 +30,12 @@ namespace Managers
 
         private void Start()
         {
-            if (SaveManager.SaveManagerInstance != null)
-                saveManager = SaveManager.SaveManagerInstance;
+            if (PlayerManager.PlayerDataInstance != null)
+                playerManager = PlayerManager.PlayerDataInstance;
 
 
             if (SceneManager.GetActiveScene().name == "00_MainMenu")
-                ActivateMainMenuLevels(); ;
+                ActivateMainMenuLevels();
 
             scene = SceneManager.GetActiveScene();
             UnPauseGame();
@@ -109,10 +109,10 @@ namespace Managers
                     }
                 }
 
-                string levelName = "01_Level" + number;
-                int levelNumber = Convert.ToInt32(number);
+                string levelName = "01_Level" + number;                     //Fix this. Does not work with other levels, use different approach.
+                int levelNumber = Convert.ToInt16(number);
 
-                if (levelNumber <= saveManager.unlockedLevels)
+                if (levelNumber <= playerManager.PlayerData.UnlockedLevels)
                     button.onClick.AddListener(() => ChangeScene(levelName));
 
                 else

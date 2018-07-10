@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114443500694463888}
   - component: {fileID: 223032736199436296}
   - component: {fileID: 114713634484124028}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TouchControlManager
   m_TagString: TouchController
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1461974072679166
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114238514659226016
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -14,6 +14,7 @@ namespace Managers
         public List<Transform> checkpointLocations = new List<Transform>();
 
         private UIManager UImanager;
+        private PlayerData playerData;
         private bool IsPlayerRespawning = false;
 
         private void Awake()
@@ -47,6 +48,19 @@ namespace Managers
             }
         }
 
+        void Start()
+        {
+            playerData = SaveManager.Instance.Load();
+        }
+
+        public PlayerData PlayerData
+        {
+            get
+            {
+                return playerData; 
+            }                
+        }
+
         //Reduces player lives by 1. If player does not have lives left, end the game.
         //Also removes one player life sprite from UI.
         public void ReduceLives()
@@ -66,11 +80,35 @@ namespace Managers
                 UImanager.RemovePlayerLifeSprite();
 
             if (UImanager.playerLifeSpriteList.Count == 0)
+                EndLevel();
             {
                 UImanager.ActivateDefeatScreen();
                 StopAllCoroutines();
                 IsPlayerRespawning = false;
             }
+        }
+
+        public void EndLevel()
+        {
+            if (UImanager == null)
+            {
+                Debug.LogError("Cannot End Game. UiManager not found.");
+                return;
+            }
+
+            UImanager.ActivateDefeatScreen();
+        }
+
+        public void UnlockNewLevel()
+        {
+            playerData.UnlockedLevels = playerData.UnlockedLevels;
+
+            SaveProgress();
+        }
+
+        public void SaveProgress()
+        {
+            SaveManager.Instance.Save(playerData);
         }
 
         //IF respawning coroutine is attached to deactiving object, the coroutine execution will stop. 
@@ -106,6 +144,49 @@ namespace Managers
                 Instantiate(player, spawningLocation.position, spawningLocation.rotation);
                 IsPlayerRespawning = false;
             }
+        }
+    }
+
+    [Serializable]
+    public class PlayerData
+    {
+        //Variables used for data saves.
+        private int unlockedSkins;
+        private int unlockedLevels;
+        private int specialSkins;
+        private int levelFinishTime;
+
+        public int UnlockedLevels
+        {
+            get
+            {
+                return unlockedLevels;
+            }
+
+            set
+            {
+                unlockedLevels = UnlockNext(unlockedLevels);
+            }
+        }
+
+        public PlayerData SaveData
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        public PlayerData()
+        {
+            unlockedSkins = 1;
+            unlockedLevels = 1;
+        }
+
+        private int UnlockNext(int unlockable)
+        {
+            unlockable++;
+            return unlockable;
         }
     }
 }
