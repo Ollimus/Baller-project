@@ -19,19 +19,16 @@ public class PlayerSpawner : MonoBehaviour
     {
         startingPoint = transform;
 
+        playerManager = PlayerManager.PlayerDataInstance;
+
         //Creates starting point as the first spawnable location.
         if (startingPoint != null)
-            checkpointLocations.Add(startingPoint);
+            playerManager.checkpointLocations.Add(startingPoint);
         else
         {
             Debug.LogError("No starting location.");
             return;
         }
-
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        if (playerObject == null)
-            SpawnPlayer();
     }
 
     /*
@@ -39,20 +36,13 @@ public class PlayerSpawner : MonoBehaviour
     */
     void SpawnPlayer()
     {
-        if (player != null)
-            Instantiate(player, startingPoint, startingPoint);
-
-        else
-        {
-            Debug.LogError("Player prefab is not assigned to PlayerSpawner.");
-            return;
-        }
+        playerManager.StartPlayerRespawn(startingPoint);
     }
 
     //Receives transform location from CheckPoint script and adds it into the list of checkpoints.
     public void AddCheckpoint(Transform location)
     {
-        checkpointLocations.Add(location);
+        playerManager.checkpointLocations.Add(location);
     }
 
     /*

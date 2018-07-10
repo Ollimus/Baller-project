@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1148459872047414}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.31, y: -1.89, z: 0}
+  m_LocalPosition: {x: -2.66, y: -1.89, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 4885928503268968}
@@ -238,7 +238,7 @@ MonoBehaviour:
   rigi: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 4294963417
+    m_Bits: 4294963455
   isLeftButtonActive: 0
   isRightButtonActive: 0
   isJumpButtonActive: 0

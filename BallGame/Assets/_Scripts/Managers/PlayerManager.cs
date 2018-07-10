@@ -9,8 +9,13 @@ namespace Managers
     {
         public static PlayerManager PlayerDataInstance;
 
+        public GameObject player;
+        public int respawnTimer = 4;
+        public List<Transform> checkpointLocations = new List<Transform>();
+
         private UIManager UImanager;
         private PlayerData playerData;
+        private bool IsPlayerRespawning = false;
 
         private void Awake()
         {
@@ -76,6 +81,11 @@ namespace Managers
 
             if (UImanager.playerLifeSpriteList.Count == 0)
                 EndLevel();
+            {
+                UImanager.ActivateDefeatScreen();
+                StopAllCoroutines();
+                IsPlayerRespawning = false;
+            }
         }
 
         public void EndLevel()
@@ -99,6 +109,41 @@ namespace Managers
         public void SaveProgress()
         {
             SaveManager.Instance.Save(playerData);
+        }
+
+        //IF respawning coroutine is attached to deactiving object, the coroutine execution will stop. 
+        //That's respawning coroutine is called from here, a static instance, instead.
+        public void StartPlayerAtLatestCheckpoint()
+        {
+            
+
+            if (IsPlayerRespawning)
+                return;
+
+            Transform checkpointLocation = checkpointLocations[checkpointLocations.Count - 1];
+
+            StartCoroutine(SpawnPlayerAtCheckpoint(checkpointLocation));
+        }
+
+        public void StartPlayerRespawn(Transform spawningLocation)
+        {
+            if (IsPlayerRespawning)
+                return;
+
+            StartCoroutine(SpawnPlayerAtCheckpoint(spawningLocation));
+        }
+
+        private IEnumerator SpawnPlayerAtCheckpoint(Transform spawningLocation)
+        {
+            IsPlayerRespawning = true;
+
+            yield return new WaitForSecondsRealtime(respawnTimer);
+
+            if (spawningLocation != null)
+            {
+                Instantiate(player, spawningLocation.position, spawningLocation.rotation);
+                IsPlayerRespawning = false;
+            }
         }
     }
 
