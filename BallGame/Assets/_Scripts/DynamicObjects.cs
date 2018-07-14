@@ -6,7 +6,7 @@ public class DynamicObjects : MonoBehaviour {
 
 	public static DynamicObjects DynamicObjectInstance;
 
-    private void Start()
+    private void Awake()
     {
         if (DynamicObjectInstance == null)
             DynamicObjectInstance = this;

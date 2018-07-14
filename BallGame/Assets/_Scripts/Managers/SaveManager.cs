@@ -42,7 +42,7 @@ namespace Managers
             if (resetSave)
             {
                 File.Delete(Application.persistentDataPath + "/playerSave.dat");
-            }                
+            }
         }
 
         public void Save(PlayerData data)
@@ -60,16 +60,29 @@ namespace Managers
             {
                 BinaryFormatter bFormatter = new BinaryFormatter();
                 FileStream file = File.Open(Application.persistentDataPath + "/playerSave.dat", FileMode.Open);
-                PlayerData playerData = (PlayerData)bFormatter.Deserialize(file);
-                file.Close();
 
-                return playerData;
-            }        
-            
+                try
+                {
+                    PlayerData playerData = (PlayerData)bFormatter.Deserialize(file);
+
+                    return playerData;
+                }
+
+                catch (Exception e)
+                {
+                    Debug.LogWarning("File could not be read right. This might be because of the data class has been edited. Creating a new file instead. \n" + e);
+
+                    file.Close();
+
+                    return CreatePlayerFile();
+                }
+            }
+
             else
             {
                 return CreatePlayerFile();
             }
+
         }
 
         private PlayerData CreatePlayerFile()

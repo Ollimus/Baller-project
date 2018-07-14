@@ -8,8 +8,10 @@ using System.Linq;
 
 namespace Managers
 {
-    public class UIManager : MonoBehaviour
+    public partial class UIManager : MonoBehaviour
     {
+        public static UIManager instance;
+
         //Gameobjects to affected by UIManager
         private GameObject informationObject;
         private ShowSongName songUIText;
@@ -39,6 +41,11 @@ namespace Managers
         private IEnumerator coroutine;
         private string operatingSystemCheck;
         private string sceneName;
+
+        private void Awake()
+        {
+            instance = this;
+        }
 
         private void Start()
         {

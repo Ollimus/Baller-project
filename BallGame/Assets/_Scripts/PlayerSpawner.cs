@@ -8,6 +8,7 @@ public class PlayerSpawner : MonoBehaviour
 {
     public GameObject player;
     public int respawnTimer = 2;
+    public PlayerManager playerManager;
 
     private Transform checkpointLocation;
     private Transform startingPoint;
@@ -29,6 +30,16 @@ public class PlayerSpawner : MonoBehaviour
             Debug.LogError("No starting location.");
             return;
         }
+
+        GameObject scenePlayer = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            Destroy(scenePlayer);
+            Debug.LogWarning("Was this intended? Player was found in scene. Player was deleted.");
+        }
+
+        SpawnPlayerInstantly();
     }
 
     /*
@@ -39,23 +50,14 @@ public class PlayerSpawner : MonoBehaviour
         playerManager.StartPlayerRespawn(startingPoint);
     }
 
+    void SpawnPlayerInstantly()
+    {
+        playerManager.InstantlySpawnPlayer(startingPoint);
+    }
+
     //Receives transform location from CheckPoint script and adds it into the list of checkpoints.
     public void AddCheckpoint(Transform location)
     {
         playerManager.checkpointLocations.Add(location);
-    }
-
-    /*
-    *After respawn time has passed, spawn player at the latest unlocked checkpoint. 
-    */
-
-    public IEnumerator SpawnPlayerAtCheckpoint()
-    {
-        yield return new WaitForSecondsRealtime(respawnTimer);
-
-        lastAddedObject = checkpointLocations.Count -1;
-        checkpointLocation = checkpointLocations[lastAddedObject];
-
-        Instantiate(player, checkpointLocation.position, checkpointLocation.rotation);
     }
 }

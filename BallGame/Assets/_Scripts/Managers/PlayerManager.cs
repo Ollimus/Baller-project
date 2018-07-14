@@ -8,6 +8,7 @@ namespace Managers
     public class PlayerManager : MonoBehaviour
     {
         public static PlayerManager PlayerDataInstance;
+        private Sprite activePlayerSkin;
 
         public GameObject player;
         public int respawnTimer = 4;
@@ -57,8 +58,15 @@ namespace Managers
         {
             get
             {
-                return playerData; 
-            }                
+                return playerData;
+            }
+        }
+
+        public void ChangePlayerSkin(Sprite skin)
+        {
+            SpriteRenderer playerRenderer = player.GetComponent<SpriteRenderer>();
+
+            playerRenderer.sprite = skin;
         }
 
         //Reduces player lives by 1. If player does not have lives left, end the game.
@@ -74,29 +82,23 @@ namespace Managers
                 {
                     Debug.LogError("No UIManager found, cannot reduce player lives.");
                     return;
-                }                    
+                }
             }
+
             if (UImanager.playerLifeSpriteList.Count > 0)
                 UImanager.RemovePlayerLifeSprite();
 
             if (UImanager.playerLifeSpriteList.Count == 0)
-                EndLevel();
             {
-                UImanager.ActivateDefeatScreen();
-                StopAllCoroutines();
-                IsPlayerRespawning = false;
+                EndLevel();
             }
         }
 
-        public void EndLevel()
+        private void EndLevel()
         {
-            if (UImanager == null)
-            {
-                Debug.LogError("Cannot End Game. UiManager not found.");
-                return;
-            }
-
             UImanager.ActivateDefeatScreen();
+            StopAllCoroutines();
+            IsPlayerRespawning = false;
         }
 
         public void UnlockNewLevel()
@@ -115,8 +117,6 @@ namespace Managers
         //That's respawning coroutine is called from here, a static instance, instead.
         public void StartPlayerAtLatestCheckpoint()
         {
-            
-
             if (IsPlayerRespawning)
                 return;
 
@@ -125,12 +125,21 @@ namespace Managers
             StartCoroutine(SpawnPlayerAtCheckpoint(checkpointLocation));
         }
 
+
         public void StartPlayerRespawn(Transform spawningLocation)
         {
             if (IsPlayerRespawning)
                 return;
 
             StartCoroutine(SpawnPlayerAtCheckpoint(spawningLocation));
+        }
+
+        /*
+        * Instantly spawns player at starting location. Coroutine is delayed respawn, which isn't suitable for scene start.
+        */
+        public void InstantlySpawnPlayer(Transform spawningLocation)
+        {
+            Instantiate(player, spawningLocation.position, spawningLocation.rotation);
         }
 
         private IEnumerator SpawnPlayerAtCheckpoint(Transform spawningLocation)
@@ -150,11 +159,9 @@ namespace Managers
     [Serializable]
     public class PlayerData
     {
-        //Variables used for data saves.
-        private int unlockedSkins;
         private int unlockedLevels;
-        private int specialSkins;
         private int levelFinishTime;
+        private List<string> unlockedSkinKeys = new List<string>();
 
         public int UnlockedLevels
         {
@@ -165,28 +172,49 @@ namespace Managers
 
             set
             {
-                unlockedLevels = UnlockNext(unlockedLevels);
+                unlockedLevels = UnlockNextLevel(unlockedLevels);
             }
         }
 
         public PlayerData SaveData
         {
-            get
-            {
-                return this;
-            }
+            get { return this; }
+        }
+
+        public List<string> UnlockedSkinKeys
+        {
+            get { return unlockedSkinKeys; }
         }
 
         public PlayerData()
         {
-            unlockedSkins = 1;
             unlockedLevels = 1;
+            UnlockedSkinKeys.Add("Defaul");
+            UnlockedSkinKeys.Add("BetaReward");
         }
 
-        private int UnlockNext(int unlockable)
+        private int UnlockNextLevel(int unlockable)
         {
             unlockable++;
             return unlockable;
+        }
+
+        /*
+         * Checks whether skin key exists within available skins and then checks whether the skin has already been added to player skins.
+         * 
+        */
+        public void AddSkinKey(string key, Dictionary<string, Sprite> skinDictionary)
+        {
+            if (!skinDictionary.ContainsKey(key))
+            {
+                if (!UnlockedSkinKeys.Contains(key))
+                {
+                    UnlockedSkinKeys.Add(key);
+                }
+
+                else
+                    return;
+            }
         }
     }
 }
