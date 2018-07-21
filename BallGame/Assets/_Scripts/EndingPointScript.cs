@@ -23,10 +23,13 @@ public class EndingPointScript : MonoBehaviour
 	{
         //Stops timer and takes time
         timer.StopTimer();
-		completionTime = timer.EndingTime();
+
+		completionTime = timer.CompletionTimeText();
+
+        float completionTimeFloat = timer.CompletionTime();
 
         //Activates the menu and sends it the time
-        menu.ActivateVictoryScreen(completionTime);
+        menu.ActivateVictoryScreen(completionTime, completionTimeFloat);
 
         //disables touch control settings.
         menu.DisableTouchControl();

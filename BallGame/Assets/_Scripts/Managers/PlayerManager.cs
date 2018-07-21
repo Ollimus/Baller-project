@@ -8,14 +8,13 @@ namespace Managers
     public class PlayerManager : MonoBehaviour
     {
         public static PlayerManager PlayerDataInstance;
-        private Sprite activePlayerSkin;
 
         public GameObject player;
         public int respawnTimer = 4;
         public List<Transform> checkpointLocations = new List<Transform>();
 
         private UIManager UImanager;
-        private PlayerData playerData;
+        private  PlayerData playerData;
         private bool IsPlayerRespawning = false;
 
         private void Awake()
@@ -60,6 +59,8 @@ namespace Managers
             {
                 return playerData;
             }
+
+
         }
 
         public void ChangePlayerSkin(Sprite skin)
@@ -113,6 +114,52 @@ namespace Managers
             SaveManager.Instance.Save(playerData);
         }
 
+        public void SaveLevelCompletionTime (string sceneName, float completionTime)
+        {
+            if (PlayerData.BestTimes.ContainsKey(sceneName))
+            {
+                playerData.BestTimes.Remove(sceneName);
+            }
+
+            if (completionTime < 10)
+            {
+                completionTime = completionTime / 10;
+            }
+
+            playerData.BestTimes.Add(sceneName, completionTime);
+
+            Debug.Log("Adding completiontime; " + completionTime);
+
+            SaveProgress();
+        }
+
+        public string LoadBestimeOfActiveScene(string sceneName, bool convertTimeToText)
+        {
+            if (!playerData.BestTimes.ContainsKey(sceneName))
+            {
+                return 0.ToString();
+            }
+
+
+            float bestTime = playerData.BestTimes[sceneName];
+
+            if (!convertTimeToText)
+                return bestTime.ToString();
+
+            else
+            {
+                int minutes = (int)bestTime;
+
+                float secondsFloat = (bestTime - minutes) * 100;
+
+                int seconds = (int)secondsFloat;
+
+                string bestTimeText = minutes + " minutes " + seconds + " seconds.";
+
+                return bestTimeText;
+            }
+        }
+
         //IF respawning coroutine is attached to deactiving object, the coroutine execution will stop. 
         //That's respawning coroutine is called from here, a static instance, instead.
         public void StartPlayerAtLatestCheckpoint()
@@ -162,18 +209,11 @@ namespace Managers
         private int unlockedLevels;
         private int levelFinishTime;
         private List<string> unlockedSkinKeys = new List<string>();
+        private Dictionary<string, float> bestTimes = new Dictionary<string, float>();
 
         public int UnlockedLevels
         {
-            get
-            {
-                return unlockedLevels;
-            }
-
-            set
-            {
-                unlockedLevels = UnlockNextLevel(unlockedLevels);
-            }
+            get { return unlockedLevels; } set { unlockedLevels = UnlockNextLevel(unlockedLevels); }
         }
 
         public PlayerData SaveData
@@ -186,9 +226,15 @@ namespace Managers
             get { return unlockedSkinKeys; }
         }
 
+        public Dictionary<string, float> BestTimes
+        {
+            get { return bestTimes; } set { bestTimes = BestTimes; }
+        }
+
         public PlayerData()
         {
             unlockedLevels = 1;
+
             UnlockedSkinKeys.Add("Defaul");
             UnlockedSkinKeys.Add("BetaReward");
         }

@@ -431,7 +431,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 443889485}
-  - component: {fileID: 443889484}
   m_Layer: 0
   m_Name: Checkpoints
   m_TagString: SpawningCheckpoints
@@ -439,20 +438,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &443889484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114084540337544316, guid: eee0e218844f051458213d65c73ea1a1,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 443889483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc4fb9c5d92d8d4b8fc1ad0201b2597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  respawnTimer: 1
 --- !u!4 &443889485
 Transform:
   m_ObjectHideFlags: 0
@@ -2397,6 +2382,11 @@ Prefab:
     - target: {fileID: 4706144231218822, guid: 464d5517a5f0b2244b9c2c0ce79ee4c0, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114812783723407992, guid: 464d5517a5f0b2244b9c2c0ce79ee4c0,
+        type: 2}
+      propertyPath: resetSave
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 464d5517a5f0b2244b9c2c0ce79ee4c0, type: 2}

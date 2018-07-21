@@ -12,8 +12,6 @@ public class PlayerSpawner : MonoBehaviour
 
     private Transform checkpointLocation;
     private Transform startingPoint;
-    private List<Transform> checkpointLocations = new List<Transform>();    //List of checkpoint locations
-    int lastAddedObject;
 
 
     void Start()
@@ -25,6 +23,7 @@ public class PlayerSpawner : MonoBehaviour
         //Creates starting point as the first spawnable location.
         if (startingPoint != null)
             playerManager.checkpointLocations.Add(startingPoint);
+
         else
         {
             Debug.LogError("No starting location.");

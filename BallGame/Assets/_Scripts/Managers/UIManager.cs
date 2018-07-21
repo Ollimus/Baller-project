@@ -15,7 +15,8 @@ namespace Managers
         //Gameobjects to affected by UIManager
         private GameObject informationObject;
         private ShowSongName songUIText;
-
+        
+        //Menus
         [HideInInspector]
         public GameObject pauseMenu;
         private GameObject playerLives;
@@ -36,11 +37,14 @@ namespace Managers
 
         [HideInInspector]
         public List<GameObject> playerLifeSpriteList = new List<GameObject>();
-        private Text informationText;
-        private Text completionTimeText;
+
         private IEnumerator coroutine;
         private string operatingSystemCheck;
         private string sceneName;
+
+        private Text informationText;
+        private Text completionTimeText;
+        public Text bestTime;
 
         private void Awake()
         {
@@ -143,23 +147,40 @@ namespace Managers
         }
 
         //Handles activation of End Menu
-        public void ActivateVictoryScreen(string completionTime)
+        public void ActivateVictoryScreen(string completionTimeString, float completionTime)
         {
-            try
+            completionTimeText = victoryMenu.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
+            Text bestTimeText = victoryMenu.transform.Find("txtBestTime").GetComponentInChildren<Text>();
+
+            if (completionTimeString == null || bestTimeText == null)
             {
-                completionTimeText = victoryMenu.transform.Find("txtCompletionTime").GetComponentInChildren<Text>();
-                completionTimeText.text = completionTime;
-                victoryMenu.SetActive(true);
-
-                playerManager.UnlockNewLevel();
-
-                ActivateMenuButtons("Button");
+                Debug.LogError("No completion or best time gameobjects found in UIManager.");
+                return;
             }
 
-            catch (Exception e)
+            float bestTime = float.Parse(playerManager.LoadBestimeOfActiveScene(sceneName, false));
+
+            if ((completionTime < bestTime  || bestTime > 0 && completionTime > 0) | bestTime == 0)
             {
-                Debug.LogError("Error creating victory menu for player. Error: " + e);
+                bestTimeText.text = "New Record: \n" + completionTimeString;
+
+                bestTimeText.color = Color.magenta;
+
+                playerManager.SaveLevelCompletionTime(sceneName, completionTime);
             }
+
+            else if (completionTime > bestTime && bestTime > 0)
+            {
+                bestTimeText.text = playerManager.LoadBestimeOfActiveScene(sceneName, true);
+            }
+
+            completionTimeText.text = completionTimeString;
+
+            victoryMenu.SetActive(true);
+
+            playerManager.UnlockNewLevel();
+
+            ActivateMenuButtons("Button");
         }
 
         public void ActivateDefeatScreen()
